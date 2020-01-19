@@ -21,7 +21,7 @@ services:
     container_name: pgadmin
     image: dpage/pgadmin4
     ports: 
-      - ${POSTGRES_HOST_PORT:-8080}:${POSTGRES_CONTAINER_PORT:-80}
+      - ${PGADMIN_HOST_PORT:-8080}:${PGADMIN_CONTAINER_PORT:-80}
     environment:
       # Defaults values if .env file is not found or variables missing
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-admin@admin.com}
