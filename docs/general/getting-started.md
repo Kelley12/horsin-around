@@ -76,4 +76,10 @@ Spin up the Docker container using the following command:
 docker-compose up
 ```
 
+***NOTE: If you are running into an error stating `Cannot create container for service...The container name "/postgres" is already in use by container` use the following command to remove any existing containers and try again.***
+
+```bash
+docker rm -f $(docker ps -a -q)
+```
+
 [For more info on developing with Docker, PostgreSQL, and pgAdmin](/docker-pgAdmin.md).
