@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.com/kelley12/horsin-around.svg?branch=master)](https://travis-ci.com/kelley12/horsin-around)
 [![Dependency Status](https://david-dm.org/kelley12/horsin-around/status.svg?style=flat)](https://david-dm.org/kelley12/horsin-around)
 [![devDependency Status](https://david-dm.org/kelley12/horsin-around/dev-status.svg)](https://david-dm.org/kelley12/horsin-around?type=dev)
-[![Test Coverage](https://coveralls.io/r/kelley12/horsin-around/badge.svg)](https://coveralls.io/r/kelley12/horsin-around)
+[![Coverage Status](https://coveralls.io/repos/github/Kelley12/horsin-around/badge.svg?branch=master)](https://coveralls.io/github/Kelley12/horsin-around?branch=master)
 
 - [Project Goals](#project-goals)
 - [Features](#features)
@@ -42,12 +42,10 @@
 
 ## Quick start
 
-1. Make sure that you have Node.js v8.15.1 and npm v5 or above installed.
+1. Make sure that you have [Prerequisites](#prerequisites) installed.
 2. Clone this repo using `git clone https://github.com/kelley12/horsin-around.git`
 3. Move to the appropriate directory: `cd horsin-around`.
-4. Run `npm run setup` in order to install dependencies and clean the git repo.
-    _At this point you can run `npm start` to see the example app at `http://localhost:3000`._
-5. Run `npm run clean` to delete the example app.
+4. Run `npm start:dev` to see the example app at `http://localhost:9000`.
 
 ## Documentation
 
@@ -59,4 +57,4 @@
 
 ## License
 
-This project is licensed under the MIT license, Copyright (c) 2020. For more information see `LICENSE`.
+This project is licensed under the MIT license, Copyright (c) 2020. For more information see [LICENSE](LICENSE).
