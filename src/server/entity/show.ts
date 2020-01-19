@@ -1,7 +1,7 @@
 import {
     Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany
 } from "typeorm";
-import { IShow } from "../definitions";
+import { IShow } from "../../shared";
 import { Result } from "./results";
 import { ShowClass } from "./show-class";
 

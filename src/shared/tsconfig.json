@@ -1,0 +1,14 @@
+{
+  "extends": "../../tsconfig-base.json",
+  "compilerOptions": {
+    "rootDir": "./",
+    "declaration": true,
+    "declarationMap": true,
+    "outDir": "../../dist/shared",
+    "composite": true
+  },
+  "include": [
+    "./**/*",
+    "../node_modules/eventemitter2/**/*"
+  ]
+}

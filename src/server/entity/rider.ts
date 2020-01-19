@@ -1,7 +1,7 @@
 import {
     Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany
 } from "typeorm";
-import { IRider } from "../definitions";
+import { IRider } from "../../shared";
 import { Result } from "./results";
 
 @Entity("riders")

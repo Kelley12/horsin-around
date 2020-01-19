@@ -2,7 +2,7 @@ import {
     Column, Entity, PrimaryGeneratedColumn, ManyToOne,
     CreateDateColumn, UpdateDateColumn
 } from "typeorm";
-import { IResults } from "../definitions";
+import { IResults } from "../../shared";
 import { Show } from "./show";
 import { Class } from "./class";
 import { Rider } from "./rider";

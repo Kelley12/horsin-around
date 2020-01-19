@@ -2,7 +2,7 @@ import {
     Column, Entity, PrimaryGeneratedColumn, ManyToOne,
     CreateDateColumn, UpdateDateColumn
 } from "typeorm";
-import { IShowClass } from "../definitions";
+import { IShowClass } from "../../shared";
 import { Show } from "./show";
 import { Class } from "./class";
 
