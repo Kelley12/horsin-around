@@ -9,8 +9,8 @@ export const dbconfig: ConnectionOptions = {
     port: Number(process.env.POSTGRES_PORT) || 5432,
     database: process.env.POSTGRES_DB ||
         env === "test" ? "horsin-around_test" : "horsin-around",
-    username: process.env.POSTGRES_USER || "postgres",
-    password: process.env.POSTGRES_PASSWORD || undefined,
+    username: process.env.POSTGRES_USER || "admin",
+    password: process.env.POSTGRES_PASSWORD || "admin",
     synchronize: true,
     logging: env !== "test",
     dropSchema: env === "test",

@@ -1,6 +1,6 @@
 import { Server } from "./server";
 import { logger } from "./utils";
-import { config } from "./definitions";
+import { config } from "./config";
 import dotenv from "dotenv";
 
 logger.log("info", "Loading .env");
