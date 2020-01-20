@@ -5,7 +5,7 @@ const env = process.env.NODE_ENV;
 
 export const dbconfig: ConnectionOptions = {
     type: "postgres",
-    host: process.env.POSTGRES_HOST || "127.0.0.1",
+    host: process.env.POSTGRES_HOST || "localhost",
     port: Number(process.env.POSTGRES_PORT) || 5432,
     database: process.env.POSTGRES_DB ||
         env === "test" ? "horsin-around_test" : "horsin-around",
@@ -14,11 +14,11 @@ export const dbconfig: ConnectionOptions = {
     synchronize: true,
     logging: env !== "test",
     dropSchema: env === "test",
-    entities: [ `${__dirname}/../entity/*.js` ],
-    migrations: [ `${__dirname}/../migration/*.js` ],
+    entities: [ `${__dirname}/entity/*.js` ],
+    migrations: [ `${__dirname}/migration/*.js` ],
     cli: {
-        entitiesDir: `${__dirname}/../entity`,
-        migrationsDir: `${__dirname}/../migration`,
+        entitiesDir: `${__dirname}/entity`,
+        migrationsDir: `${__dirname}/migration`,
     }
 };
 
