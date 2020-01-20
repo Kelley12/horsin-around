@@ -3,6 +3,8 @@ coverage
 build
 node_modules
 dist/
+.cache/
+.nyc_output
 
 # Cruft
 .DS_Store
