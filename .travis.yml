@@ -5,6 +5,9 @@ node_js:
 
 sudo: false
 
+services:
+  - postgresql
+
 install:
   - npm install
 
