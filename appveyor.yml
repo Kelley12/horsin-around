@@ -20,6 +20,9 @@ services:
 # Fix line endings in Windows. (runs before repo cloning)
 init:
   - git config --global core.autocrlf input
+  - SET POSTGRES_USER=postgres
+  - SET POSTGRES_PASSWORD=Password12!
+  - psql --version
 
 # Install scripts--runs after repo cloning
 install:
