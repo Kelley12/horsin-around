@@ -1,6 +1,7 @@
 # HorsinAround
 
-[![Build Status](https://travis-ci.com/kelley12/horsin-around.svg?branch=master)](https://travis-ci.com/kelley12/horsin-around)
+[![Travis Build Status](https://travis-ci.com/kelley12/horsin-around.svg?branch=master)](https://travis-ci.com/kelley12/horsin-around)
+[![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/43ah5tri0ennicdd?svg=true)](https://ci.appveyor.com/project/Kelley12/horsin-around)
 [![Dependency Status](https://david-dm.org/kelley12/horsin-around/status.svg?style=flat)](https://david-dm.org/kelley12/horsin-around)
 [![devDependency Status](https://david-dm.org/kelley12/horsin-around/dev-status.svg)](https://david-dm.org/kelley12/horsin-around?type=dev)
 [![Coverage Status](https://coveralls.io/repos/github/Kelley12/horsin-around/badge.svg?branch=master)](https://coveralls.io/github/Kelley12/horsin-around?branch=master)
