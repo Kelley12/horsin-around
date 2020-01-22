@@ -65,7 +65,7 @@ export class Server {
     listen(host: string, port: number) {
         this.emitter.emit("Starting");
 
-        this.app.use("/api", apiRouter());
+        this.app.use("/api/v1", apiRouter());
         this.app.get("*", (_req, res) => res.sendStatus(404));
 
         this.server.listen(port, host, () => {
