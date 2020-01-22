@@ -8,11 +8,11 @@ import { showClassRouter } from "./show-class";
 export function apiRouter(): express.Router {
     const router = express.Router();
 
-    router.use("/rider", riderRouter());
-    router.use("/show", showRouter());
-    router.use("/class", classRouter());
-    router.use("/showclass", showClassRouter());
-    router.use("/result", resultRouter());
+    router.use("/riders", riderRouter());
+    router.use("/shows", showRouter());
+    router.use("/classes", classRouter());
+    router.use("/showclasses", showClassRouter());
+    router.use("/results", resultRouter());
 
     router.get("*", (_req, res) => res.sendStatus(404));
 

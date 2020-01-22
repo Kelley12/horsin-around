@@ -13,7 +13,7 @@ export class Show implements IShow {
     @Column("varchar", { length: 50 })
     public name!: string;
 
-    @Column()
+    @Column("date")
     public showDate!: Date;
 
     @Column()

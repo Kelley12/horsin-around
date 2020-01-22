@@ -10,15 +10,19 @@ export const HomePage = Vue.extend({
     created() { state.updateVue(this); },
     mounted() {
         get(`${apiurl}/shows`)
-            .then((shows) => state.set(shows))
+            .then((shows) => {
+                state.set({shows});
+            })
             .catch((e: Error) => console.log(e))
             .then(() => this.showsLoading = false);
     },
 
     computed: {
         hasNoShows() {
-            for (const _key in this.shows) { return false; }
-            return true;
+            if (this.shows.length < 1) {
+                return true;
+            }
+            return false;
         }
     }
 });

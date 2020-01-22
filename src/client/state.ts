@@ -1,5 +1,5 @@
 import { State, setAjaxToken } from "./helpers";
-import { User, IShow } from "../shared";
+import { User } from "../shared";
 const localStorage = require("localStorage");
 
 const emptyUser: User = {
@@ -11,7 +11,7 @@ export const state = new State({
     loggedIn: false,
     token: "",
     user: emptyUser,
-    shows: {} as { [id: string]: IShow }
+    shows: []
 });
 
 // export function signOut(router: VueRouter) {

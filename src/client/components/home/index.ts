@@ -7,5 +7,6 @@ export const ShowBox = Vue.extend({
     props: {
         show: Object as PropType<IShow>
     },
-    data() { return state.get(); }
+    data() { return state.get(); },
+    created() { state.updateVue(this); }
 });

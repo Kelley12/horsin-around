@@ -3,7 +3,7 @@
     <hr>
     <show-box
         v-for="show in shows"
-        :key="show.id"
+        :key="show.showId"
         :show="show">
     </show-box>
     <div v-if="hasNoShows" class="content">
