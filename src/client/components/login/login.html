@@ -1,0 +1,32 @@
+<div class="login-container">
+    <div class="is-hidden-touch login-padding"></div>
+    <div class="box login-box">
+        <div class="has-text-centered">
+            <h1 class="title">Login</h1>
+            <h2 v-if="error" class="subtitle has-text-danger">{{ error }}</h2>
+        </div>
+        <br>
+        <form @submit.prevent="submit()">
+            <div class="field">
+                <label for="" class="label">Username</label>
+                <div class="control">
+                    <input type="text" class="input" v-model="username">
+                </div>
+            </div>
+            <div class="field">
+                <label for="" class="label">Password</label>
+                <div class="control">
+                    <input type="password" class="input" v-model="password">
+                </div>
+            </div>
+            <div class="control">
+                <button
+                    :class="['button', 'is-primary', { 'is-loading': loading }]"
+                    @click="submit()"
+                    :disabled="loading">
+                    Submit
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
