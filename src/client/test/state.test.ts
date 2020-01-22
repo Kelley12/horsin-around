@@ -1,5 +1,9 @@
-import { state } from "../state";
+import { state, checkForSession } from "../state";
 import { assert } from "chai";
+const localStorage = require("localStorage");
+
+const testToken = "12345";
+const testUser = { name: "test", email: "test@test.com" };
 
 describe("State", () => {
     describe("Get", () => {
@@ -27,8 +31,8 @@ describe("State", () => {
         before(() => {
             state.set({
                 loggedIn: true,
-                token: "12345",
-                user: { name: "test", email: "test@test.com" }
+                token: testToken,
+                user: testUser
             });
         });
 
@@ -49,6 +53,49 @@ describe("State", () => {
             assert.typeOf(user, "object");
             assert.deepStrictEqual(user.name, "test");
             assert.deepStrictEqual(user.email, "test@test.com");
+        });
+    });
+
+    describe("Session", () => {
+        it("Should have empty session", () => {
+            localStorage.setItem("session", "");
+            checkForSession();
+
+            const sessionState = state.get();
+            assert.deepStrictEqual(
+                {
+                    token: sessionState.token,
+                    user: sessionState.user,
+                    loggedIn: sessionState.loggedIn
+                },
+                {
+                    token: "",
+                    user: {
+                        email: "",
+                        name: ""
+                    },
+                    loggedIn: false
+                });
+        });
+        it("Should have valid session", () => {
+            localStorage.setItem("session", JSON.stringify({ token: testToken, user: testUser }));
+            checkForSession();
+
+            const sessionState = state.get();
+            assert.deepStrictEqual(
+                {
+                    token: sessionState.token,
+                    user: sessionState.user,
+                    loggedIn: sessionState.loggedIn
+                },
+                {
+                    token: "12345",
+                    user: {
+                        email: "test@test.com",
+                        name: "test"
+                    },
+                    loggedIn: true
+                });
         });
     });
 });
