@@ -32,16 +32,17 @@
   "scripts": {
     "prebuild": "rimraf dist/* && npm run lint",
     "build": "NODE_ENV=production && npm run build:all",
+    "build:dev": "npm run prebuild && npm ci && npm run build:all",
     "build:all": "npm run build:shared && npm run build:client && npm run build:server",
-    "build:dev": "npm ci && npm run build:all",
     "build:client": "tsc -b ./src/client && parcel build src/client/index.html",
     "build:server": "tsc -b ./src/server",
     "build:shared": "tsc -b ./src/shared",
     "start": "node dist/index.js",
-    "start:dev": "concurrently --kill-others 'npm run watch:server' 'npm run watch:client' 'npm run watch:shared' 'npm run start:nodemon'",
+    "start:dev": "concurrently --kill-others 'npm run watch:server' 'npm run watch:client' 'npm run watch:shared' 'npm run start:parcel' 'npm run start:nodemon'",
     "start:nodemon": "nodemon -e js,ts dist/index.js",
+    "start:parcel": "parcel src/client/index.html",
     "watch:server": "tsc -b --watch ./src/server",
-    "watch:client": "tsc -b --watch ./src/client && parcel watch src/client/index.html",
+    "watch:client": "tsc -b --watch ./src/client",
     "watch:shared": "tsc -b --watch ./src/shared",
     "lint": "tslint -p tslint.json",
     "pretest": "npm run test:clean",
@@ -49,7 +50,9 @@
     "test:watch": "mocha --watch 'dist/**/test/*.js'",
     "test:clean": "rimraf ./coverage",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
-    "preversion": "npm run build && npm run test"
+    "preversion": "npm run build && npm run test",
+    "heroku-postbuild": "parcel build src/client/index.html",
+    "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js"
   },
   "dependencies": {
     "body-parser": "^1.19.0",

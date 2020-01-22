@@ -23,7 +23,7 @@
         }],
         "space-within-parens": [true, 0],
         "prefer-template": true,
-        "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore"],
+        "variable-name": [true, "ban-keywords", "check-format", "allow-pascal-case", "allow-leading-underscore"],
         "whitespace": [true,
             "check-branch", "check-operator", "check-typecast", "check-decl",
             "check-module", "check-separator", "check-rest-spread", "check-type-operator",
