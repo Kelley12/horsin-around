@@ -29,18 +29,13 @@ export function riderRouter(): express.Router {
     });
 
     router.post("/", (req, res) => {
-        if (!req.body.name || !req.body.ip || !req.body.mac || !req.body.type) {
+        if (!req.body.firstName || !req.body.lastName) {
             return res.status(400)
-                .send({ error: "Missing data: name, ip, mac, or type (RaspberryPi or Arduino)" });
-        }
-
-        if (!["RaspberryPi", "Arduino"].includes(req.body.type)) {
-            return res.status(400)
-                .send({ error: "Incorrect type: Must be 'RaspberryPi' or 'Arduino'" });
+                .send({ error: "Missing data: firstName or lastName" });
         }
 
         riderController.createRider(req.body)
-            .then(() => res.sendStatus(201))
+            .then((rider) => res.status(201).send(rider))
             .catch(error => {
                 logger.log("error", `API Error:`);
                 logger.log("error", error);
@@ -50,17 +45,21 @@ export function riderRouter(): express.Router {
 
     router.put("/:id", (req, res) => {
         const id = parseInt(req.params.id);
-        if (!req.body.name || !req.body.ip || !req.body.mac || !req.body.type) {
+        if (!req.body.firstName || !req.body.lastName) {
             return res.status(400)
-                .send({ error: "Missing data: name, ip, mac, or type (RaspberryPi or Arduino)" });
-        }
-
-        if (!["RaspberryPi", "Arduino"].includes(req.body.type)) {
-            return res.status(400)
-                .send({ error: "Incorrect type: Must be 'RaspberryPi' or 'Arduino'" });
+                .send({ error: "Missing data: firstName or lastName" });
         }
 
         basicStatus(res, riderController.updateRider(req.body, id));
+    });
+
+    router.put("/", (req, res) => {
+        if (!req.body.riderId || !req.body.firstName || !req.body.lastName) {
+            return res.status(400)
+                .send({ error: "Missing data: riderId, firstName, or lastName" });
+        }
+
+        basicStatus(res, riderController.updateRider(req.body, req.body.riderId));
     });
 
     router.delete("/:id", (req, res) => {

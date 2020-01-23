@@ -11,7 +11,8 @@ export const state = new State({
     loggedIn: false,
     token: "",
     user: emptyUser,
-    shows: []
+    shows: [] as any[],
+    riders: [] as any[]
 });
 
 // export function signOut(router: VueRouter) {
