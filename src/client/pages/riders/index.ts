@@ -48,7 +48,9 @@ export const RiderPage = Vue.extend({
             this.rider.lastName = rider.lastName;
         },
         resetRider() {
-            this.rider = emptyRider;
+            this.rider.riderId = 0;
+            this.rider.firstName = "";
+            this.rider.lastName = "";
         },
         deleteRider(rider: Rider) {
             this.setRider(rider);

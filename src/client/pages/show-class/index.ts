@@ -48,7 +48,9 @@ export const ShowClassPage = Vue.extend({
             this.showClass.speed = showClass.speed;
         },
         resetShowClass() {
-            this.showClass = emptyShowClass;
+            this.showClass.showClassId = 0;
+            this.showClass.name = "";
+            this.showClass.speed = 0;
         },
         deleteShowClass(showClass: ShowClass) {
             this.setShowClass(showClass);
