@@ -31,7 +31,7 @@
   "license": "MIT",
   "scripts": {
     "prebuild": "rimraf dist/* && npm run lint",
-    "build": "NODE_ENV=production && npm run build:all",
+    "build": "npm run build:all",
     "build:dev": "npm run prebuild && npm ci && npm run build:all",
     "build:all": "npm run build:shared && npm run build:client && npm run build:server",
     "build:client": "tsc -b ./src/client && parcel build src/client/index.html",

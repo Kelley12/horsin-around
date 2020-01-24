@@ -1,0 +1,32 @@
+<div style="margin-top: 24px">
+    <div class="columns is-mobile is-pulled-right is-marginles">
+        <div class="column is-8">
+            <p>Use Ctrl + F to search for now</p>
+        </div>
+        <div>
+            <button class="button is-success" @click="openModal()">Add New Rider</button>
+        </div>
+    </div>
+    <h1 class="title">Riders</h1>
+    <hr>
+    <table class="table is-responsive">
+        <tbody>
+            <rider-row
+                v-for="rider in riders"
+                :key="rider.riderId"
+                :rider="rider"
+                @open="openModal(rider)"
+                @deleteModal="deleteRider(rider)">
+            </rider-row>
+        </tbody>
+    </table>
+    <div v-if="hasNoRiders" class="content">
+        <p>No riders in database. Click Add New Rider above to add one.</p>
+    </div>
+    <rider-modal 
+        v-if="riderModal"
+        :rider="rider"
+        :deleteModal="deleteModal"
+        @close="riderModal = false">
+    </rider-modal>
+</div>
