@@ -1,5 +1,6 @@
 import { state, checkForSession } from "../state";
 import { assert } from "chai";
+import { emptyUser } from "../../shared";
 const localStorage = require("localStorage");
 
 const testToken = "12345";
@@ -70,11 +71,7 @@ describe("State", () => {
                 },
                 {
                     token: "",
-                    user: {
-                        userId: "",
-                        email: "",
-                        name: ""
-                    },
+                    user: emptyUser,
                     loggedIn: false
                 });
         });
