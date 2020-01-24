@@ -3,7 +3,7 @@ import { assert } from "chai";
 const localStorage = require("localStorage");
 
 const testToken = "12345";
-const testUser = { name: "test", email: "test@test.com" };
+const testUser = { userId: 0, name: "test", email: "test@test.com" };
 
 describe("State", () => {
     describe("Get", () => {
@@ -71,6 +71,7 @@ describe("State", () => {
                 {
                     token: "",
                     user: {
+                        userId: "",
                         email: "",
                         name: ""
                     },
@@ -90,10 +91,7 @@ describe("State", () => {
                 },
                 {
                     token: "12345",
-                    user: {
-                        email: "test@test.com",
-                        name: "test"
-                    },
+                    user: testUser,
                     loggedIn: true
                 });
         });
