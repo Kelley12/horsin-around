@@ -29,18 +29,13 @@ export function showClassRouter(): express.Router {
     });
 
     router.post("/", (req, res) => {
-        if (!req.body.name || !req.body.ip || !req.body.mac || !req.body.type) {
+        if (!req.body.name || !req.body.speed) {
             return res.status(400)
-                .send({ error: "Missing data: name, ip, mac, or type (RaspberryPi or Arduino)" });
-        }
-
-        if (!["RaspberryPi", "Arduino"].includes(req.body.type)) {
-            return res.status(400)
-                .send({ error: "Incorrect type: Must be 'RaspberryPi' or 'Arduino'" });
+                .send({ error: "Missing data: name or speed" });
         }
 
         showClassController.createShowClass(req.body)
-            .then(() => res.sendStatus(201))
+            .then((showClass) => res.status(201).send(showClass))
             .catch(error => {
                 logger.log("error", `API Error:`);
                 logger.log("error", error);
@@ -50,14 +45,9 @@ export function showClassRouter(): express.Router {
 
     router.put("/:id", (req, res) => {
         const id = parseInt(req.params.id);
-        if (!req.body.name || !req.body.ip || !req.body.mac || !req.body.type) {
+        if (!req.body.name || !req.body.speed) {
             return res.status(400)
-                .send({ error: "Missing data: name, ip, mac, or type (RaspberryPi or Arduino)" });
-        }
-
-        if (!["RaspberryPi", "Arduino"].includes(req.body.type)) {
-            return res.status(400)
-                .send({ error: "Incorrect type: Must be 'RaspberryPi' or 'Arduino'" });
+                .send({ error: "Missing data: name or speed" });
         }
 
         basicStatus(res, showClassController.updateShowClass(req.body, id));

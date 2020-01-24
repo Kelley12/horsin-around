@@ -1,12 +1,12 @@
 import Vue from "vue";
-//import { ShowClassRow, ShowClassModal } from "../../components";
+import { ShowClassRow, ShowClassModal } from "../../components";
 import { state } from "../../state";
 import { get, apiurl } from "../../helpers";
 import { ShowClass, emptyShowClass } from "../../../shared";
 
 export const ShowClassPage = Vue.extend({
     template: require("./show-classes.html"),
-    //components: { ShowClassRow, ShowClassModal },
+    components: { ShowClassRow, ShowClassModal },
     data() {
         return {
             ...state.get(),
@@ -18,7 +18,7 @@ export const ShowClassPage = Vue.extend({
     },
     created() { state.updateVue(this); },
     mounted() {
-        get(`${apiurl}/showclasses`)
+        get(`${apiurl}/class`)
             .then((showClasses) => {
                 state.set({showClasses});
             })

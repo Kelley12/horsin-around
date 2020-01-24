@@ -36,7 +36,7 @@ export const ShowClassModal = Vue.extend({
             this.submitting = true;
 
             if (this.deleteModal) {
-                del(`${apiurl}/showclass/${this.showClass.showClassId}`)
+                del(`${apiurl}/class/${this.showClass.showClassId}`)
                     .then(() => {
                         const showClasses = state.get().showClasses;
                         showClasses.forEach((showClass, i) => {
@@ -50,7 +50,7 @@ export const ShowClassModal = Vue.extend({
                     .catch((e: Error) => this.error = e.message)
                     .then(() => this.submitting = false);
             } else if (this.showClass.showClassId) {
-                put(`${apiurl}/showclass`, {
+                put(`${apiurl}/class/${this.showClass.showClassId}`, {
                     showClassId: this.showClass.showClassId,
                     name: this.showClass.name,
                     speed: this.showClass.speed
@@ -69,7 +69,7 @@ export const ShowClassModal = Vue.extend({
                     .catch((e: Error) => this.error = e.message)
                     .then(() => this.submitting = false);
             } else {
-                post(`${apiurl}/showclass`, {
+                post(`${apiurl}/class`, {
                     name: this.showClass.name,
                     speed: this.showClass.speed
                 })

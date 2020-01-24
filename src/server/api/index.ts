@@ -10,7 +10,7 @@ export function apiRouter(): express.Router {
 
     router.use("/riders", riderRouter());
     router.use("/shows", showRouter());
-    router.use("/showclass", showClassRouter());
+    router.use("/class", showClassRouter());
     router.use("/showclassinfo", showClassInfoRouter());
     router.use("/results", resultRouter());
 

@@ -4,29 +4,29 @@
             <p>Use Ctrl + F to search for now</p>
         </div>
         <div>
-            <button class="button is-success" @click="openModal()">Add New Rider</button>
+            <button class="button is-success" @click="openModal()">Add New Class</button>
         </div>
     </div>
-    <h1 class="title">Riders</h1>
+    <h1 class="title">Classes</h1>
     <hr>
     <table class="table is-responsive">
         <tbody>
-            <rider-row
-                v-for="rider in riders"
-                :key="rider.riderId"
-                :rider="rider"
-                @open="openModal(rider)"
-                @deleteModal="deleteRider(rider)">
-            </rider-row>
+            <show-class-row
+                v-for="showClass in showClasses"
+                :key="showClass.showClassId"
+                :showClass="showClass"
+                @open="openModal(showClass)"
+                @deleteModal="deleteShowClass(showClass)">
+            </show-class-row>
         </tbody>
     </table>
-    <div v-if="hasNoRiders" class="content">
-        <p>No riders in database. Click Add New Rider above to add one.</p>
+    <div v-if="hasNoShowClasses" class="content">
+        <p>No classes in database. Click Add New Class above to add one.</p>
     </div>
-    <rider-modal 
-        v-if="riderModal"
-        :rider="rider"
+    <show-class-modal 
+        v-if="showClassModal"
+        :showClass="showClass"
         :deleteModal="deleteModal"
-        @close="riderModal = false">
-    </rider-modal>
+        @close="showClassModal = false">
+    </show-class-modal>
 </div>

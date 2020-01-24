@@ -3,29 +3,29 @@
     <div class="modal-content">
         <div class="box">
             <template v-if="!submitted">
-                <h1 class="title">{{ modalText }} Show</h1>
+                <h1 class="title">{{ modalText }} Class</h1>
                 <h2 v-if="error" class="subtitle has-text-danger">{{ error }}</h2>
                 <form @submit.prevent="submit()">
                     <div class="field is-hidden">
-                        <label class="label">Show ID</label>
+                        <label class="label">Class ID</label>
                         <div class="control">
-                            <input type="text" class="input" v-model="show.showId">
+                            <input type="text" class="input" v-model="showClass.showClassId">
                         </div>
                     </div>
                     <div v-if="!deleteModal" class="field">
                         <label class="label">Name</label>
                         <div class="control">
-                            <input type="text" class="input" v-model="show.name">
+                            <input type="text" class="input" v-model="showClass.name">
                         </div>
                     </div>
                     <div v-if="!deleteModal" class="field">
                         <label class="label">Speed</label>
                         <div class="control">
-                            <input type="number" class="input" v-model="show.speed">
+                            <input type="number" class="input" v-model="showClass.speed">
                         </div>
                     </div>
                     <div v-if="deleteModal" class="field">
-                        Are you sure you want to delete {{show.firstName}} {{show.lastName}} ?
+                        Are you sure you want to delete {{showClass.name}} ?
                     </div>
                     <div class="field is-grouped">
                         <div class="control">
@@ -42,7 +42,7 @@
                 </form>
             </template>
             <div class="content" v-else>
-                <h1>Show {{ submitMessage }}!</h1>
+                <h1>Class {{ submitMessage }}!</h1>
                 <button class="button" @click="close()">Close</button>
             </div>
         </div>
