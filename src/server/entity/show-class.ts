@@ -1,30 +1,26 @@
 import {
-    Column, Entity, PrimaryGeneratedColumn, ManyToOne,
-    CreateDateColumn, UpdateDateColumn
+    Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany
 } from "typeorm";
 import { IShowClass } from "../../shared";
-import { Show } from "./show";
-import { Class } from "./class";
+import { Result } from "./results";
+import { ShowClassInfo } from "./show-class-info";
 
 @Entity("showclasses")
 export class ShowClass implements IShowClass {
     @PrimaryGeneratedColumn()
     public showClassId?: number;
 
-    @ManyToOne(_ => Show, show => show.classes)
-    public show?: Show;
-
-    @ManyToOne(_ => Class, clas => clas.classes)
-    public class?: Class;
+    @Column("varchar", { length: 50 })
+    public name!: string;
 
     @Column()
-    public minutes!: number;
+    public speed!: number;
 
-    @Column()
-    public seconds!: number;
+    @OneToMany(_ => Result, result => result.showClass)
+    public results!: Result[];
 
-    @Column()
-    public milliseconds!: number;
+    @OneToMany(_ => ShowClassInfo, ShowClassInfo => ShowClassInfo.showClass)
+    public showClassInfo!: ShowClassInfo[];
 
     @CreateDateColumn({ type: "timestamp with time zone" })
     public createDate!: Date;

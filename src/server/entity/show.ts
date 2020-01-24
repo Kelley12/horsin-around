@@ -3,7 +3,7 @@ import {
 } from "typeorm";
 import { IShow } from "../../shared";
 import { Result } from "./results";
-import { ShowClass } from "./show-class";
+import { ShowClassInfo } from "./show-class-info";
 
 @Entity("shows")
 export class Show implements IShow {
@@ -22,8 +22,8 @@ export class Show implements IShow {
     @OneToMany(_ => Result, result => result.show)
     public results!: Result[];
 
-    @OneToMany(_ => ShowClass, showClass => showClass.show)
-    public classes!: ShowClass[];
+    @OneToMany(_ => ShowClassInfo, ShowClassInfo => ShowClassInfo.show)
+    public showClassInfo!: ShowClassInfo[];
 
     @CreateDateColumn({ type: "timestamp with time zone" })
     public createDate!: Date;

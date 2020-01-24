@@ -2,33 +2,20 @@ import {
     Column, Entity, PrimaryGeneratedColumn, ManyToOne,
     CreateDateColumn, UpdateDateColumn
 } from "typeorm";
-import { IResults } from "../../shared";
+import { IShowClassInfo } from "../../shared";
 import { Show } from "./show";
 import { ShowClass } from "./show-class";
-import { Rider } from "./rider";
 
-@Entity("results")
-export class Result implements IResults {
+@Entity("showclassinfo")
+export class ShowClassInfo implements IShowClassInfo {
     @PrimaryGeneratedColumn()
-    public resultId?: number;
+    public ShowClassInfoId?: number;
 
-    @ManyToOne(_ => Show, show => show.results)
+    @ManyToOne(_ => Show, show => show.showClassInfo)
     public show?: Show;
 
-    @ManyToOne(_ => ShowClass, showClass => showClass.results)
+    @ManyToOne(_ => ShowClass, showClass => showClass.showClassInfo)
     public showClass?: ShowClass;
-
-    @ManyToOne(_ => Rider, rider => rider.results)
-    public rider?: Rider;
-
-    @Column("varchar", { length: 50 })
-    public horse!: string;
-
-    @Column()
-    public scored!: boolean;
-
-    @Column()
-    public faults!: number;
 
     @Column()
     public minutes!: number;

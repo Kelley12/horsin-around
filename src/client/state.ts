@@ -7,7 +7,8 @@ export const state = new State({
     token: "",
     user: emptyUser,
     shows: [] as any[],
-    riders: [] as any[]
+    riders: [] as any[],
+    showClasses: [] as any[]
 });
 
 // export function signOut(router: VueRouter) {

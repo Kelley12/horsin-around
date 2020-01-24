@@ -1,0 +1,25 @@
+<tr>
+    <td style="display:none;">
+        {{ showClass.showId }}
+    </td>
+    <td>
+        {{ showClass.name }}
+    </td>
+    <td>
+        {{ showClass.speed }}
+    </td>
+    <td>
+        <button class="button" @click="open()">
+            <span class="icon is-small">
+                <i class="fas fa-user-edit"></i>
+            </span>
+        </button>
+    </td>
+    <td>
+        <button class="button" @click="deleteModal()">
+            <span class="icon is-small">
+                <i class="fas fa-skull"></i>
+            </span>
+        </button>
+    </td>
+</tr>
