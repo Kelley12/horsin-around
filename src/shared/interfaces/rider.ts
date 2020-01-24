@@ -8,3 +8,9 @@ export interface IRider {
     firstName: string;
     lastName: string;
 }
+
+export const emptyRider: Rider = {
+    riderId: 0,
+    firstName: "",
+    lastName: ""
+};
