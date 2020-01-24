@@ -1,34 +1,35 @@
 import { EventEmitter2 } from "eventemitter2";
-import { Class } from "../entity";
+import { ShowClassInfo } from "../entity";
 import { getManager, Repository } from "typeorm";
 
-export class ClassController {
+export class ShowClassInfoController {
     private readonly emitter = new EventEmitter2();
-    private readonly repository: Repository<Class>;
+    private readonly repository: Repository<ShowClassInfo>;
 
     constructor() {
-        this.repository = getManager().getRepository(Class);
+        this.repository = getManager().getRepository(ShowClassInfo);
     }
 
-    getClasss(): Promise<Class[]> {
+    getShowClassInfos(): Promise<ShowClassInfo[]> {
         return this.repository.find();
     }
 
-    getClass(id: number): Promise<Class | undefined> {
+    getShowClassInfo(id: number): Promise<ShowClassInfo | undefined> {
         return this.repository.findOne(id);
     }
 
-    createClass(classModel: Class): Promise<Class> {
-        const newClass = this.repository.create(classModel);
-        return this.repository.save(newClass);
+    createShowClassInfo(showClassInfo: ShowClassInfo): Promise<ShowClassInfo> {
+        const newShowClassInfo = this.repository.create(showClassInfo);
+        return this.repository.save(newShowClassInfo);
     }
 
-    async updateClass(classModel: Class, id: number): Promise<Class | undefined> {
-        await this.repository.update(id, classModel);
+    async updateShowClassInfo(showClassInfo: ShowClassInfo, id: number):
+        Promise<ShowClassInfo | undefined> {
+        await this.repository.update(id, showClassInfo);
         return this.repository.findOne(id);
     }
 
-    async deleteClass(id: number): Promise<boolean> {
+    async deleteShowClassInfo(id: number): Promise<boolean> {
         const deleted = await this.repository.delete(id);
         return deleted.raw[1] ? true : false;
     }

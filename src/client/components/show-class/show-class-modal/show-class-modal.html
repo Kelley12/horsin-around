@@ -1,0 +1,51 @@
+<div class="modal is-active">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <div class="box">
+            <template v-if="!submitted">
+                <h1 class="title">{{ modalText }} Class</h1>
+                <h2 v-if="error" class="subtitle has-text-danger">{{ error }}</h2>
+                <form @submit.prevent="submit()">
+                    <div class="field is-hidden">
+                        <label class="label">Class ID</label>
+                        <div class="control">
+                            <input type="text" class="input" v-model="showClass.showClassId">
+                        </div>
+                    </div>
+                    <div v-if="!deleteModal" class="field">
+                        <label class="label">Name</label>
+                        <div class="control">
+                            <input type="text" class="input" v-model="showClass.name">
+                        </div>
+                    </div>
+                    <div v-if="!deleteModal" class="field">
+                        <label class="label">Speed</label>
+                        <div class="control">
+                            <input type="number" class="input" v-model="showClass.speed">
+                        </div>
+                    </div>
+                    <div v-if="deleteModal" class="field">
+                        Are you sure you want to delete {{showClass.name}} ?
+                    </div>
+                    <div class="field is-grouped">
+                        <div class="control">
+                            <button
+                                :class="{ button: true, 'is-link': true, 'is-loading': submitting }"
+                                @click="submit()">
+                                Submit
+                            </button>
+                        </div>
+                        <div class="control">
+                            <button class="button is-text" type="button" @click="close()">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+            </template>
+            <div class="content" v-else>
+                <h1>Class {{ submitMessage }}!</h1>
+                <button class="button" @click="close()">Close</button>
+            </div>
+        </div>
+    </div>
+    <button class="modal-close is-large" aria-label="close" @click="close()"></button>
+</div>

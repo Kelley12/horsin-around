@@ -5,6 +5,13 @@ export interface IUser {
 }
 
 export interface User {
+    userId: number;
     name: string;
     email: string;
 }
+
+export const emptyUser: User = {
+    userId: 0,
+    email: "",
+    name: ""
+};

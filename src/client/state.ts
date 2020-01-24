@@ -1,18 +1,14 @@
 import { State, setAjaxToken } from "./helpers";
-import { User } from "../shared";
+import { emptyUser } from "../shared";
 const localStorage = require("localStorage");
-
-const emptyUser: User = {
-    email: "",
-    name: ""
-};
 
 export const state = new State({
     loggedIn: false,
     token: "",
     user: emptyUser,
     shows: [] as any[],
-    riders: [] as any[]
+    riders: [] as any[],
+    showClasses: [] as any[]
 });
 
 // export function signOut(router: VueRouter) {

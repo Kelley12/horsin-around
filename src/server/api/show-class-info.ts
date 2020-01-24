@@ -1,14 +1,14 @@
 import express from "express";
-import { ClassController } from "../controllers";
+import { ShowClassInfoController } from "../controllers";
 import { basicStatus } from "./helpers";
 import { logger } from "../utils";
 
-export function classRouter(): express.Router {
+export function showClassInfoRouter(): express.Router {
     const router = express.Router();
-    const classController = new ClassController();
+    const showClassInfoController = new ShowClassInfoController();
 
-    router.get("/", (_, res) => classController.getClasss()
-        .then(classs => res.status(200).send(classs))
+    router.get("/", (_, res) => showClassInfoController.getShowClassInfos()
+        .then(showClassInfos => res.status(200).send(showClassInfos))
         .catch(error => {
             logger.log("error", `API Error:`);
             logger.log("error", error);
@@ -19,8 +19,8 @@ export function classRouter(): express.Router {
     router.get("/:id", (req, res) => {
         const id = parseInt(req.params.id);
 
-        classController.getClass(id)
-            .then(clas => res.status(200).send(clas))
+        showClassInfoController.getShowClassInfo(id)
+            .then(showClassInfo => res.status(200).send(showClassInfo))
             .catch(error => {
                 logger.log("error", `API Error:`);
                 logger.log("error", error);
@@ -39,7 +39,7 @@ export function classRouter(): express.Router {
                 .send({ error: "Incorrect type: Must be 'RaspberryPi' or 'Arduino'" });
         }
 
-        classController.createClass(req.body)
+        showClassInfoController.createShowClassInfo(req.body)
             .then(() => res.sendStatus(201))
             .catch(error => {
                 logger.log("error", `API Error:`);
@@ -60,14 +60,14 @@ export function classRouter(): express.Router {
                 .send({ error: "Incorrect type: Must be 'RaspberryPi' or 'Arduino'" });
         }
 
-        basicStatus(res, classController.updateClass(req.body, id));
+        basicStatus(res, showClassInfoController.updateShowClassInfo(req.body, id));
     });
 
     router.delete("/:id", (req, res) => {
         const id = parseInt(req.params.id);
 
-        classController.deleteClass(id)
-            .then(clas => res.status(200).send(clas))
+        showClassInfoController.deleteShowClassInfo(id)
+            .then(showClassInfo => res.status(200).send(showClassInfo))
             .catch(error => {
                 logger.log("error", `API Error:`);
                 logger.log("error", error);

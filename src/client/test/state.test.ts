@@ -1,9 +1,10 @@
 import { state, checkForSession } from "../state";
 import { assert } from "chai";
+import { emptyUser } from "../../shared";
 const localStorage = require("localStorage");
 
 const testToken = "12345";
-const testUser = { name: "test", email: "test@test.com" };
+const testUser = { userId: 0, name: "test", email: "test@test.com" };
 
 describe("State", () => {
     describe("Get", () => {
@@ -70,10 +71,7 @@ describe("State", () => {
                 },
                 {
                     token: "",
-                    user: {
-                        email: "",
-                        name: ""
-                    },
+                    user: emptyUser,
                     loggedIn: false
                 });
         });
@@ -90,10 +88,7 @@ describe("State", () => {
                 },
                 {
                     token: "12345",
-                    user: {
-                        email: "test@test.com",
-                        name: "test"
-                    },
+                    user: testUser,
                     loggedIn: true
                 });
         });

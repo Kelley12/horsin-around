@@ -2,7 +2,7 @@ import Vue from "vue";
 import { RiderRow, RiderModal } from "../../components";
 import { state } from "../../state";
 import { get, apiurl } from "../../helpers";
-import { Rider } from "../../../shared";
+import { Rider, emptyRider } from "../../../shared";
 
 export const RiderPage = Vue.extend({
     template: require("./riders.html"),
@@ -12,11 +12,7 @@ export const RiderPage = Vue.extend({
             ...state.get(),
             ridersLoading: false,
             riderModal: false,
-            rider: {
-                riderId: 0,
-                firstName: "",
-                lastName: ""
-            },
+            rider: emptyRider,
             deleteModal: false
         };
     },
@@ -52,9 +48,7 @@ export const RiderPage = Vue.extend({
             this.rider.lastName = rider.lastName;
         },
         resetRider() {
-            this.rider.riderId = 0;
-            this.rider.firstName = "";
-            this.rider.lastName = "";
+            this.rider = emptyRider;
         },
         deleteRider(rider: Rider) {
             this.setRider(rider);

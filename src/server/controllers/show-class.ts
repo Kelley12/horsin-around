@@ -10,7 +10,7 @@ export class ShowClassController {
         this.repository = getManager().getRepository(ShowClass);
     }
 
-    getShowClasss(): Promise<ShowClass[]> {
+    getShowShowClass(): Promise<ShowClass[]> {
         return this.repository.find();
     }
 
@@ -18,13 +18,13 @@ export class ShowClassController {
         return this.repository.findOne(id);
     }
 
-    createShowClass(showclass: ShowClass): Promise<ShowClass> {
-        const newShowClass = this.repository.create(showclass);
+    createShowClass(showClassModel: ShowClass): Promise<ShowClass> {
+        const newShowClass = this.repository.create(showClassModel);
         return this.repository.save(newShowClass);
     }
 
-    async updateShowClass(showclass: ShowClass, id: number): Promise<ShowClass | undefined> {
-        await this.repository.update(id, showclass);
+    async updateShowClass(showClassModel: ShowClass, id: number): Promise<ShowClass | undefined> {
+        await this.repository.update(id, showClassModel);
         return this.repository.findOne(id);
     }
 
