@@ -12,18 +12,17 @@ export class AuthController {
         //Check if email and password are set
         const { email, password } = req.body;
         if (!(email && password)) {
-            res.sendStatus(400)
+            res.status(400)
                 .send({ error: "Missing data: email or password" });
         }
 
         //Get user from database
         const userRepository = getRepository(User);
         userRepository.findOneOrFail({ where: { email } })
-            .then((dbUser) => {
-                const user: User = dbUser;
+            .then((user) => {
                 //Check if encrypted password match
                 if (!user.validPassowrd(password)) {
-                    res.sendStatus(401);
+                    res.status(401).send({ error: "Invalid email or password" });
                     return;
                 }
 
@@ -34,13 +33,16 @@ export class AuthController {
                     { expiresIn: config.jwtExpire }
                 );
 
+                const sendableUser = { ...user };
+                delete sendableUser.password;
+
                 //Send the jwt in the response
-                res.send(token);
+                res.json({token, user: sendableUser});
             })
             .catch(error => {
                 logger.log("error", `API Error:`);
                 logger.log("error", error);
-                return res.sendStatus(500);
+                res.status(401).send({ error: "Invalid email or password" });
             });
     }
 
@@ -57,10 +59,10 @@ export class AuthController {
         const userId = res.locals.jwtPayload.userId;
 
         //Get parameters from the body
-        const { oldPassword, newPassword } = req.body;
-        if (!(oldPassword && newPassword)) {
+        const { currentPassword, newPassword } = req.body;
+        if (!(currentPassword && newPassword)) {
             res.status(400)
-                .send({ error: "Missing data: oldPassword or newPassword" });
+                .send({ error: "Missing data: current password or new password" });
             return;
         }
 
@@ -71,8 +73,9 @@ export class AuthController {
                 const user: User = dbUser;
 
                 //Check if old password is valid
-                if (!user.validPassowrd(oldPassword)) {
-                    res.sendStatus(401);
+                if (!user.validPassowrd(currentPassword)) {
+                    res.status(401)
+                        .send({ error: "Current password incorrect" });
                     return;
                 }
 
@@ -97,6 +100,6 @@ export class AuthController {
                         return;
                     });
             })
-            .catch(_ => res.sendStatus(401));
+            .catch(_ => res.sendStatus(404).send({ error: "User cannot be found" }));
     }
 }
