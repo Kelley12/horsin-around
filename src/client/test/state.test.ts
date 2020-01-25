@@ -4,7 +4,7 @@ import { emptyUser } from "../../shared";
 const localStorage = require("localStorage");
 
 const testToken = "12345";
-const testUser = { userId: 0, name: "test", email: "test@test.com" };
+const testUser = { userId: 0, name: "test", email: "test@test.com", role: "user" };
 
 describe("State", () => {
     describe("Get", () => {
@@ -13,6 +13,7 @@ describe("State", () => {
             assert.typeOf(user, "object");
             assert.deepStrictEqual(user.name, "");
             assert.deepStrictEqual(user.email, "");
+            assert.deepStrictEqual(user.role, "user");
         });
 
         it("Should have loggedIn of false", () => {
@@ -54,6 +55,7 @@ describe("State", () => {
             assert.typeOf(user, "object");
             assert.deepStrictEqual(user.name, "test");
             assert.deepStrictEqual(user.email, "test@test.com");
+            assert.deepStrictEqual(user.role, "user");
         });
     });
 
