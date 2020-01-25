@@ -13,7 +13,8 @@ export const AdminPage = Vue.extend({
             usersLoading: false,
             userModal: false,
             user: emptyUser,
-            deleteModal: false
+            deleteModal: false,
+            changePasswordModal: false
         };
     },
     created() { state.updateVue(this); },

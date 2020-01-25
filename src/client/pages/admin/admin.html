@@ -40,8 +40,8 @@
         @close="userModal = false">
     </user-modal>
     <admin-change-password-modal
-        v-if="showChangePassword"
+        v-if="changePasswordModal"
         :userid="changePasswordUserID"
-        @close="showChangePassword = false">
+        @close="changePasswordModal = false">
     </admin-change-password-modal>
 </div>
