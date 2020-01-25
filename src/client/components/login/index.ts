@@ -8,7 +8,7 @@ export const LoginBox = Vue.extend({
     data() {
         return {
             ...state.get(),
-            username: "",
+            email: "",
             password: "",
             error: "",
             loading: false,
@@ -24,8 +24,8 @@ export const LoginBox = Vue.extend({
             this.error = "";
             if (this.loading) return;
             this.loading = true;
-            post(`${apiurl}/login`, {
-                id: this.username,
+            post(`${apiurl}/auth/login`, {
+                email: this.email,
                 password: this.password
             })
                 .then(({ token, user }: { token: string, user: User }) => {
