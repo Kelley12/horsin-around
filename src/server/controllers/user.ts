@@ -1,6 +1,7 @@
 import { EventEmitter2 } from "eventemitter2";
 import { User } from "../entity";
 import { getManager, Repository } from "typeorm";
+const generator = require("generate-password");
 
 export class UserController {
     private readonly emitter = new EventEmitter2();
@@ -19,6 +20,11 @@ export class UserController {
     }
 
     createUser(user: User): Promise<User> {
+        if (!user.password) {
+            user.password = generator.generate({
+                length: 15, numbers: true, symbols: true
+            });
+        }
         const newUser = this.repository.create(user);
         return this.repository.save(newUser);
     }
