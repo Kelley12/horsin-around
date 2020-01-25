@@ -1,3 +1,3 @@
-import { handleCors, handleBodyRequestParsing, handleCompression } from "./helpers";
+import { handleCors, handleHelmet, handleBodyRequestParsing, handleCompression } from "./helpers";
 
-export const middleware = [handleCors, handleBodyRequestParsing, handleCompression];
+export const middleware = [handleCors, handleHelmet, handleBodyRequestParsing, handleCompression];
