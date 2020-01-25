@@ -2,4 +2,4 @@ import { handleCors, handleHelmet, handleBodyRequestParsing, handleCompression }
 
 export const middleware = [handleCors, handleHelmet, handleBodyRequestParsing, handleCompression];
 
-export * from "./validate-jwt";
+export * from "./authorization";
