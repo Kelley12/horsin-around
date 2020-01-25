@@ -1,4 +1,4 @@
-# HorsinAround
+# Horsin'Around
 
 [![Travis Build Status](https://travis-ci.com/kelley12/horsin-around.svg?branch=master)](https://travis-ci.com/kelley12/horsin-around)
 [![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/43ah5tri0ennicdd?svg=true)](https://ci.appveyor.com/project/Kelley12/horsin-around)
