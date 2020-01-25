@@ -1,0 +1,21 @@
+<div class="box">
+    <h2 class="title is-4">{{ user.userId }}</h2>
+    <hr>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>Created:</strong> {{ prettyDate(user.createDate) }}</p>
+    <p><strong></strong></p>
+    <div class="level">
+        <div class="level-left"></div>
+        <div class="level-right">
+            <div class="buttons">
+                <button class="button is-primary" @click="open()">Edit</button>
+                <button class="button is-link" @click="changePassword(user.userId)">Change Password</button>
+                <button
+                    class="button is-danger"
+                    @click="deleteModal()">
+                    Delete
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

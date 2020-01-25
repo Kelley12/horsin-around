@@ -1,5 +1,5 @@
 import VueRouter from "vue-router";
-import { HomePage, LoginPage, ShowClassPage, RiderPage } from "./pages";
+import { HomePage, LoginPage, ShowClassPage, RiderPage, AdminPage } from "./pages";
 import { state } from "./state";
 // import { post, apiurl } from "./helpers";
 
@@ -10,7 +10,8 @@ export const router = new VueRouter({
         { path: "/home", component: HomePage, meta: { admin: false } },
         { path: "/login", component: LoginPage, meta: { admin: false } },
         { path: "/riders", component: RiderPage, meta: { admin: false } },
-        { path: "/class", component: ShowClassPage, meta: { admin: false } }
+        { path: "/class", component: ShowClassPage, meta: { admin: false } },
+        { path: "/admin", component: AdminPage, meta: { admin: false } }
     ]
 });
 
