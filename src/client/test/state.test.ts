@@ -1,10 +1,14 @@
 import { state, checkForSession } from "../state";
 import { assert } from "chai";
-import { emptyUser } from "../../shared";
+import { emptyUser, User, Show, ShowClass, Rider } from "../../shared";
 const localStorage = require("localStorage");
 
 const testToken = "12345";
-const testUser = { userId: 0, name: "test", email: "test@test.com", role: "user" };
+const testUser: User = { userId: 0, name: "test", email: "test@test.com", role: "user" };
+const testShow: Show = {
+    showId: 0, name: "TestShow", showDate: new Date(2020, 1, 1), distance: 100 };
+const testShowClass: ShowClass = { showClassId: 0, name: "TestClass", speed: 100 };
+const testRider: Rider = { riderId: 0, firstName: "Test", lastName: "Rider" };
 
 describe("State", () => {
     describe("Get", () => {
@@ -14,6 +18,30 @@ describe("State", () => {
             assert.deepStrictEqual(user.name, "");
             assert.deepStrictEqual(user.email, "");
             assert.deepStrictEqual(user.role, "user");
+        });
+
+        it("Should get an empty list of Shows", () => {
+            const shows = state.get().shows;
+            assert.typeOf(shows, "Array");
+            assert.deepStrictEqual(shows.length, 0);
+        });
+
+        it("Should get an empty list of ShowClasses", () => {
+            const classes = state.get().showClasses;
+            assert.typeOf(classes, "Array");
+            assert.deepStrictEqual(classes.length, 0);
+        });
+
+        it("Should get an empty list of Riders", () => {
+            const rider = state.get().riders;
+            assert.typeOf(rider, "Array");
+            assert.deepStrictEqual(rider.length, 0);
+        });
+
+        it("Should get an empty list of Users", () => {
+            const user = state.get().users;
+            assert.typeOf(user, "Array");
+            assert.deepStrictEqual(user.length, 0);
         });
 
         it("Should have loggedIn of false", () => {
@@ -34,7 +62,11 @@ describe("State", () => {
             state.set({
                 loggedIn: true,
                 token: testToken,
-                user: testUser
+                user: testUser,
+                shows: [testShow],
+                showClasses: [testShowClass],
+                riders: [testRider],
+                users: [testUser]
             });
         });
 
@@ -56,6 +88,35 @@ describe("State", () => {
             assert.deepStrictEqual(user.name, "test");
             assert.deepStrictEqual(user.email, "test@test.com");
             assert.deepStrictEqual(user.role, "user");
+        });
+
+        it("Should return list of 1 Show", () => {
+            const shows = state.get().shows;
+            assert.typeOf(shows, "Array");
+            assert.deepStrictEqual(shows.length, 1);
+            assert.deepEqual(shows[0], {
+                showId: 0, name: "TestShow", showDate: "2020-02-01T07:00:00.000Z", distance: 100 });
+        });
+
+        it("Should return a list of 1 ShowClass", () => {
+            const classes = state.get().showClasses;
+            assert.typeOf(classes, "Array");
+            assert.deepStrictEqual(classes.length, 1);
+            assert.deepStrictEqual(classes[0], testShowClass);
+        });
+
+        it("Should return a list of 1 Rider", () => {
+            const riders = state.get().riders;
+            assert.typeOf(riders, "Array");
+            assert.deepStrictEqual(riders.length, 1);
+            assert.deepStrictEqual(riders[0], testRider);
+        });
+
+        it("Should return a list of 1 User", () => {
+            const users = state.get().users;
+            assert.typeOf(users, "Array");
+            assert.deepStrictEqual(users.length, 1);
+            assert.deepStrictEqual(users[0], testUser);
         });
     });
 
