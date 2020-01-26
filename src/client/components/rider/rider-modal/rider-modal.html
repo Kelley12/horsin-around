@@ -13,15 +13,19 @@
                         </div>
                     </div>
                     <div v-if="!deleteModal" class="field">
-                        <label class="label">First Name</label>
-                        <div class="control">
-                            <input type="text" class="input" v-model="rider.firstName">
+                        <div class="control has-icons-left">
+                            <input type="text" placeholder="First Name" class="input" v-model="rider.firstName">
+                            <span class="icon is-small is-left">
+                                <i class="fas fa-user"></i>
+                            </span>
                         </div>
                     </div>
                     <div v-if="!deleteModal" class="field">
-                        <label class="label">Last Name</label>
-                        <div class="control">
-                            <input type="text" class="input" v-model="rider.lastName">
+                        <div class="control has-icons-left">
+                            <input type="text" placeholder="Last Name" class="input" v-model="rider.lastName">
+                            <span class="icon is-small is-left">
+                                <i class="fas fa-user-tie"></i>
+                            </span>
                         </div>
                     </div>
                     <div v-if="deleteModal" class="field">
