@@ -36,6 +36,6 @@ export class User implements IUser {
     }
 
     validPassowrd(password: string) {
-        return bcrypt.compare(password, this.password);
+        return bcrypt.compareSync(password, this.password);
     }
 }
