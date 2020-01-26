@@ -57,7 +57,7 @@ export async function patch(uri: string, body: any): Promise<void> {
 export async function del(uri: string): Promise<void> {
     const req = new Request(uri, { method: "DELETE", headers: baseHeader });
     const res = await fetch(req);
-    if (res.status !== 200) return statusRej(res);
+    if (res.status !== 204) return statusRej(res);
     return parseResponse(res);
 }
 

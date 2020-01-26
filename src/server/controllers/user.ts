@@ -1,42 +1,133 @@
 import { EventEmitter2 } from "eventemitter2";
+import { Request, Response } from "express";
 import { User } from "../entity";
-import { getManager, Repository } from "typeorm";
+import { getRepository } from "typeorm";
+import { validate } from "class-validator";
+import { logger } from "../utils";
 const generator = require("generate-password");
 
 export class UserController {
     private readonly emitter = new EventEmitter2();
-    private readonly repository: Repository<User>;
 
-    constructor() {
-        this.repository = getManager().getRepository(User);
+    async getUsers(_: Request, res: Response) {
+        try {
+            const userRepository = getRepository(User);
+            const users = await userRepository.find({
+                select: ["userId", "email", "name", "role"]
+            });
+
+            res.send(users);
+        } catch (error) {
+            logger.log("error", `API Error:`);
+            logger.log("error", error);
+            res.status(500).json({ error });
+        }
     }
 
-    getUsers(): Promise<User[]> {
-        return this.repository.find();
+    async getUser(req: Request, res: Response){
+        try {
+            const id = parseInt(req.params.id);
+            const userRepository = getRepository(User);
+            const user = await userRepository.findOneOrFail(id, {
+                select: ["userId", "email", "name", "role"]
+            });
+            res.send(user);
+        } catch (error) {
+            res.status(404).send("User not found");
+        }
     }
 
-    getUser(id: number): Promise<User | undefined> {
-        return this.repository.findOne(id);
-    }
+    async createUser(req: Request, res: Response) {
+        const { name, email, role } = req.body;
+        let password = req.body.password;
 
-    createUser(user: User): Promise<User> {
-        if (!user.password) {
-            user.password = generator.generate({
+        if (!name || !email || !role) {
+            return res.status(400)
+                .send({ error: "Missing data: name or email or role" });
+        }
+
+        if (!password) {
+            password = generator.generate({
                 length: 15, numbers: true, symbols: true
             });
         }
-        const newUser = this.repository.create(user);
-        return this.repository.save(newUser);
+
+        const user = new User();
+        user.name = name;
+        user.email = email;
+        user.role = role;
+        user.password = password;
+
+        const errors = await validate(user);
+        if (errors.length > 0) {
+            res.status(400).send(errors);
+            return;
+        }
+
+        user.hashPassword();
+
+        try {
+            const userRepository = getRepository(User);
+            await userRepository.save(user);
+        } catch (e) {
+            res.status(409).send("username already in use");
+        return;
+        }
+
+        res.status(201).send(user);
     }
 
-    async updateUser(user: User, id: number): Promise<User | undefined> {
-        await this.repository.update(id, user);
-        return this.repository.findOne(id);
+    async updateUser(req: Request, res: Response) {
+        const id = req.params.id;
+        const { name, email, role } = req.body;
+
+        if (!name || !email || !role) {
+            return res.status(400)
+                .send({ error: "Missing data: name or email or role" });
+        }
+
+        let user;
+        const userRepository = getRepository(User);
+        try {
+            user = await userRepository.findOneOrFail(id);
+        } catch (error) {
+            res.status(404).send("User not found");
+            return;
+        }
+
+        user.name = name;
+        user.email = email;
+        user.role = role;
+
+        const errors = await validate(user);
+        if (errors.length > 0) {
+            res.status(400).send(errors);
+            return;
+        }
+
+        try {
+            await userRepository.save(user);
+        } catch (e) {
+            res.status(409).send("email already in use");
+            return;
+        }
+
+        res.sendStatus(204);
     }
 
-    async deleteUser(id: number): Promise<boolean> {
-        const deleted = await this.repository.delete(id);
-        return deleted.raw[1] ? true : false;
+    async deleteUser(req: Request, res: Response) {
+        const id = req.params.id;
+
+        const userRepository = getRepository(User);
+        try {
+            await userRepository.findOneOrFail(id);
+        } catch (error) {
+            res.status(404).send("User not found");
+            return;
+        }
+        userRepository.delete(id);
+
+        res.sendStatus(204);
     }
 
     on(event: "Error", cb: (error: Error) => void): this;
@@ -55,3 +146,5 @@ export class UserController {
         return this;
     }
 }
+
+export const userController = new UserController();
