@@ -43,7 +43,7 @@ export class UserController {
 
         if (!name || !email || !role) {
             return res.status(400)
-                .send({ error: "Missing data: name or email or role" });
+                .send({ error: "Missing data: name, email, or role" });
         }
 
         if (!password) {
@@ -54,7 +54,7 @@ export class UserController {
 
         const user = new User();
         user.name = name;
-        user.email = email;
+        user.email = email.toLowerCase();
         user.role = role;
         user.password = password;
 
@@ -70,7 +70,7 @@ export class UserController {
             const userRepository = getRepository(User);
             await userRepository.save(user);
         } catch (e) {
-            res.status(409).send("username already in use");
+            res.status(409).send("Email already in use");
         return;
         }
 
@@ -96,7 +96,7 @@ export class UserController {
         }
 
         user.name = name;
-        user.email = email;
+        user.email = email.toLowerCase();
         user.role = role;
 
         const errors = await validate(user);

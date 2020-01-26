@@ -10,7 +10,9 @@ import { config } from "../config";
 export class AuthController {
     static async login(req: Request, res: Response) {
         //Check if email and password are set
-        const { email, password } = req.body;
+        const email = req.body.email.toLowerCase();
+        const password = req.body.password;
+
         if (!(email && password)) {
             res.status(400)
                 .send({ error: "Missing data: email or password" });
@@ -56,18 +58,18 @@ export class AuthController {
 
     static async changePassword(req: Request, res: Response) {
         try {
-        //Get userId from JWT
+            //Get userId from JWT
             const currentUserId = res.locals.jwtPayload.userId;
             const { userId, currentPassword, newPassword, confirmPassword } = req.body;
 
             if (!(newPassword && confirmPassword)) {
-            res.status(400)
-                .send({ error: "Missing data: current password or new password" });
-            return;
-        }
+                res.status(400)
+                    .send({ error: "Missing data: current password or new password" });
+                return;
+            }
 
-        //Get user from the database
-        const userRepository = getRepository(User);
+            //Get user from the database
+            const userRepository = getRepository(User);
             userRepository.findOneOrFail(currentUserId)
                 .then(async (user) => {
                     //If userIds don't match, verify admin
@@ -76,12 +78,12 @@ export class AuthController {
                         return;
                     }
 
-                //Check if old password is valid
+                    //Check if old password is valid
                     if (!user.validPassowrd(currentPassword) && user.role !== "admin") {
-                    res.status(401)
-                        .send({ error: "Current password incorrect" });
-                    return;
-                }
+                        res.status(401)
+                            .send({ error: "Current password incorrect" });
+                        return;
+                    }
 
                     if (currentUserId !== userId) {
                         try {
@@ -91,28 +93,28 @@ export class AuthController {
                             return;
                         }
                     }
-                //Validate the model (password length)
-                user.password = newPassword;
-                validate(user)
-                    .then((errors) => {
-                        if (errors.length > 0) {
-                            res.status(400).send(errors);
-                            return;
-                        }
-                        //Hash the new password and save
-                        user.hashPassword();
-                        userRepository.save(user);
+                    //Validate the model (password length)
+                    user.password = newPassword;
+                    validate(user)
+                        .then((errors) => {
+                            if (errors.length > 0) {
+                                res.status(400).send(errors);
+                                return;
+                            }
+                            //Hash the new password and save
+                            user.hashPassword();
+                            userRepository.save(user);
 
-                        res.sendStatus(204);
-                    })
-                    .catch((error) => {
-                        logger.log("error", `API Error:`);
-                        logger.log("error", error);
-                        res.sendStatus(500);
-                        return;
-                    });
-            })
-            .catch(_ => res.sendStatus(404).send({ error: "User cannot be found" }));
+                            res.sendStatus(204);
+                        })
+                        .catch((error) => {
+                            logger.log("error", `API Error:`);
+                            logger.log("error", error);
+                            res.sendStatus(500);
+                            return;
+                        });
+                })
+                .catch(_ => res.sendStatus(404).send({ error: "User cannot be found" }));
         } catch (error) {
             logger.log("error", `API Error:`);
             logger.log("error", error);
