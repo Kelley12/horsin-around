@@ -1,7 +1,7 @@
 import VueRouter from "vue-router";
 import { HomePage, LoginPage, ShowClassPage, RiderPage, AdminPage } from "./pages";
-import { state } from "./state";
-// import { post, apiurl } from "./helpers";
+import { state, signOut } from "./state";
+import { post, apiurl } from "./helpers";
 
 export const router = new VueRouter({
     linkActiveClass: "is-active",
@@ -23,9 +23,9 @@ router.beforeEach((to, _from, next) => {
     next();
 });
 
-// post(`${apiurl}/session-is-valid`, { token: state.get().token })
-//     .then(sessionState => {
-//         if (sessionState.isValid) return;
-//         return signOut(router);
-//     })
-//     .catch(e => console.log(e));
+post(`${apiurl}/auth/session-is-valid`, { token: state.get().token })
+    .then(sessionState => {
+        if (sessionState.isValid) return;
+        return signOut(router);
+    })
+    .catch(e => console.log(e));
