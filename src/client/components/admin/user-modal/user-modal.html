@@ -28,7 +28,7 @@
                             </span>
                         </div>
                     </div>
-                    <div v-if="!deleteModal" class="field">
+                    <div v-if="!deleteModal && !user.userId" class="field">
                         <div class="control has-icons-left">
                             <input class="input" type="password" placeholder="Password" v-model="user.password">
                             <span class="icon is-small is-left">

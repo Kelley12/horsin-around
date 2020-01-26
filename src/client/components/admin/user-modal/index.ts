@@ -73,6 +73,7 @@ export const UserModal = Vue.extend({
                 post(`${apiurl}/users`, {
                     name: this.user.name,
                     email: this.user.email,
+                    password: this.user.password,
                     role: this.user.role
                 })
                     .then((user) => {
