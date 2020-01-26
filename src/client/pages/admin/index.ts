@@ -1,12 +1,12 @@
 import Vue from "vue";
-import { UserRow, UserModal } from "../../components";
+import { UserRow, UserModal, ChangePasswordModal } from "../../components";
 import { state } from "../../state";
 import { get, apiurl } from "../../helpers";
 import { User, emptyUser } from "../../../shared";
 
 export const AdminPage = Vue.extend({
     template: require("./admin.html"),
-    components: { UserRow, UserModal },
+    components: { UserRow, UserModal, ChangePasswordModal },
     data() {
         return {
             ...state.get(),
@@ -57,6 +57,10 @@ export const AdminPage = Vue.extend({
             this.setUser(user);
             this.deleteModal = true;
             this.userModal = true;
+        },
+        changeUserPassword(user: User) {
+            this.setUser(user);
+            this.changePasswordModal = true;
         }
     }
 });

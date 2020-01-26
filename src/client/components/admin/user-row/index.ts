@@ -16,6 +16,10 @@ export const UserRow = Vue.extend({
 
         deleteModal() {
             this.$emit("deleteModal", this.userRow);
+        },
+
+        changePassword() {
+            this.$emit("changePassword", this.userRow);
         }
     }
 });

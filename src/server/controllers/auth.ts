@@ -55,12 +55,12 @@ export class AuthController {
     }
 
     static async changePassword(req: Request, res: Response) {
+        try {
         //Get userId from JWT
-        const userId = res.locals.jwtPayload.userId;
+            const currentUserId = res.locals.jwtPayload.userId;
+            const { userId, currentPassword, newPassword, confirmPassword } = req.body;
 
-        //Get parameters from the body
-        const { currentPassword, newPassword } = req.body;
-        if (!(currentPassword && newPassword)) {
+            if (!(newPassword && confirmPassword)) {
             res.status(400)
                 .send({ error: "Missing data: current password or new password" });
             return;
@@ -68,17 +68,29 @@ export class AuthController {
 
         //Get user from the database
         const userRepository = getRepository(User);
-        userRepository.findOneOrFail(userId)
-            .then((dbUser) => {
-                const user: User = dbUser;
+            userRepository.findOneOrFail(currentUserId)
+                .then(async (user) => {
+                    //If userIds don't match, verify admin
+                    if (currentUserId !== userId && user.role !== "admin") {
+                        res.sendStatus(401);
+                        return;
+                    }
 
                 //Check if old password is valid
-                if (!user.validPassowrd(currentPassword)) {
+                    if (!user.validPassowrd(currentPassword) && user.role !== "admin") {
                     res.status(401)
                         .send({ error: "Current password incorrect" });
                     return;
                 }
 
+                    if (currentUserId !== userId) {
+                        try {
+                            user = await userRepository.findOneOrFail(userId);
+                        } catch (_) {
+                            res.sendStatus(404).send({ error: "User cannot be found" });
+                            return;
+                        }
+                    }
                 //Validate the model (password length)
                 user.password = newPassword;
                 validate(user)
@@ -101,5 +113,11 @@ export class AuthController {
                     });
             })
             .catch(_ => res.sendStatus(404).send({ error: "User cannot be found" }));
+        } catch (error) {
+            logger.log("error", `API Error:`);
+            logger.log("error", error);
+            res.sendStatus(500);
+            return;
+        }
     }
 }

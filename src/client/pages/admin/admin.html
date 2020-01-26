@@ -26,6 +26,7 @@
                 :key="user.userId"
                 :userRow="user"
                 @open="openModal(user)"
+                @changePassword="changeUserPassword(user)"
                 @deleteModal="deleteUser(user)">
             </user-row>
             <div v-if="hasNoUsers" class="content">
@@ -39,9 +40,10 @@
         :deleteModal="deleteModal"
         @close="userModal = false">
     </user-modal>
-    <admin-change-password-modal
+    <change-password-modal
         v-if="changePasswordModal"
-        :userid="changePasswordUserID"
+        :user="user"
+        :adminModal="true"
         @close="changePasswordModal = false">
-    </admin-change-password-modal>
+    </change-password-modal>
 </div>
