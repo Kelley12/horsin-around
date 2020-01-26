@@ -50,10 +50,11 @@ export const UserModal = Vue.extend({
                     .catch((e: Error) => this.error = e.message)
                     .then(() => this.submitting = false);
             } else if (this.user.userId) {
-                put(`${apiurl}/users`, {
+                put(`${apiurl}/users/${this.user.userId}`, {
                     userId: this.user.userId,
                     name: this.user.name,
-                    email: this.user.email
+                    email: this.user.email,
+                    role: this.user.role
                 })
                     .then(() => {
                         const users = state.get().users;
@@ -71,7 +72,8 @@ export const UserModal = Vue.extend({
             } else {
                 post(`${apiurl}/users`, {
                     name: this.user.name,
-                    email: this.user.email
+                    email: this.user.email,
+                    role: this.user.role
                 })
                     .then((user) => {
                         const users = state.get().users;

@@ -5,16 +5,17 @@ import { IUser } from "../../../../shared";
 export const UserRow = Vue.extend({
     template: require("./user-row.html"),
     props: {
-        user: Object as PropType<IUser>
+        userRow: Object as PropType<IUser>
     },
     data() { return state.get(); },
     created() { state.updateVue(this); },
     methods: {
         open() {
-            this.$emit("open", this.user);
+            this.$emit("open", this.userRow);
         },
+
         deleteModal() {
-            this.$emit("deleteModal", this.user);
+            this.$emit("deleteModal", this.userRow);
         }
     }
 });

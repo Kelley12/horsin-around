@@ -24,6 +24,17 @@
                             <input type="text" class="input" v-model="user.email">
                         </div>
                     </div>
+                    <div v-if="!deleteModal" class="field">
+                        <label class="label">Role</label>
+                        <div class="control">
+                            <div class="select">
+                                <select v-model="user.role">
+                                  <option value="user" selected>User</option>
+                                  <option value="admin">Admin</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                     <div v-if="deleteModal" class="field">
                         Are you sure you want to delete {{user.name}} ({{user.email}}) ?
                     </div>

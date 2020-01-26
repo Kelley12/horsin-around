@@ -24,7 +24,7 @@
             <user-row
                 v-for="user in users"
                 :key="user.userId"
-                :user="user"
+                :userRow="user"
                 @open="openModal(user)"
                 @deleteModal="deleteUser(user)">
             </user-row>
