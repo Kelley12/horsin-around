@@ -57,7 +57,7 @@ export async function patch(uri: string, body: any): Promise<void> {
 export async function del(uri: string): Promise<void> {
     const req = new Request(uri, { method: "DELETE", headers: baseHeader });
     const res = await fetch(req);
-    if (res.status !== 204) return statusRej(res);
+    if (![200, 204].includes(res.status)) return statusRej(res);
     return parseResponse(res);
 }
 
@@ -66,6 +66,6 @@ export async function post<T = any>(uri: string, body?: any): Promise<T> {
         method: "POST", body: JSON.stringify(body), headers: jsonHeader
     });
     const res = await fetch(req);
-    if (res.status !== 201) return statusRej(res);
+    if (![200, 201].includes(res.status)) return statusRej(res);
     return parseResponse(res);
 }
