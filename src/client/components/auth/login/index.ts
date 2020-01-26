@@ -1,7 +1,7 @@
 import Vue from "vue";
-import { state, checkForSession } from "../../state";
-import { post, apiurl } from "../../helpers";
-import { User } from "../../../shared";
+import { state, checkForSession } from "../../../state";
+import { post, apiurl } from "../../../helpers";
+import { User } from "../../../../shared";
 
 export const LoginBox = Vue.extend({
     template: require("./login.html"),
