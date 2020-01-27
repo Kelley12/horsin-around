@@ -24,7 +24,7 @@ export class UserController {
         }
     }
 
-    async getUser(req: Request, res: Response){
+    async getUser(req: Request, res: Response) {
         try {
             const id = parseInt(req.params.id);
             const userRepository = getRepository(User);
