@@ -1,5 +1,5 @@
 import Vue, { PropType } from "vue";
-import { state } from "../../../state";
+import { state } from "../../../helpers";
 import { IUser } from "../../../../shared";
 
 export const UserRow = Vue.extend({

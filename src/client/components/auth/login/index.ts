@@ -1,6 +1,5 @@
 import Vue from "vue";
-import { state, checkForSession } from "../../../state";
-import { post, apiurl } from "../../../helpers";
+import { post, apiurl, state, checkForSession } from "../../../helpers";
 import { User } from "../../../../shared";
 
 export const LoginBox = Vue.extend({

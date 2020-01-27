@@ -1,7 +1,6 @@
 import Vue from "vue";
 import { ShowClassRow, ShowClassModal } from "../../components";
-import { state } from "../../state";
-import { get, apiurl } from "../../helpers";
+import { state, get, apiurl } from "../../helpers";
 import { ShowClass, emptyShowClass } from "../../../shared";
 
 export const ShowClassPage = Vue.extend({

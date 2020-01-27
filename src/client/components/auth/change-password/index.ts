@@ -1,6 +1,5 @@
 import Vue from "vue";
-import { state } from "../../../state";
-import { post, apiurl } from "../../../helpers";
+import { post, apiurl, state } from "../../../helpers";
 
 export const ChangePasswordModal = Vue.extend({
     template: require("./change-password.html"),

@@ -1,7 +1,6 @@
 import Vue from "vue";
 import { ShowBox } from "../../components";
-import { state } from "../../state";
-import { get, apiurl } from "../../helpers";
+import { state, get, apiurl } from "../../helpers";
 
 export const HomePage = Vue.extend({
     template: require("./home.html"),

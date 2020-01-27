@@ -1,6 +1,5 @@
 import Vue from "vue";
-import { post, put, apiurl, del } from "../../../helpers";
-import { state } from "../../../state";
+import { state, post, put, apiurl, del } from "../../../helpers";
 
 export const RiderModal = Vue.extend({
     template: require("./rider-modal.html"),

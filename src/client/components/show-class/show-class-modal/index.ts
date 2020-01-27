@@ -1,6 +1,5 @@
 import Vue from "vue";
-import { post, put, apiurl, del } from "../../../helpers";
-import { state } from "../../../state";
+import { state, post, put, apiurl, del } from "../../../helpers";
 
 export const ShowClassModal = Vue.extend({
     template: require("./show-class-modal.html"),

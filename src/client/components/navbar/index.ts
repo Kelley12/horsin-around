@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { state, signOut } from "../../state";
+import { state, signOut } from "../../helpers";
 
 export const Navbar = Vue.extend({
     template: require("./navbar.html"),

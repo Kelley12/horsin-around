@@ -1,7 +1,6 @@
 import Vue from "vue";
 import { UserRow, UserModal, ChangePasswordModal } from "../../components";
-import { state } from "../../state";
-import { get, apiurl } from "../../helpers";
+import { state, get, apiurl } from "../../helpers";
 import { User, emptyUser } from "../../../shared";
 
 export const AdminPage = Vue.extend({

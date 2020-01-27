@@ -1,7 +1,6 @@
 import Vue from "vue";
 import { RiderRow, RiderModal } from "../../components";
-import { state } from "../../state";
-import { get, apiurl } from "../../helpers";
+import { state, get, apiurl } from "../../helpers";
 import { Rider, emptyRider } from "../../../shared";
 
 export const RiderPage = Vue.extend({
