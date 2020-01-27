@@ -1,4 +1,5 @@
-import { State, setAjaxToken } from ".";
+import { State } from "./state";
+import { setAjaxToken } from "./ajax";
 import { emptyUser } from "../../shared";
 import VueRouter from "vue-router";
 const localStorage = require("localStorage");
@@ -17,12 +18,6 @@ export function signOut(router: VueRouter) {
     localStorage.setItem("session", "");
     state.set({ loggedIn: false, token: "" });
     router.push("/login");
-}
-
-export function updateJWT(newToken: string) {
-    localStorage.setItem("session", JSON.stringify({ newToken }));
-    state.set({ token: newToken });
-    setAjaxToken(newToken);
 }
 
 export function checkForSession() {

@@ -1,7 +1,9 @@
 const fetch = require("node-fetch");
 import { Headers, Request } from "node-fetch";
+import { state } from "./session";
 
 const parseResponse = (res: Response): Promise<string | any> => {
+    refreshJWT(res);
     const type = res.headers.get("content-type");
     if (type && type.includes("application/json")) {
         return res.json();
@@ -23,6 +25,13 @@ const jsonHeader = new Headers();
 jsonHeader.append("Content-Type", "application/json");
 
 const baseHeader = new Headers();
+
+export function refreshJWT(res: Response) {
+    const newToken = res.headers.get("new-token") || "";
+    localStorage.setItem("session", JSON.stringify({ newToken }));
+    state.set({ token: newToken });
+    setAjaxToken(newToken);
+}
 
 export function setAjaxToken(token: string) {
     baseHeader.set("horsin-around-token", token);
