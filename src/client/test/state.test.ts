@@ -1,5 +1,6 @@
 import { assert } from "chai";
-import { state, checkForSession, emptyUser, User, Show, ShowClass, Rider } from "../../shared";
+import { state, checkForSession } from "../helpers";
+import { emptyUser, User, Show, ShowClass, Rider } from "../../shared";
 const localStorage = require("localStorage");
 
 const testToken = "12345";

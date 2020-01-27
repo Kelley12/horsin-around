@@ -1,5 +1,5 @@
 import { State } from "./state";
-import { setAjaxToken } from "./ajax";
+import { Headers, Response } from "node-fetch";
 import { emptyUser } from "../../shared";
 import VueRouter from "vue-router";
 const localStorage = require("localStorage");
@@ -14,10 +14,33 @@ export const state = new State({
     users: [] as any[]
 });
 
-export function signOut(router: VueRouter) {
+export function clearSession() {
     localStorage.setItem("session", "");
     state.set({ loggedIn: false, token: "" });
-    router.push("/login");
+}
+
+export function signOut(router: VueRouter) {
+    clearSession();
+    if (router.currentRoute.path !== "/login") {
+        router.push("/login");
+    }
+}
+
+export const jsonHeader = new Headers();
+jsonHeader.append("Content-Type", "application/json");
+
+export const baseHeader = new Headers();
+
+export function refreshJWT(res: Response) {
+    const newToken = res.headers.get("new-token") || "";
+    localStorage.setItem("session", JSON.stringify({ token: newToken }));
+    state.set({ token: newToken });
+    setAjaxToken(newToken);
+}
+
+export function setAjaxToken(token: string) {
+    baseHeader.set("horsin-around-token", token);
+    jsonHeader.set("horsin-around-token", token);
 }
 
 export function checkForSession() {

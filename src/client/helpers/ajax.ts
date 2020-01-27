@@ -1,6 +1,6 @@
 const fetch = require("node-fetch");
-import { Headers, Request } from "node-fetch";
-import { state } from "./session";
+import { Request, Response } from "node-fetch";
+import { refreshJWT, baseHeader, jsonHeader } from "./session";
 
 const parseResponse = (res: Response): Promise<string | any> => {
     refreshJWT(res);
@@ -20,23 +20,6 @@ const statusRej = async (res: Response) => {
 
     throw new Error(result.error);
 };
-
-const jsonHeader = new Headers();
-jsonHeader.append("Content-Type", "application/json");
-
-const baseHeader = new Headers();
-
-export function refreshJWT(res: Response) {
-    const newToken = res.headers.get("new-token") || "";
-    localStorage.setItem("session", JSON.stringify({ newToken }));
-    state.set({ token: newToken });
-    setAjaxToken(newToken);
-}
-
-export function setAjaxToken(token: string) {
-    baseHeader.set("horsin-around-token", token);
-    jsonHeader.set("horsin-around-token", token);
-}
 
 export async function get(uri: string): Promise<any> {
     const req = new Request(uri, { headers: baseHeader });
