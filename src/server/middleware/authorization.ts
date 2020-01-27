@@ -6,8 +6,8 @@ import { User } from "../entity";
 
 export function checkJwt(): RequestHandler {
     return (req: Request, res: Response, next: NextFunction) => {
-        //Get the jwt token from the head
-        const token = <string> req.headers["auth"];
+        //Get the jwt token from the header
+        const token = <string> req.headers["horsin-around-token"];
         let jwtPayload: any;
 
         //Try to validate the token and get data
@@ -25,7 +25,7 @@ export function checkJwt(): RequestHandler {
         const newToken = jwt.sign({ userId, email }, config.jwtSecret, {
             expiresIn: config.jwtExpire
         });
-        res.setHeader("token", newToken);
+        res.setHeader("new-token", newToken);
 
         //Call the next middleware or controller
         next();
