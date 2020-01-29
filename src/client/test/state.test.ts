@@ -1,12 +1,14 @@
 import { assert } from "chai";
-import { state, checkForSession } from "../helpers";
+import { state, checkForSession, clearSession, signOut, refreshJWT, baseHeader, jsonHeader } from "../helpers";
 import { emptyUser, User, Show, ShowClass, Rider } from "../../shared";
+import VueRouter from "vue-router";
+import { Response } from "node-fetch";
 const localStorage = require("localStorage");
 
 const testToken = "12345";
 const testUser: User = { userId: 0, name: "test", email: "test@test.com", role: "user" };
 const testShow: Show = {
-    showId: 0, name: "TestShow", showDate: new Date(2020, 1, 1), distance: 100 };
+    showId: 0, name: "TestShow", showDate: new Date(2020, 1, 1, 0, 0, 0, 0), distance: 100 };
 const testShowClass: ShowClass = { showClassId: 0, name: "TestClass", speed: 100 };
 const testRider: Rider = { riderId: 0, firstName: "Test", lastName: "Rider" };
 
@@ -154,6 +156,68 @@ describe("State", () => {
                     user: testUser,
                     loggedIn: true
                 });
+        });
+        it("Should clear the session", () => {
+            localStorage.setItem("session", JSON.stringify({ token: testToken, user: testUser }));
+            clearSession();
+
+            const session = localStorage.getItem("session");
+            assert.deepStrictEqual(session, "");
+
+            const sessionState = state.get();
+            assert.deepStrictEqual(
+                {
+                    token: sessionState.token,
+                    loggedIn: sessionState.loggedIn
+                },
+                {
+                    token: "",
+                    loggedIn: false
+                });
+        });
+        it("Should sign the user out", () => {
+            localStorage.setItem("session", JSON.stringify({ token: testToken, user: testUser }));
+
+            const router = new VueRouter();
+            signOut(router);
+
+            const session = localStorage.getItem("session");
+            assert.deepStrictEqual(session, "");
+
+            const sessionState = state.get();
+            assert.deepStrictEqual(
+                {
+                    token: sessionState.token,
+                    loggedIn: sessionState.loggedIn
+                },
+                {
+                    token: "",
+                    loggedIn: false
+                });
+
+            assert.deepStrictEqual(router.currentRoute.path, "/login");
+        });
+        it("Should refresh JWT", () => {
+            const newToken = "54321";
+            const res = new Response();
+            res.headers.set("new-token", newToken);
+
+            localStorage.setItem("session", JSON.stringify({ token: testToken }));
+            state.set({ token: testToken });
+
+            refreshJWT(res);
+
+            const { token } = JSON.parse(localStorage.getItem("session"));
+            assert.deepStrictEqual(token, newToken);
+
+            const sessionState = state.get();
+            assert.deepStrictEqual({ token: sessionState.token }, { token: newToken });
+
+            const baseHeaderToken = baseHeader.get("horsin-around-token");
+            assert.deepStrictEqual(baseHeaderToken, newToken);
+
+            const jsonHeaderToken = jsonHeader.get("horsin-around-token");
+            assert.deepStrictEqual(jsonHeaderToken, newToken);
         });
     });
 });
