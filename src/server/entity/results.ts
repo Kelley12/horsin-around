@@ -1,6 +1,6 @@
 import {
     Column, Entity, PrimaryGeneratedColumn, ManyToOne,
-    CreateDateColumn, UpdateDateColumn
+    CreateDateColumn, UpdateDateColumn, JoinColumn
 } from "typeorm";
 import { IResults } from "../../shared";
 import { Show } from "./show";
@@ -12,13 +12,22 @@ export class Result implements IResults {
     @PrimaryGeneratedColumn()
     public resultId?: number;
 
+    @Column()
+    public showId!: number;
     @ManyToOne(_ => Show, show => show.results)
+    @JoinColumn({ name: "showId" })
     public show?: Show;
 
+    @Column()
+    public showClassId!: number;
     @ManyToOne(_ => ShowClass, showClass => showClass.results)
+    @JoinColumn({ name: "showClassId" })
     public showClass?: ShowClass;
 
+    @Column()
+    public riderId!: number;
     @ManyToOne(_ => Rider, rider => rider.results)
+    @JoinColumn({ name: "riderId" })
     public rider?: Rider;
 
     @Column("varchar", { length: 50 })
