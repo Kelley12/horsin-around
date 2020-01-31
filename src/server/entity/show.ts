@@ -16,9 +16,6 @@ export class Show implements IShow {
     @Column("date")
     public showDate!: Date;
 
-    @Column()
-    public distance!: number;
-
     @OneToMany(_ => Result, result => result.show)
     public results!: Result[];
 

@@ -24,6 +24,12 @@ export class ShowClassInfo implements IShowClassInfo {
     public showClass?: ShowClass;
 
     @Column()
+    public distance!: number;
+
+    @Column()
+    public speed!: number;
+
+    @Column()
     public minutes!: number;
 
     @Column()
