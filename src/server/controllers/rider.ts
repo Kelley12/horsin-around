@@ -1,36 +1,116 @@
 import { EventEmitter2 } from "eventemitter2";
+import { Request, Response } from "express";
+import { validate } from "class-validator";
+import { logger } from "../utils";
+import { getRepository } from "typeorm";
 import { Rider } from "../entity";
-import { getManager, Repository } from "typeorm";
 
 export class RiderController {
     private readonly emitter = new EventEmitter2();
-    private readonly repository: Repository<Rider>;
 
-    constructor() {
-        this.repository = getManager().getRepository(Rider);
+    async getRiders(_: Request, res: Response) {
+        try {
+            const riderRepository = getRepository(Rider);
+            const riders = await riderRepository.find();
+
+            res.send(riders);
+        } catch (error) {
+            logger.log("error", `API Error:`);
+            logger.log("error", error);
+            res.status(500).json({ error });
+        }
     }
 
-    getRiders(): Promise<Rider[]> {
-        return this.repository.find();
+    async getRider(req: Request, res: Response) {
+        try {
+            const id = parseInt(req.params.id);
+            const riderRepository = getRepository(Rider);
+            const rider = await riderRepository.findOneOrFail(id);
+            res.send(rider);
+        } catch (error) {
+            res.status(404).send("Rider not found");
+        }
     }
 
-    getRider(id: number): Promise<Rider | undefined> {
-        return this.repository.findOne(id);
+    async createRider(req: Request, res: Response) {
+        const { firstName, lastName } = req.body;
+
+        if (!firstName || !lastName) {
+            return res.status(400)
+                .send({ error: "Missing data: firstName or lastName" });
+        }
+
+        const rider = new Rider();
+        rider.firstName = firstName;
+        rider.lastName = lastName;
+
+        const errors = await validate(rider);
+        if (errors.length > 0) {
+            res.status(400).send(errors);
+            return;
+        }
+
+        try {
+            const riderRepository = getRepository(Rider);
+            await riderRepository.save(rider);
+        } catch (e) {
+            res.status(409).send("Invalid rider");
+            return;
+        }
+
+        res.status(201).send(rider);
     }
 
-    createRider(rider: Rider): Promise<Rider> {
-        const newRider = this.repository.create(rider);
-        return this.repository.save(newRider);
+    async updateRider(req: Request, res: Response) {
+        const id = parseInt(req.params.id);
+        const { firstName, lastName } = req.body;
+
+        if (!firstName || !lastName) {
+            return res.status(400)
+                .send({ error: "Missing data: firstName or lastName" });
+        }
+
+        let rider;
+        const riderRepository = getRepository(Rider);
+        try {
+            rider = await riderRepository.findOneOrFail(id);
+        } catch (error) {
+            res.status(404).send("Rider not found");
+            return;
+        }
+
+        rider.firstName = firstName;
+        rider.lastName = lastName;
+
+        const errors = await validate(rider);
+        if (errors.length > 0) {
+            res.status(400).send(errors);
+            return;
+        }
+
+        try {
+            await riderRepository.save(rider);
+        } catch (e) {
+            res.status(409).send("Invalid rider");
+            return;
+        }
+
+        res.status(200).send(rider);
     }
 
-    async updateRider(rider: Rider, id: number): Promise<Rider | undefined> {
-        await this.repository.update(id, rider);
-        return this.repository.findOne(id);
-    }
+    async deleteRider(req: Request, res: Response) {
+        const id = parseInt(req.params.id);
 
-    async deleteRider(id: number): Promise<boolean> {
-        const deleted = await this.repository.delete(id);
-        return deleted.raw[1] ? true : false;
+        const riderRepository = getRepository(Rider);
+        try {
+            await riderRepository.findOneOrFail(id);
+        } catch (error) {
+            res.status(404).send("Rider not found");
+            return;
+        }
+        riderRepository.delete(id);
+
+        res.status(200).send(true);
     }
 
     on(event: "Error", cb: (error: Error) => void): this;
@@ -49,3 +129,5 @@ export class RiderController {
         return this;
     }
 }
+
+export const riderController = new RiderController();
