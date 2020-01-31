@@ -1,5 +1,5 @@
 export * from "./show-class";
-export * from "./home";
+export * from "./show";
 export * from "./login";
 export * from "./navbar";
 export * from "./rider";

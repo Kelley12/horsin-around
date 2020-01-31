@@ -3,8 +3,8 @@ import { ShowRow } from "../../components";
 import { state } from "../../state";
 import { get, apiurl } from "../../helpers";
 
-export const HomePage = Vue.extend({
-    template: require("./home.html"),
+export const ShowPage = Vue.extend({
+    template: require("./shows.html"),
     components: { ShowRow },
     data() { return { ...state.get(), showsLoading: false }; },
     created() { state.updateVue(this); },

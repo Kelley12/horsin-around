@@ -1,0 +1,12 @@
+<div style="margin-top: 24px">
+    <h1 class="title">Welcome to HorsinAround</h1>
+    <hr>
+    <show-row
+        v-for="show in shows"
+        :key="show.showId"
+        :show="show">
+    </show-row>
+    <div v-if="hasNoShows" class="content">
+        <p>There are currently no show results.</p>
+    </div>
+</div>
