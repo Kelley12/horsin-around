@@ -33,7 +33,7 @@ export class Result implements IResults {
     @Column("varchar", { length: 50, default: "N/A" })
     public horse!: string;
 
-    @Column("boolean", { default: 0 })
+    @Column("boolean", { default: false })
     public scored!: boolean;
 
     @Column("integer", { default: 0 })
