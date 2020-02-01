@@ -28,6 +28,8 @@ export class RiderController {
             const rider = await riderRepository.findOneOrFail(id);
             res.send(rider);
         } catch (error) {
+            logger.log("error", `API Error:`);
+            logger.log("error", error);
             res.status(404).send("Rider not found");
         }
     }
@@ -75,6 +77,8 @@ export class RiderController {
         try {
             rider = await riderRepository.findOneOrFail(id);
         } catch (error) {
+            logger.log("error", `API Error:`);
+            logger.log("error", error);
             res.status(404).send("Rider not found");
             return;
         }
@@ -105,6 +109,8 @@ export class RiderController {
         try {
             await riderRepository.findOneOrFail(id);
         } catch (error) {
+            logger.log("error", `API Error:`);
+            logger.log("error", error);
             res.status(404).send("Rider not found");
             return;
         }

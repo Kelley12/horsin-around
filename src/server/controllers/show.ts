@@ -28,6 +28,8 @@ export class ShowController {
             const show = await showRepository.findOneOrFail(id);
             res.send(show);
         } catch (error) {
+            logger.log("error", `API Error:`);
+            logger.log("error", error);
             res.status(404).send("Show not found");
         }
     }
@@ -75,6 +77,8 @@ export class ShowController {
         try {
             show = await showRepository.findOneOrFail(id);
         } catch (error) {
+            logger.log("error", `API Error:`);
+            logger.log("error", error);
             res.status(404).send("Show not found");
             return;
         }
@@ -105,6 +109,8 @@ export class ShowController {
         try {
             await showRepository.findOneOrFail(id);
         } catch (error) {
+            logger.log("error", `API Error:`);
+            logger.log("error", error);
             res.status(404).send("Show not found");
             return;
         }

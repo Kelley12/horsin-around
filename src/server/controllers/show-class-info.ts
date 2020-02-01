@@ -28,6 +28,8 @@ export class ShowClassInfoController {
             const showClassInfo = await showClassInfoRepository.findOneOrFail(id);
             res.send(showClassInfo);
         } catch (error) {
+            logger.log("error", `API Error:`);
+            logger.log("error", error);
             res.status(404).send("ShowClassInfo not found");
         }
     }
@@ -80,6 +82,8 @@ export class ShowClassInfoController {
         try {
             showClassInfo = await showClassInfoRepository.findOneOrFail(id);
         } catch (error) {
+            logger.log("error", `API Error:`);
+            logger.log("error", error);
             res.status(404).send("ShowClassInfo not found");
             return;
         }
@@ -115,6 +119,8 @@ export class ShowClassInfoController {
         try {
             await showClassInfoRepository.findOneOrFail(id);
         } catch (error) {
+            logger.log("error", `API Error:`);
+            logger.log("error", error);
             res.status(404).send("ShowClassInfo not found");
             return;
         }

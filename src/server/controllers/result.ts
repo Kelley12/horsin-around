@@ -28,6 +28,8 @@ export class ResultController {
             const result = await resultRepository.findOneOrFail(id);
             res.send(result);
         } catch (error) {
+            logger.log("error", `API Error:`);
+            logger.log("error", error);
             res.status(404).send("Result not found");
         }
     }
@@ -88,6 +90,8 @@ export class ResultController {
         try {
             result = await resultRepository.findOneOrFail(id);
         } catch (error) {
+            logger.log("error", `API Error:`);
+            logger.log("error", error);
             res.status(404).send("Result not found");
             return;
         }
@@ -125,6 +129,8 @@ export class ResultController {
         try {
             await resultRepository.findOneOrFail(id);
         } catch (error) {
+            logger.log("error", `API Error:`);
+            logger.log("error", error);
             res.status(404).send("Result not found");
             return;
         }
