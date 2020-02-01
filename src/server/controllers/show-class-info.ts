@@ -34,6 +34,19 @@ export class ShowClassInfoController {
         }
     }
 
+    async getShowClassInfoByShow(req: Request, res: Response) {
+        try {
+            const id = parseInt(req.params.id);
+            const showClassInfoRepository = getRepository(ShowClassInfo);
+            const showClassInfo = await showClassInfoRepository.find({ where: { showId: id } });
+            res.send(showClassInfo);
+        } catch (error) {
+            logger.log("error", `API Error:`);
+            logger.log("error", error);
+            res.status(404).send("ShowClassInfo not found");
+        }
+    }
+
     async createShowClassInfo(req: Request, res: Response) {
         const { showId, showClassId, distance, speed, minutes, seconds, milliseconds } = req.body;
 
