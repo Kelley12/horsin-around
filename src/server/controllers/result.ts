@@ -1,36 +1,136 @@
 import { EventEmitter2 } from "eventemitter2";
+import { Request, Response } from "express";
+import { validate } from "class-validator";
+import { logger } from "../utils";
+import { getRepository } from "typeorm";
 import { Result } from "../entity";
-import { getManager, Repository } from "typeorm";
 
 export class ResultController {
     private readonly emitter = new EventEmitter2();
-    private readonly repository: Repository<Result>;
 
-    constructor() {
-        this.repository = getManager().getRepository(Result);
+    async getResults(_: Request, res: Response) {
+        try {
+            const resultRepository = getRepository(Result);
+            const results = await resultRepository.find();
+
+            res.send(results);
+        } catch (error) {
+            logger.log("error", `API Error:`);
+            logger.log("error", error);
+            res.status(500).json({ error });
+        }
     }
 
-    getResults(): Promise<Result[]> {
-        return this.repository.find();
+    async getResult(req: Request, res: Response) {
+        try {
+            const id = parseInt(req.params.id);
+            const resultRepository = getRepository(Result);
+            const result = await resultRepository.findOneOrFail(id);
+            res.send(result);
+        } catch (error) {
+            res.status(404).send("Result not found");
+        }
     }
 
-    getResult(id: number): Promise<Result | undefined> {
-        return this.repository.findOne(id);
+    async createResult(req: Request, res: Response) {
+        const {
+            showId, showClassId, riderId, horse, scored,
+            faults, minutes, seconds, milliseconds
+        } = req.body;
+
+        if (!showId || !showClassId || !riderId) {
+            return res.status(400)
+                .send({ error: "Missing data: showId, showClassId, or riderId" });
+        }
+
+        const result = new Result();
+        result.showId = showId;
+        result.showClassId = showClassId;
+        result.riderId = riderId;
+        result.horse = horse;
+        result.scored = scored;
+        result.faults = faults;
+        result.minutes = minutes;
+        result.seconds = seconds;
+        result.milliseconds = milliseconds;
+
+        const errors = await validate(result);
+        if (errors.length > 0) {
+            res.status(400).send(errors);
+            return;
+        }
+
+        try {
+            const resultRepository = getRepository(Result);
+            await resultRepository.save(result);
+        } catch (e) {
+            res.status(409).send("Invalid result");
+            return;
+        }
+
+        res.status(201).send(result);
     }
 
-    createResult(result: Result): Promise<Result> {
-        const newResult = this.repository.create(result);
-        return this.repository.save(newResult);
+    async updateResult(req: Request, res: Response) {
+        const id = parseInt(req.params.id);
+        const {
+            showId, showClassId, riderId, horse, scored,
+            faults, minutes, seconds, milliseconds
+        } = req.body;
+
+        if (!showId || !showClassId || !riderId) {
+            return res.status(400)
+                .send({ error: "Missing data: firstName or lastName" });
+        }
+
+        let result;
+        const resultRepository = getRepository(Result);
+        try {
+            result = await resultRepository.findOneOrFail(id);
+        } catch (error) {
+            res.status(404).send("Result not found");
+            return;
+        }
+
+        result.showId = showId;
+        result.showClassId = showClassId;
+        result.riderId = riderId;
+        result.horse = horse;
+        result.scored = scored;
+        result.faults = faults;
+        result.minutes = minutes;
+        result.seconds = seconds;
+        result.milliseconds = milliseconds;
+
+        const errors = await validate(result);
+        if (errors.length > 0) {
+            res.status(400).send(errors);
+            return;
+        }
+
+        try {
+            await resultRepository.save(result);
+        } catch (e) {
+            res.status(409).send("Invalid result");
+            return;
+        }
+
+        res.status(200).send(result);
     }
 
-    async updateResult(result: Result, id: number): Promise<Result | undefined> {
-        await this.repository.update(id, result);
-        return this.repository.findOne(id);
-    }
+    async deleteResult(req: Request, res: Response) {
+        const id = parseInt(req.params.id);
 
-    async deleteResult(id: number): Promise<boolean> {
-        const deleted = await this.repository.delete(id);
-        return deleted.raw[1] ? true : false;
+        const resultRepository = getRepository(Result);
+        try {
+            await resultRepository.findOneOrFail(id);
+        } catch (error) {
+            res.status(404).send("Result not found");
+            return;
+        }
+        resultRepository.delete(id);
+
+        res.status(200).send(true);
     }
 
     on(event: "Error", cb: (error: Error) => void): this;
@@ -49,3 +149,5 @@ export class ResultController {
         return this;
     }
 }
+
+export const resultController = new ResultController();
