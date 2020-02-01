@@ -23,19 +23,19 @@ export class ShowClassInfo implements IShowClassInfo {
     @JoinColumn({ name: "showClassId" })
     public showClass?: ShowClass;
 
-    @Column()
+    @Column("integer", { default: 0 })
     public distance!: number;
 
-    @Column()
+    @Column("integer", { default: 0 })
     public speed!: number;
 
-    @Column()
+    @Column("integer", { default: 0 })
     public minutes!: number;
 
-    @Column()
+    @Column("integer", { default: 0 })
     public seconds!: number;
 
-    @Column()
+    @Column("integer", { default: 0 })
     public milliseconds!: number;
 
     @CreateDateColumn({ type: "timestamp with time zone" })
