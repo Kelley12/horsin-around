@@ -33,16 +33,15 @@ export class ShowClassController {
     }
 
     async createShowClass(req: Request, res: Response) {
-        const { name, speed } = req.body;
+        const { name } = req.body;
 
-        if (!name || !speed) {
+        if (!name) {
             return res.status(400)
-                .send({ error: "Missing data: name or speed" });
+                .send({ error: "Missing data: name" });
         }
 
         const showClass = new ShowClass();
         showClass.name = name;
-        showClass.speed = speed;
 
         const errors = await validate(showClass);
         if (errors.length > 0) {
@@ -63,11 +62,11 @@ export class ShowClassController {
 
     async updateShowClass(req: Request, res: Response) {
         const id = parseInt(req.params.id);
-        const { name, speed } = req.body;
+        const { name } = req.body;
 
-        if (!name || !speed) {
+        if (!name) {
             return res.status(400)
-                .send({ error: "Missing data: name or speed" });
+                .send({ error: "Missing data: name" });
         }
 
         let showClass;
@@ -80,7 +79,6 @@ export class ShowClassController {
         }
 
         showClass.name = name;
-        showClass.speed = speed;
 
         const errors = await validate(showClass);
         if (errors.length > 0) {
