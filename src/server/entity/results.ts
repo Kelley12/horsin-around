@@ -30,22 +30,22 @@ export class Result implements IResults {
     @JoinColumn({ name: "riderId" })
     public rider?: Rider;
 
-    @Column("varchar", { length: 50 })
+    @Column("varchar", { length: 50, default: "N/A" })
     public horse!: string;
 
-    @Column()
+    @Column("boolean", { default: 0 })
     public scored!: boolean;
 
-    @Column()
+    @Column("integer", { default: 0 })
     public faults!: number;
 
-    @Column()
+    @Column("integer", { default: 0 })
     public minutes!: number;
 
-    @Column()
+    @Column("integer", { default: 0 })
     public seconds!: number;
 
-    @Column()
+    @Column("integer", { default: 0 })
     public milliseconds!: number;
 
     @CreateDateColumn({ type: "timestamp with time zone" })
