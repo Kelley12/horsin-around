@@ -11,7 +11,9 @@ export class RiderController {
     async getRiders(_: Request, res: Response) {
         try {
             const riderRepository = getRepository(Rider);
-            const riders = await riderRepository.find();
+            const riders = await riderRepository.find({
+                order: { lastName: "ASC", firstName: "ASC", riderId: "DESC" }
+            });
 
             res.send(riders);
         } catch (error) {

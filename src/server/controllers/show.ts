@@ -11,7 +11,9 @@ export class ShowController {
     async getShows(_: Request, res: Response) {
         try {
             const showRepository = getRepository(Show);
-            const shows = await showRepository.find();
+            const shows = await showRepository.find({
+                order: { showDate: "DESC", showId: "DESC" }
+            });
 
             res.send(shows);
         } catch (error) {
