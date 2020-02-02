@@ -1,6 +1,6 @@
 <div class="box">
     <strong class="is-size-4">{{ show.name }}</strong>
-    <small>{{ prettyFormatDate(show.showDate) }}</small>
+    <small>{{ formatDate(show.showDate) }}</small>
     <hr>
     <div v-for="info in showClassInfo" class="is-inline-flex">
         <a class="box"

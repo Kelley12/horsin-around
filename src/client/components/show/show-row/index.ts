@@ -1,6 +1,6 @@
 import Vue, { PropType } from "vue";
 import { state } from "../../../state";
-import { Show } from "../../../../shared";
+import { Show, prettyFormatDate } from "../../../../shared";
 import { get, apiurl } from "../../../helpers";
 
 export const ShowRow = Vue.extend({
@@ -33,12 +33,8 @@ export const ShowRow = Vue.extend({
             this.$emit("deleteModal", this.show);
         },
 
-        prettyFormatDate(uglyDate: Date) {
-            const date = new Date(uglyDate);
-            const month = date.getMonth() + 1;
-            const day = date.getDate();
-            const year = date.getFullYear();
-            return `${month}/${day}/${year}`;
+        formatDate(uglyDate: string): string {
+            return prettyFormatDate(uglyDate);
         }
     }
 });

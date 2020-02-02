@@ -1,6 +1,7 @@
 import Vue from "vue";
 import { post, put, apiurl, del } from "../../../helpers";
 import { state } from "../../../state";
+import { prettyFormatDate } from "../../../../shared";
 
 export const ShowModal = Vue.extend({
     template: require("./show-modal.html"),
@@ -29,6 +30,7 @@ export const ShowModal = Vue.extend({
             this.modalText = "Edit";
             this.submitMessage = "Edited";
         }
+        this.show.showDate = prettyFormatDate(this.show.showDate);
     },
     methods: {
         submit() {

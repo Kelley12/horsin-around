@@ -43,10 +43,12 @@ export const ShowPage = Vue.extend({
         setShow(show: Show) {
             this.show.showId = show.showId;
             this.show.name = show.name;
+            this.show.showDate = show.showDate;
         },
         resetShow() {
             this.show.showId = 0;
             this.show.name = "";
+            this.show.showDate = new Date();
         },
         deleteShow(show: Show) {
             this.setShow(show);
