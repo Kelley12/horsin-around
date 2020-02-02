@@ -4,7 +4,9 @@
     <show-row
         v-for="show in shows"
         :key="show.showId"
-        :show="show">
+        :show="show"
+        @open="openModal(show)"
+        @deleteModal="deleteShow(show)">
     </show-row>
     <div v-if="hasNoShows" class="content">
         <p>There are currently no show results.</p>

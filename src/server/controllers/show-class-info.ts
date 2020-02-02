@@ -38,7 +38,13 @@ export class ShowClassInfoController {
         try {
             const id = parseInt(req.params.id);
             const showClassInfoRepository = getRepository(ShowClassInfo);
-            const showClassInfo = await showClassInfoRepository.find({ where: { showId: id } });
+            const showClassInfo = await showClassInfoRepository.find({
+                relations: ["showClass"],
+                join: { alias: "showClassInfo", leftJoinAndSelect: {
+                    showClass: "showClassInfo.showClass"
+                }},
+                where: { showId: id }
+            });
             res.send(showClassInfo);
         } catch (error) {
             logger.log("error", `API Error:`);

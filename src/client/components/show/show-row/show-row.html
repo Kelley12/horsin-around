@@ -2,6 +2,13 @@
     <strong class="is-size-4">{{ show.name }}</strong>
     <small>{{ prettyFormatDate(show.showDate) }}</small>
     <hr>
+    <div v-for="info in showClassInfo" class="is-inline-flex">
+        <a class="box"
+            style="margin: 0 15px"
+            @click="showResults()">
+            {{ info.showClass.name }}
+        </a>
+    </div>
     <div class="level">
         <div class="level-left"></div>
         <div class="level-right">
