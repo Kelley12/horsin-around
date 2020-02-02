@@ -18,12 +18,6 @@
                             <input type="text" class="input" v-model="showClass.name">
                         </div>
                     </div>
-                    <div v-if="!deleteModal" class="field">
-                        <label class="label">Speed</label>
-                        <div class="control">
-                            <input type="number" class="input" v-model="showClass.speed">
-                        </div>
-                    </div>
                     <div v-if="deleteModal" class="field">
                         Are you sure you want to delete {{showClass.name}} ?
                     </div>

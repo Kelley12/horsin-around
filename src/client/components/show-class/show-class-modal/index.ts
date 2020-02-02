@@ -52,15 +52,13 @@ export const ShowClassModal = Vue.extend({
             } else if (this.showClass.showClassId) {
                 put(`${apiurl}/class/${this.showClass.showClassId}`, {
                     showClassId: this.showClass.showClassId,
-                    name: this.showClass.name,
-                    speed: this.showClass.speed
+                    name: this.showClass.name
                 })
                     .then(() => {
                         const showClasses = state.get().showClasses;
                         showClasses.forEach((showClass) => {
                             if (showClass.showClassId === this.showClass.showClassId) {
                                 showClass.name = this.showClass.name;
-                                showClass.speed = this.showClass.speed;
                             }
                         });
                         state.set({ showClasses });
@@ -70,8 +68,7 @@ export const ShowClassModal = Vue.extend({
                     .then(() => this.submitting = false);
             } else {
                 post(`${apiurl}/class`, {
-                    name: this.showClass.name,
-                    speed: this.showClass.speed
+                    name: this.showClass.name
                 })
                     .then((showClass) => {
                         const showClasses = state.get().showClasses;
