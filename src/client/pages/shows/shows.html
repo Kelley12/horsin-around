@@ -1,5 +1,13 @@
 <div style="margin-top: 24px">
-    <h1 class="title">Welcome to HorsinAround</h1>
+    <div class="columns is-mobile is-pulled-right is-marginles">
+        <div class="column is-8">
+            <p>Use Ctrl + F to search for now</p>
+        </div>
+        <div>
+            <button class="button is-success" @click="openModal()">Add New Show</button>
+        </div>
+    </div>
+    <h1 class="title">Shows</h1>
     <hr>
     <show-row
         v-for="show in shows"
@@ -9,6 +17,12 @@
         @deleteModal="deleteShow(show)">
     </show-row>
     <div v-if="hasNoShows" class="content">
-        <p>There are currently no show results.</p>
+        <p>There are currently no shows. Use the Add New Show button above to create one.</p>
     </div>
+    <show-modal 
+        v-if="showModal"
+        :show="show"
+        :deleteModal="deleteModal"
+        @close="showModal = false">
+    </show-modal>
 </div>
