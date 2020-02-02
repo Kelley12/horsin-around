@@ -52,17 +52,17 @@ export const ShowModal = Vue.extend({
                     .catch((e: Error) => this.error = e.message)
                     .then(() => this.submitting = false);
             } else if (this.show.showId) {
-                put(`${apiurl}/shows`, {
+                put(`${apiurl}/shows/${this.show.showId}`, {
                     showId: this.show.showId,
-                    firstName: this.show.firstName,
-                    lastName: this.show.lastName
+                    name: this.show.name,
+                    showDate: this.show.showDate
                 })
                     .then(() => {
                         const shows = state.get().shows;
                         shows.forEach((show) => {
                             if (show.showId === this.show.showId) {
-                                show.firstName = this.show.firstName;
-                                show.lastName = this.show.lastName;
+                                show.name = this.show.name;
+                                show.showDate = this.show.showDate;
                             }
                         });
                         state.set({ shows });
@@ -72,8 +72,8 @@ export const ShowModal = Vue.extend({
                     .then(() => this.submitting = false);
             } else {
                 post(`${apiurl}/shows`, {
-                    firstName: this.show.firstName,
-                    lastName: this.show.lastName
+                    name: this.show.name,
+                    showDate: this.show.showDate
                 })
                     .then((show) => {
                         const shows = state.get().shows;
