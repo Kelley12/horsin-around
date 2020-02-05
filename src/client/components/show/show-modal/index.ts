@@ -77,7 +77,7 @@ export const ShowModal = Vue.extend({
                 })
                     .then((show) => {
                         const shows = state.get().shows;
-                        shows.push(show);
+                        shows.unshift(show);
                         state.set({ shows });
                         this.submitted = true;
                     })
