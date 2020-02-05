@@ -2,17 +2,29 @@
     <strong class="is-size-4">{{ show.name }}</strong>
     <small>{{ formatDate(show.showDate) }}</small>
     <hr>
-    <div v-for="info in showClassInfo" class="is-inline-flex">
-        <a class="box"
-            style="margin: 0 15px"
-            @click="showResults()">
-            {{ info.showClass.name }}
-        </a>
+    <div v-for="info in showClassInfo" class="box is-inline-flex" style="margin-right: 1.5rem">
+        <div class="content">
+            <p class="has-text-weight-semibold">{{ info.showClass.name }}</p>
+            <p class="is-size-7 is-italic is-marginless">Distance: {{ info.distance }}</p>
+            <p class="is-size-7 is-italic is-marginless">Speed: {{ info.speed }}</p>
+            <p class="is-size-7 is-italic is-marginless">Opt Time: {{ info.minutes }}:{{ info.seconds }}.{{ info.milliseconds }}</p>
+        </div>
+        <button class="button" @click="editClass(info)">
+            <span class="icon is-small">
+                <i class="fas fa-edit"></i>
+            </span>
+        </button>
+        <button class="button" @click="deleteClass(info)">
+            <span class="icon is-small">
+                <i class="fas fa-trash"></i>
+            </span>
+        </button>
     </div>
     <div class="level">
         <div class="level-left"></div>
         <div class="level-right">
             <div class="buttons">
+                <button class="button is-primary" @click="addClass()">Add Class</button>
                 <button class="button is-link" @click="open()">Edit Show</button>
                 <button
                     class="button is-danger"

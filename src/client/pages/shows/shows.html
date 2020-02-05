@@ -13,6 +13,9 @@
         v-for="show in shows"
         :key="show.showId"
         :show="show"
+        @addClass="openShowInfoModal(undefined, show.showId)"
+        @editClass="openShowInfoModal"
+        @deleteClass="deleteShowInfoModal"
         @open="openModal(show)"
         @deleteModal="deleteShow(show)">
     </show-row>
@@ -25,4 +28,11 @@
         :deleteModal="deleteModal"
         @close="showModal = false">
     </show-modal>
+    <show-class-info-modal 
+        v-if="showClassInfoModal"
+        :showClassInfo="showClassInfo"
+        :deleteModal="deleteModal"
+        @refreshShow="refreshShow"
+        @close="showClassInfoModal = false">
+    </show-class-info-modal>
 </div>

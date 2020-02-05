@@ -1,6 +1,6 @@
 import Vue, { PropType } from "vue";
 import { state } from "../../../state";
-import { Show, prettyFormatDate } from "../../../../shared";
+import { Show, prettyFormatDate, ShowClassInfo } from "../../../../shared";
 import { get, apiurl } from "../../../helpers";
 
 export const ShowRow = Vue.extend({
@@ -23,6 +23,18 @@ export const ShowRow = Vue.extend({
                     this.showClassInfo = showClassInfo;
                 })
                 .catch((e: Error) => console.log(e));
+        },
+
+        addClass() {
+            this.$emit("addClass", this.show);
+        },
+
+        editClass(showClassInfo: ShowClassInfo) {
+            this.$emit("editClass", showClassInfo);
+        },
+
+        deleteClass(showClassInfo: ShowClassInfo) {
+            this.$emit("deleteClass", showClassInfo);
         },
 
         open() {
