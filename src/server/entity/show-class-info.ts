@@ -9,7 +9,7 @@ import { ShowClass } from "./show-class";
 @Entity("showclassinfo")
 export class ShowClassInfo implements IShowClassInfo {
     @PrimaryGeneratedColumn()
-    public ShowClassInfoId?: number;
+    public showClassInfoId?: number;
 
     @Column()
     public showId!: number;

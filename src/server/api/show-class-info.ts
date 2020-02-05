@@ -9,6 +9,7 @@ export function showClassInfoRouter(): express.Router {
     router.get("/byshow/:id", showClassInfoController.getShowClassInfoByShow);
     router.post("/", showClassInfoController.createShowClassInfo);
     router.put("/:id", showClassInfoController.updateShowClassInfo);
+    router.delete("/:id", showClassInfoController.deleteShowClassInfo);
 
     return router;
 }
