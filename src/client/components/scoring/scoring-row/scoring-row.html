@@ -1,0 +1,31 @@
+<tr>
+    <td style="display:none;">
+        {{ result.resultId }}
+    </td>
+    <td style="display:none;">
+        {{ result.showId }}
+    </td>
+    <td style="display:none;">
+        {{ result.showClassId }}
+    </td>
+    <td>
+        {{ result.minutes }}
+    </td>
+    <td>
+        {{ result.seconds }}
+    </td>
+    <td>
+        {{ result.milliseconds }}
+    </td>
+    <td>
+        {{ result.faults }}
+    </td>
+    <td>
+        <button class="button" @click="save()">
+            <span class="icon is-small">
+                <i class="far fa-save"></i>
+            </span>
+            Save
+        </button>
+    </td>
+</tr>

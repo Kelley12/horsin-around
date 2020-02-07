@@ -1,0 +1,20 @@
+<div style="margin-top: 24px">
+    <div class="columns is-mobile is-pulled-right is-marginles">
+        <div class="column is-8">
+            <p>Use Ctrl + F to search for now</p>
+        </div>
+    </div>
+    <h1 class="title">Scoring</h1>
+    <hr>
+    <table class="table is-responsive">
+        <tbody>
+            <scoring-row
+                v-for="score in scores"
+                :key="score.resultId">
+            </scoring-row>
+        </tbody>
+    </table>
+    <div v-if="hasNoScores" class="content">
+        <p>No entries in class. Click Add New Entry above to add one.</p>
+    </div>
+</div>
