@@ -1,3 +1,5 @@
+import { ShowClass } from "./show-class";
+
 export interface IShowClassInfo {
     showId: number;
     showClassId: number;
@@ -8,15 +10,12 @@ export interface IShowClassInfo {
     milliseconds: number;
 }
 
-export interface ShowClassInfo {
+export interface ShowClassInfo extends IShowClassInfo {
     showClassInfoId: number;
-    showId: number;
-    showClassId: number;
-    distance: number;
-    speed: number;
-    minutes: number;
-    seconds: number;
-    milliseconds: number;
+}
+
+export interface ShowClassInfoByShow extends ShowClassInfo {
+    showClass: ShowClass;
 }
 
 export const emptyShowClassInfo = {

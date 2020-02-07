@@ -1,31 +1,44 @@
 <tr>
-    <td style="display:none;">
+    <td class="is-hidden">
         {{ result.resultId }}
-    </td>
-    <td style="display:none;">
+    </t>
+    <td class="is-hidden">
         {{ result.showId }}
     </td>
-    <td style="display:none;">
+    <td class="is-hidden">
         {{ result.showClassId }}
     </td>
-    <td>
-        {{ result.minutes }}
+    <td class="is-hidden">
+        {{ result.riderId }}
     </td>
     <td>
-        {{ result.seconds }}
+        {{ result.rider.firstName }} {{ result.rider.lastName }}
     </td>
     <td>
-        {{ result.milliseconds }}
+        {{ result.horse }}
+    </td>
+    <td style="text-align: center;">
+        <i v-if="result.scored" class="fas fa-award"></i>
+        <i v-else class="fas fa-graduation-cap"></i>
     </td>
     <td>
-        {{ result.faults }}
+        <div class="field is-flex">
+            <input type="number" class="input" v-model="result.minutes" v-on:input="unsavedChange()">
+            <span class="is-size-4" style="padding: 0 8px">:</span>
+            <input type="number" class="input" v-model="result.seconds" v-on:input="unsavedChange()">
+            <span class="is-size-4" style="padding: 0 8px">.</span>
+            <input type="number" class="input" v-model="result.milliseconds" v-on:input="unsavedChange()">
+        </div>
     </td>
     <td>
-        <button class="button" @click="save()">
+        <input type="number" class="input" v-model="result.faults" v-on:input="unsavedChange()">
+    </td>
+    <td>
+        <button class="button" :disabled="!isUnsaved" @click="save()">
             <span class="icon is-small">
                 <i class="far fa-save"></i>
             </span>
-            Save
+            <span>Save</span>
         </button>
     </td>
 </tr>
