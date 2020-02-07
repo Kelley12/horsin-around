@@ -9,7 +9,7 @@ import { ShowClass } from "./show-class";
 @Entity("showclassinfo")
 export class ShowClassInfo implements IShowClassInfo {
     @PrimaryGeneratedColumn()
-    public ShowClassInfoId?: number;
+    public showClassInfoId?: number;
 
     @Column()
     public showId!: number;
@@ -23,13 +23,19 @@ export class ShowClassInfo implements IShowClassInfo {
     @JoinColumn({ name: "showClassId" })
     public showClass?: ShowClass;
 
-    @Column()
+    @Column("integer", { default: 0 })
+    public distance!: number;
+
+    @Column("integer", { default: 0 })
+    public speed!: number;
+
+    @Column("integer", { default: 0 })
     public minutes!: number;
 
-    @Column()
+    @Column("integer", { default: 0 })
     public seconds!: number;
 
-    @Column()
+    @Column("integer", { default: 0 })
     public milliseconds!: number;
 
     @CreateDateColumn({ type: "timestamp with time zone" })

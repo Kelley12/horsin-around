@@ -1,12 +1,16 @@
 export interface IShow {
     name: string;
     showDate: Date;
-    distance: number;
 }
 
 export interface Show {
     showId: number;
     name: string;
     showDate: Date;
-    distance: number;
 }
+
+export const emptyShow: Show = {
+    showId: 0,
+    name: "",
+    showDate: new Date()
+};

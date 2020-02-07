@@ -1,0 +1,62 @@
+<tr>
+    <td class="is-hidden">
+        {{ result.resultId }}
+    </t>
+    <td class="is-hidden">
+        {{ result.showId }}
+    </td>
+    <td class="is-hidden">
+        {{ result.showClassId }}
+    </td>
+    <td class="is-hidden">
+        {{ result.riderId }}
+    </td>
+    <td>
+        {{ result.rider.firstName }} {{ result.rider.lastName }}
+    </td>
+    <td>
+        {{ result.horse }}
+    </td>
+    <td style="text-align: center;">
+        <i v-if="result.scored" class="fas fa-award"></i>
+        <i v-else class="fas fa-graduation-cap"></i>
+    </td>
+    <td>
+        <div class="field is-flex">
+            <input type="number" class="input" v-model="result.minutes" v-on:input="unsavedChange()">
+            <span class="is-size-4" style="padding: 0 8px">:</span>
+            <input type="number" class="input" v-model="result.seconds" v-on:input="unsavedChange()">
+            <span class="is-size-4" style="padding: 0 8px">.</span>
+            <input type="number" class="input" v-model="result.milliseconds" v-on:input="unsavedChange()">
+        </div>
+    </td>
+    <td>
+        <input type="number" class="input" v-model="result.faults" v-on:input="unsavedChange()">
+    </td>
+    <td>
+        <div class="field is-grouped">
+            <div class="control">
+                <button
+                    :class="{ button: true, 'is-link': isUnsaved }"
+                    :disabled="!isUnsaved"
+                    @click="save()">
+                    <span class="icon is-small">
+                        <i class="far fa-save"></i>
+                    </span>
+                    <span>Save</span>
+                </button>
+            </div>
+            <div class="control">
+                <button
+                    :class="{ button: true, 'is-danger': isUnsaved }"
+                    :disabled="!isUnsaved"
+                    @click="refreshRow()">
+                    <span class="icon is-small">
+                        <i class="far fa-trash-alt"></i>
+                    </span>
+                    <span>Cancel</span>
+                </button>
+            </div>
+        </div>
+    </td>
+</tr>

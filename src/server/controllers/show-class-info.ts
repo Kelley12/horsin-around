@@ -28,12 +28,53 @@ export class ShowClassInfoController {
             const showClassInfo = await showClassInfoRepository.findOneOrFail(id);
             res.send(showClassInfo);
         } catch (error) {
+            logger.log("error", `API Error:`);
+            logger.log("error", error);
+            res.status(404).send("ShowClassInfo not found");
+        }
+    }
+
+    async getShowClassInfoByShow(req: Request, res: Response) {
+        try {
+            const showId = parseInt(req.params.showId);
+            const showClassInfoRepository = getRepository(ShowClassInfo);
+            const showClassInfo = await showClassInfoRepository.find({
+                relations: ["showClass"],
+                join: { alias: "showClassInfo", leftJoinAndSelect: {
+                    showClass: "showClassInfo.showClass"
+                }},
+                where: { showId }
+            });
+            res.send(showClassInfo);
+        } catch (error) {
+            logger.log("error", `API Error:`);
+            logger.log("error", error);
+            res.status(404).send("ShowClassInfo not found");
+        }
+    }
+
+    async getShowClassInfoByShowClass(req: Request, res: Response) {
+        try {
+            const showId = parseInt(req.params.showId);
+            const showClassId = parseInt(req.params.showClassId);
+            const showClassInfoRepository = getRepository(ShowClassInfo);
+            const showClassInfo = await showClassInfoRepository.findOneOrFail({
+                relations: ["showClass"],
+                join: { alias: "showClassInfo", leftJoinAndSelect: {
+                    showClass: "showClassInfo.showClass"
+                }},
+                where: { showId, showClassId }
+            });
+            res.send(showClassInfo);
+        } catch (error) {
+            logger.log("error", `API Error:`);
+            logger.log("error", error);
             res.status(404).send("ShowClassInfo not found");
         }
     }
 
     async createShowClassInfo(req: Request, res: Response) {
-        const { showId, showClassId, minutes, seconds, milliseconds } = req.body;
+        const { showId, showClassId, distance, speed, minutes, seconds, milliseconds } = req.body;
 
         if (!showId || !showClassId) {
             return res.status(400)
@@ -43,6 +84,8 @@ export class ShowClassInfoController {
         const showClassInfo = new ShowClassInfo();
         showClassInfo.showId = showId;
         showClassInfo.showClassId = showClassId;
+        showClassInfo.distance = distance;
+        showClassInfo.speed = speed;
         showClassInfo.minutes = minutes;
         showClassInfo.seconds = seconds;
         showClassInfo.milliseconds = milliseconds;
@@ -66,7 +109,7 @@ export class ShowClassInfoController {
 
     async updateShowClassInfo(req: Request, res: Response) {
         const id = parseInt(req.params.id);
-        const { showId, showClassId, minutes, seconds, milliseconds } = req.body;
+        const { showId, showClassId, distance, speed, minutes, seconds, milliseconds } = req.body;
 
         if (!showId || !showClassId) {
             return res.status(400)
@@ -78,12 +121,16 @@ export class ShowClassInfoController {
         try {
             showClassInfo = await showClassInfoRepository.findOneOrFail(id);
         } catch (error) {
+            logger.log("error", `API Error:`);
+            logger.log("error", error);
             res.status(404).send("ShowClassInfo not found");
             return;
         }
 
         showClassInfo.showId = showId;
         showClassInfo.showClassId = showClassId;
+        showClassInfo.distance = distance;
+        showClassInfo.speed = speed;
         showClassInfo.minutes = minutes;
         showClassInfo.seconds = seconds;
         showClassInfo.milliseconds = milliseconds;
@@ -111,6 +158,8 @@ export class ShowClassInfoController {
         try {
             await showClassInfoRepository.findOneOrFail(id);
         } catch (error) {
+            logger.log("error", `API Error:`);
+            logger.log("error", error);
             res.status(404).send("ShowClassInfo not found");
             return;
         }

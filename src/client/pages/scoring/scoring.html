@@ -1,0 +1,60 @@
+<div style="margin-top: 24px">
+    <div class="columns is-mobile is-pulled-right is-marginles">
+        <div class="column is-8">
+            <p>Use Ctrl + F to search</p>
+        </div>
+        <div>
+            <button class="button is-success" @click="openEntryModal()">Edit Entries</button>
+        </div>
+    </div>
+    <h1 class="title">Scoring</h1>
+    <div class="control select">
+        <select v-model="selectedShowId" @change="loadShowClasses()">
+            <option v-for="show in shows" v-bind:value="show.showId">
+                {{ show.name }}
+            </option>
+        </select>
+    </div>
+    <div class="control select">
+        <select v-model="selectedShowClassId" @change="loadScores()">
+            <option v-for="info in showClassInfo" v-bind:value="info.showClass.showClassId">
+                {{ info.showClass.name }}
+            </option>
+        </select>
+    </div>
+    <hr>
+    <table class="table is-striped is-responsive">
+        <thead>
+            <tr>
+                <th class="is-hidden">ResultId</th>
+                <th class="is-hidden">ShowId</th>
+                <th class="is-hidden">ShowClassId</th>
+                <th class="is-hidden">RiderId</th>
+                <th>Rider</th>
+                <th>Horse</th>
+                <th>Type</th>
+                <th>Ride Time (mm:ss.ms)</th>
+                <th>Faults</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <scoring-row
+                v-for="score in scores"
+                :key="score.resultId"
+                :result="score">
+            </scoring-row>
+        </tbody>
+    </table>
+    <div v-if="hasNoScores" class="content">
+        <p>No entries in class. Click Add New Entry above to add one.</p>
+    </div>
+    <show-entry-modal
+        v-if="showEntriesModal"
+        :showClassInfo="showEntriesData"
+        @addEntry="addEntry"
+        @editEntry="editEntry"
+        @deleteEntry="deleteEntry"
+        @close="showEntriesModal = false">
+    </show-entry-modal>
+</div>

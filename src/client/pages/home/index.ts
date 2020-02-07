@@ -1,10 +1,10 @@
 import Vue from "vue";
-import { ShowBox } from "../../components";
+import { ShowRow } from "../../components";
 import { state, get, apiurl } from "../../helpers";
 
 export const HomePage = Vue.extend({
     template: require("./home.html"),
-    components: { ShowBox },
+    components: { ShowRow },
     data() { return { ...state.get(), showsLoading: false }; },
     created() { state.updateVue(this); },
     mounted() {

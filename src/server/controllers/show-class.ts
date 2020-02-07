@@ -11,7 +11,9 @@ export class ShowClassController {
     async getShowShowClass(_: Request, res: Response) {
         try {
             const showClassRepository = getRepository(ShowClass);
-            const showClasss = await showClassRepository.find();
+            const showClasss = await showClassRepository.find({
+                order: { name: "ASC", showClassId: "DESC" }
+            });
 
             res.send(showClasss);
         } catch (error) {
@@ -28,21 +30,22 @@ export class ShowClassController {
             const showClass = await showClassRepository.findOneOrFail(id);
             res.send(showClass);
         } catch (error) {
+            logger.log("error", `API Error:`);
+            logger.log("error", error);
             res.status(404).send("ShowClass not found");
         }
     }
 
     async createShowClass(req: Request, res: Response) {
-        const { name, speed } = req.body;
+        const { name } = req.body;
 
-        if (!name || !speed) {
+        if (!name) {
             return res.status(400)
-                .send({ error: "Missing data: name or speed" });
+                .send({ error: "Missing data: name" });
         }
 
         const showClass = new ShowClass();
         showClass.name = name;
-        showClass.speed = speed;
 
         const errors = await validate(showClass);
         if (errors.length > 0) {
@@ -63,11 +66,11 @@ export class ShowClassController {
 
     async updateShowClass(req: Request, res: Response) {
         const id = parseInt(req.params.id);
-        const { name, speed } = req.body;
+        const { name } = req.body;
 
-        if (!name || !speed) {
+        if (!name) {
             return res.status(400)
-                .send({ error: "Missing data: name or speed" });
+                .send({ error: "Missing data: name" });
         }
 
         let showClass;
@@ -75,12 +78,13 @@ export class ShowClassController {
         try {
             showClass = await showClassRepository.findOneOrFail(id);
         } catch (error) {
+            logger.log("error", `API Error:`);
+            logger.log("error", error);
             res.status(404).send("ShowClass not found");
             return;
         }
 
         showClass.name = name;
-        showClass.speed = speed;
 
         const errors = await validate(showClass);
         if (errors.length > 0) {
@@ -105,6 +109,8 @@ export class ShowClassController {
         try {
             await showClassRepository.findOneOrFail(id);
         } catch (error) {
+            logger.log("error", `API Error:`);
+            logger.log("error", error);
             res.status(404).send("ShowClass not found");
             return;
         }

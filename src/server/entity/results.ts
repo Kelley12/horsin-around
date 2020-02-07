@@ -2,13 +2,13 @@ import {
     Column, Entity, PrimaryGeneratedColumn, ManyToOne,
     CreateDateColumn, UpdateDateColumn, JoinColumn
 } from "typeorm";
-import { IResults } from "../../shared";
+import { IResult } from "../../shared";
 import { Show } from "./show";
 import { ShowClass } from "./show-class";
 import { Rider } from "./rider";
 
 @Entity("results")
-export class Result implements IResults {
+export class Result implements IResult {
     @PrimaryGeneratedColumn()
     public resultId?: number;
 
@@ -33,7 +33,7 @@ export class Result implements IResults {
     @Column("varchar", { length: 50, default: "N/A" })
     public horse!: string;
 
-    @Column("boolean", { default: 0 })
+    @Column("boolean", { default: false })
     public scored!: boolean;
 
     @Column("integer", { default: 0 })
