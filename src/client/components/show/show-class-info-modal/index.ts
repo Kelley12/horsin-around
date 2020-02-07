@@ -4,7 +4,7 @@ import { prettyFormatDate } from "../../../../shared";
 
 export const ShowClassInfoModal = Vue.extend({
     template: require("./show-class-info-modal.html"),
-    props: ["showClassInfo", "deleteModal"],
+    props: ["showClassInfo", "deleteModal", "disableClassSelect"],
 
     data(): {
         modalText: string,
@@ -88,6 +88,17 @@ export const ShowClassInfoModal = Vue.extend({
         getShowClasses() {
             get(`${apiurl}/class`)
             .then((classes) => this.showClasses = classes);
+        },
+
+        calculateOptTime() {
+            const distance = parseInt(this.showClassInfo.distance);
+            const speed = parseInt(this.showClassInfo.speed);
+            if (distance && speed) {
+                const optimumTime = distance / speed;
+                this.showClassInfo.minutes = Math.floor(optimumTime);
+                this.showClassInfo.seconds = Math.floor((optimumTime % 1) * 60);
+                this.showClassInfo.milliseconds = 0;
+            }
         },
 
         close() {

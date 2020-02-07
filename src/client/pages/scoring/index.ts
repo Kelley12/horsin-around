@@ -1,12 +1,12 @@
 import Vue from "vue";
-import { ScoringRow, ShowEntryModal } from "../../components";
+import { ScoringRow, ShowEntryModal, ShowClassInfoModal } from "../../components";
 import { Result, ShowClassInfoByShow, ShowClassInfo, emptyShowClassInfo } from "../../../shared";
 import { state } from "../../state";
 import { get, apiurl } from "../../helpers";
 
 export const ScoringPage = Vue.extend({
     template: require("./scoring.html"),
-    components: { ScoringRow, ShowEntryModal },
+    components: { ScoringRow, ShowEntryModal, ShowClassInfoModal },
     props: ["showId", "showClassId"],
     data(): {
         selectedShowId: number,
@@ -14,7 +14,8 @@ export const ScoringPage = Vue.extend({
         showClassInfo: ShowClassInfoByShow[],
         scores: Result[],
         showEntriesData: ShowClassInfo,
-        showEntriesModal: boolean
+        showEntriesModal: boolean,
+        showClassInfoModal: boolean
     } {
         return {
             ...state.get(),
@@ -23,7 +24,8 @@ export const ScoringPage = Vue.extend({
             showClassInfo: [],
             scores: [],
             showEntriesData: emptyShowClassInfo,
-            showEntriesModal: false
+            showEntriesModal: false,
+            showClassInfoModal: false
         };
     },
     created() { state.updateVue(this); },
@@ -57,6 +59,7 @@ export const ScoringPage = Vue.extend({
                     this.showClassInfo = showClassInfo;
                     if (this.showClassInfo[0]) {
                         this.selectedShowClassId = this.showClassInfo[0].showClass.showClassId;
+                        this.setShowClassInfo();
                         this.loadScores();
                     }
                 })
@@ -67,16 +70,21 @@ export const ScoringPage = Vue.extend({
             get(`${apiurl}/results/ByShow/${this.selectedShowId}/${this.selectedShowClassId}`)
                 .then((results) => {
                     this.scores = results;
+                    this.setShowClassInfo();
                 })
                 .catch((e: Error) => console.log(e));
         },
 
-        openEntryModal() {
+        setShowClassInfo() {
             get(`${apiurl}/showClassInfo/byShow/${this.selectedShowId}/${this.selectedShowClassId}`)
                 .then((showClassInfo) => {
                     this.showEntriesData = showClassInfo;
-                    this.showEntriesModal = true;
                 });
+        },
+
+        openEntryModal() {
+            this.setShowClassInfo();
+            this.showEntriesModal = true;
         },
 
         addEntry(result: Result) {
@@ -104,6 +112,10 @@ export const ScoringPage = Vue.extend({
                     this.scores.splice(i, 1);
                 }
             });
+        },
+
+        editShowClassInfo() {
+            this.showClassInfoModal = true;
         }
     }
 });
