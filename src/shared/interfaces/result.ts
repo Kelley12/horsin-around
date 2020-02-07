@@ -10,20 +10,13 @@ export interface IResult {
     milliseconds: number;
 }
 
-export interface Result {
+export interface Result extends IResult {
     resultId: number;
-    showClassId: number;
-    riderId: number;
-    horse: string;
-    scored: boolean;
-    faults: number;
-    minutes: number;
-    seconds: number;
-    milliseconds: number;
 }
 
 export const emptyResult: Result = {
     resultId: 0,
+    showId: 0,
     showClassId: 0,
     riderId: 0,
     horse: "",

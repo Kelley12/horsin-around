@@ -121,7 +121,7 @@ export class ResultController {
 
         if (!showId || !showClassId || !riderId) {
             return res.status(400)
-                .send({ error: "Missing data: firstName or lastName" });
+                .send({ error: "Missing data: showId, showClassId, or riderId" });
         }
 
         let result;
