@@ -90,6 +90,17 @@ export const ShowClassInfoModal = Vue.extend({
             .then((classes) => this.showClasses = classes);
         },
 
+        calculateOptTime() {
+            const distance = parseInt(this.showClassInfo.distance);
+            const speed = parseInt(this.showClassInfo.speed);
+            if (distance && speed) {
+                const optimumTime = distance / speed;
+                this.showClassInfo.minutes = Math.floor(optimumTime);
+                this.showClassInfo.seconds = Math.floor((optimumTime % 1) * 60);
+                this.showClassInfo.milliseconds = 0;
+            }
+        },
+
         close() {
             this.$emit("close");
         }

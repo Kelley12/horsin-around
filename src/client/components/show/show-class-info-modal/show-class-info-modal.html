@@ -29,11 +29,11 @@
                     <div v-if="!deleteModal" class="field is-grouped">
                         <div class="control">
                             <label class="label">Distance</label>
-                            <input type="number" class="input" v-model="showClassInfo.distance">
+                            <input type="number" class="input" v-on:input="calculateOptTime()" v-model="showClassInfo.distance">
                         </div>
                         <div class="control">
                             <label class="label">Speed</label>
-                            <input type="number" class="input" v-model="showClassInfo.speed">
+                            <input type="number" class="input" v-on:input="calculateOptTime()" v-model="showClassInfo.speed">
                         </div>
                     </div>
                     <div v-if="!deleteModal" class="field">
