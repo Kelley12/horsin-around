@@ -19,7 +19,7 @@
                     <div v-if="!deleteModal" class="field">
                         <label class="label">Class</label>
                         <div class="control select">
-                            <select v-model="showClassInfo.showClassId">
+                            <select v-model="showClassInfo.showClassId" :disabled="disableClassSelect">
                                 <option v-for="showClass in showClasses" v-bind:value="showClass.showClassId">
                                 {{ showClass.name }}
                                 </option>
@@ -29,11 +29,11 @@
                     <div v-if="!deleteModal" class="field is-grouped">
                         <div class="control">
                             <label class="label">Distance</label>
-                            <input type="number" class="input" v-model="showClassInfo.distance">
+                            <input type="number" class="input" v-on:input="calculateOptTime()" v-model="showClassInfo.distance">
                         </div>
                         <div class="control">
                             <label class="label">Speed</label>
-                            <input type="number" class="input" v-model="showClassInfo.speed">
+                            <input type="number" class="input" v-on:input="calculateOptTime()" v-model="showClassInfo.speed">
                         </div>
                     </div>
                     <div v-if="!deleteModal" class="field">
