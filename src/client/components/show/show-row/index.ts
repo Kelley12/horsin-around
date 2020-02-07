@@ -18,7 +18,7 @@ export const ShowRow = Vue.extend({
     mounted() { this.getClasses(); },
     methods: {
         getClasses() {
-            get(`${apiurl}/showclassinfo/byshow/${this.show.showId}`)
+            get(`${apiurl}/showclassinfo/byShow/${this.show.showId}`)
                 .then((showClassInfo) => {
                     this.showClassInfo = showClassInfo;
                 })

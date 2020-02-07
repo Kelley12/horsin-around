@@ -49,4 +49,9 @@
     <div v-if="hasNoScores" class="content">
         <p>No entries in class. Click Add New Entry above to add one.</p>
     </div>
+    <show-entry-modal
+        v-if="showEntriesModal"
+        :showClassInfo="showEntriesData"
+        @close="showEntriesModal = false">
+    </show-entry-modal>
 </div>

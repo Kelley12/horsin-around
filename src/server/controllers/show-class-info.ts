@@ -36,14 +36,34 @@ export class ShowClassInfoController {
 
     async getShowClassInfoByShow(req: Request, res: Response) {
         try {
-            const id = parseInt(req.params.id);
+            const showId = parseInt(req.params.showId);
             const showClassInfoRepository = getRepository(ShowClassInfo);
             const showClassInfo = await showClassInfoRepository.find({
                 relations: ["showClass"],
                 join: { alias: "showClassInfo", leftJoinAndSelect: {
                     showClass: "showClassInfo.showClass"
                 }},
-                where: { showId: id }
+                where: { showId }
+            });
+            res.send(showClassInfo);
+        } catch (error) {
+            logger.log("error", `API Error:`);
+            logger.log("error", error);
+            res.status(404).send("ShowClassInfo not found");
+        }
+    }
+
+    async getShowClassInfoByShowClass(req: Request, res: Response) {
+        try {
+            const showId = parseInt(req.params.showId);
+            const showClassId = parseInt(req.params.showClassId);
+            const showClassInfoRepository = getRepository(ShowClassInfo);
+            const showClassInfo = await showClassInfoRepository.findOneOrFail({
+                relations: ["showClass"],
+                join: { alias: "showClassInfo", leftJoinAndSelect: {
+                    showClass: "showClassInfo.showClass"
+                }},
+                where: { showId, showClassId }
             });
             res.send(showClassInfo);
         } catch (error) {

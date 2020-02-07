@@ -1,25 +1,29 @@
 import Vue from "vue";
-import { ScoringRow } from "../../components";
-import { Result, ShowClassInfoByShow } from "../../../shared";
+import { ScoringRow, ShowEntryModal } from "../../components";
+import { Result, ShowClassInfoByShow, ShowClassInfo, emptyShowClassInfo } from "../../../shared";
 import { state } from "../../state";
 import { get, apiurl } from "../../helpers";
 
 export const ScoringPage = Vue.extend({
     template: require("./scoring.html"),
-    components: { ScoringRow },
+    components: { ScoringRow, ShowEntryModal },
     props: ["showId", "showClassId"],
     data(): {
         selectedShowId: number,
         selectedShowClassId: number,
         showClassInfo: ShowClassInfoByShow[],
-        scores: Result[]
+        scores: Result[],
+        showEntriesData: ShowClassInfo,
+        showEntriesModal: boolean
     } {
         return {
             ...state.get(),
             selectedShowId: this.showId,
             selectedShowClassId: this.showClassId,
             showClassInfo: [],
-            scores: []
+            scores: [],
+            showEntriesData: emptyShowClassInfo,
+            showEntriesModal: false
         };
     },
     created() { state.updateVue(this); },
@@ -65,6 +69,12 @@ export const ScoringPage = Vue.extend({
                     this.scores = results;
                 })
                 .catch((e: Error) => console.log(e));
+        },
+
+        openEntryModal() {
+            get(`${apiurl}/showClassInfo/byShow/${this.selectedShowId}/${this.selectedShowClassId}`)
+                .then((showClassInfo) => this.showEntriesData = showClassInfo)
+                .then(() => this.showEntriesModal = true);
         }
     }
 });
