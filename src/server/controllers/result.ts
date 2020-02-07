@@ -34,6 +34,45 @@ export class ResultController {
         }
     }
 
+    async getResultByShow(req: Request, res: Response) {
+        try {
+            const showId = parseInt(req.params.showId);
+            const resultRepository = getRepository(Result);
+            const results = await resultRepository.find({
+                relations: ["rider"],
+                join: { alias: "result", leftJoinAndSelect: {
+                    showClass: "result.rider"
+                }},
+                where: { showId }
+            });
+            res.send(results);
+        } catch (error) {
+            logger.log("error", `API Error:`);
+            logger.log("error", error);
+            res.status(404).send("Result not found");
+        }
+    }
+
+    async getResultByShowClass(req: Request, res: Response) {
+        try {
+            const showId = parseInt(req.params.showId);
+            const showClassId = parseInt(req.params.showClassId);
+            const resultRepository = getRepository(Result);
+            const results = await resultRepository.find({
+                relations: ["rider"],
+                join: { alias: "result", leftJoinAndSelect: {
+                    showClass: "result.rider"
+                }},
+                where: { showId, showClassId}
+            });
+            res.send(results);
+        } catch (error) {
+            logger.log("error", `API Error:`);
+            logger.log("error", error);
+            res.status(404).send("Result not found");
+        }
+    }
+
     async createResult(req: Request, res: Response) {
         const {
             showId, showClassId, riderId, horse, scored,
