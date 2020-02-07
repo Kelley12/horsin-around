@@ -1,3 +1,5 @@
+import { Rider, emptyRider } from "./rider";
+
 export interface IResult {
     showId: number;
     showClassId: number;
@@ -12,6 +14,7 @@ export interface IResult {
 
 export interface Result extends IResult {
     resultId: number;
+    rider?: Rider;
 }
 
 export const emptyResult: Result = {
@@ -24,5 +27,6 @@ export const emptyResult: Result = {
     faults: 0,
     minutes: 0,
     seconds: 0,
-    milliseconds: 0
+    milliseconds: 0,
+    rider: emptyRider
 };

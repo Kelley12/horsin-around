@@ -27,9 +27,14 @@ export const ScoringRow = Vue.extend({
                 .catch((e: Error) => this.$emit("error", e.message));
         },
 
-        cancel() {
+        unsavedChange() {
+            this.isUnsaved = true;
+        },
+
+        refreshRow() {
             get(`${apiurl}/results/${this.result.resultId}`)
                 .then((result: Result) => {
+                    this.result.horse = result.horse;
                     this.result.scored = result.scored;
                     this.result.minutes = result.minutes;
                     this.result.seconds = result.seconds;
@@ -37,10 +42,6 @@ export const ScoringRow = Vue.extend({
                     this.result.faults = result.faults;
                     this.isUnsaved = false;
                 });
-        },
-
-        unsavedChange() {
-            this.isUnsaved = true;
         }
     }
 });

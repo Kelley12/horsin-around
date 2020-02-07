@@ -1,10 +1,10 @@
 <div style="margin-top: 24px">
     <div class="columns is-mobile is-pulled-right is-marginles">
         <div class="column is-8">
-            <p>Use Ctrl + F to search for now</p>
+            <p>Use Ctrl + F to search</p>
         </div>
         <div>
-            <button class="button is-success" @click="openEntryModal()">Add New Entry</button>
+            <button class="button is-success" @click="openEntryModal()">Edit Entries</button>
         </div>
     </div>
     <h1 class="title">Scoring</h1>
@@ -33,7 +33,7 @@
                 <th>Rider</th>
                 <th>Horse</th>
                 <th>Type</th>
-                <th>Ride Time</th>
+                <th>Ride Time (mm:ss.ms)</th>
                 <th>Faults</th>
                 <th></th>
             </tr>
@@ -52,6 +52,9 @@
     <show-entry-modal
         v-if="showEntriesModal"
         :showClassInfo="showEntriesData"
+        @addEntry="addEntry"
+        @editEntry="editEntry"
+        @deleteEntry="deleteEntry"
         @close="showEntriesModal = false">
     </show-entry-modal>
 </div>

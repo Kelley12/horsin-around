@@ -50,7 +50,7 @@
                 <button
                     :class="{ button: true, 'is-danger': isUnsaved }"
                     :disabled="!isUnsaved"
-                    @click="cancel()">
+                    @click="refreshRow()">
                     <span class="icon is-small">
                         <i class="far fa-trash-alt"></i>
                     </span>

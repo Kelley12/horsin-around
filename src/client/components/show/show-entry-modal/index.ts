@@ -43,6 +43,7 @@ export const ShowEntryModal = Vue.extend({
                     scored: this.result.scored
                 })
                     .then(() => {
+                        this.$emit("editEntry", this.result.resultId);
                         this.getEnteredRiders();
                         this.toggleEditMode();
                     })
@@ -56,7 +57,8 @@ export const ShowEntryModal = Vue.extend({
                     horse: this.result.horse,
                     scored: this.result.scored
                 })
-                    .then(() => {
+                    .then((newEntry) => {
+                        this.$emit("addEntry", newEntry);
                         this.getEnteredRiders();
                         this.toggleEditMode();
                     })
@@ -71,6 +73,7 @@ export const ShowEntryModal = Vue.extend({
 
             del(`${apiurl}/results/${this.result.resultId}`)
                 .then(() => {
+                    this.$emit("deleteEntry", this.result.resultId);
                     this.getEnteredRiders();
                     this.toggleDeleteMode();
                 })

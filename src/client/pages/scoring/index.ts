@@ -73,8 +73,37 @@ export const ScoringPage = Vue.extend({
 
         openEntryModal() {
             get(`${apiurl}/showClassInfo/byShow/${this.selectedShowId}/${this.selectedShowClassId}`)
-                .then((showClassInfo) => this.showEntriesData = showClassInfo)
-                .then(() => this.showEntriesModal = true);
+                .then((showClassInfo) => {
+                    this.showEntriesData = showClassInfo;
+                    this.showEntriesModal = true;
+                });
+        },
+
+        addEntry(result: Result) {
+            get(`${apiurl}/riders/${result.riderId}`)
+                .then((rider) => {
+                    result.rider = rider;
+                    this.scores.unshift(result);
+                });
+        },
+
+        editEntry(resultId: number) {
+            console.log(`Attempting to refresh score resultID: ${resultId}`);
+            this.$children.forEach((scoringRow) => {
+                if (scoringRow.$props.result.resultId === resultId) {
+                    // @ts-ignore
+                    scoringRow.refreshRow();
+                }
+            });
+        },
+
+        deleteEntry(resultId: number) {
+            console.log(`Deleting score of resultId: ${resultId}`);
+            this.scores.forEach((result, i) => {
+                if (result.resultId === resultId) {
+                    this.scores.splice(i, 1);
+                }
+            });
         }
     }
 });
