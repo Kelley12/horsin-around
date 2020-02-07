@@ -34,11 +34,29 @@
         <input type="number" class="input" v-model="result.faults" v-on:input="unsavedChange()">
     </td>
     <td>
-        <button class="button" :disabled="!isUnsaved" @click="save()">
-            <span class="icon is-small">
-                <i class="far fa-save"></i>
-            </span>
-            <span>Save</span>
-        </button>
+        <div class="field is-grouped">
+            <div class="control">
+                <button
+                    :class="{ button: true, 'is-link': isUnsaved }"
+                    :disabled="!isUnsaved"
+                    @click="save()">
+                    <span class="icon is-small">
+                        <i class="far fa-save"></i>
+                    </span>
+                    <span>Save</span>
+                </button>
+            </div>
+            <div class="control">
+                <button
+                    :class="{ button: true, 'is-danger': isUnsaved }"
+                    :disabled="!isUnsaved"
+                    @click="cancel()">
+                    <span class="icon is-small">
+                        <i class="far fa-trash-alt"></i>
+                    </span>
+                    <span>Cancel</span>
+                </button>
+            </div>
+        </div>
     </td>
 </tr>

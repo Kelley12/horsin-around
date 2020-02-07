@@ -53,6 +53,7 @@ export const ScoringPage = Vue.extend({
                     this.showClassInfo = showClassInfo;
                     if (this.showClassInfo[0]) {
                         this.selectedShowClassId = this.showClassInfo[0].showClass.showClassId;
+                        this.loadScores();
                     }
                 })
                 .catch((e: Error) => console.log(e));

@@ -1,6 +1,6 @@
 import Vue, { PropType } from "vue";
 import { Result } from "../../../../shared";
-import { put, apiurl } from "../../../helpers";
+import { put, apiurl, get } from "../../../helpers";
 
 export const ScoringRow = Vue.extend({
     template: require("./scoring-row.html"),
@@ -25,6 +25,18 @@ export const ScoringRow = Vue.extend({
             })
                 .then(() => this.isUnsaved = false)
                 .catch((e: Error) => this.$emit("error", e.message));
+        },
+
+        cancel() {
+            get(`${apiurl}/results/${this.result.resultId}`)
+                .then((result: Result) => {
+                    this.result.scored = result.scored;
+                    this.result.minutes = result.minutes;
+                    this.result.seconds = result.seconds;
+                    this.result.milliseconds = result.milliseconds;
+                    this.result.faults = result.faults;
+                    this.isUnsaved = false;
+                });
         },
 
         unsavedChange() {

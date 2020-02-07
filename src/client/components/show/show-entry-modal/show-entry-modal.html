@@ -99,7 +99,7 @@
                             <th class="is-hidden">RiderId</th>
                             <th>Rider</th>
                             <th>Horse</th>
-                            <th>Scored</th>
+                            <th>Type</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -111,8 +111,8 @@
                             <td>{{ enteredRider.rider.firstName }} {{ enteredRider.rider.lastName }}</td>
                             <td>{{ enteredRider.horse }}</td>
                             <td style="text-align: center;">
-                                <i v-if="enteredRider.scored" class="fas fa-check"></i>
-                                <i v-else class="fas fa-times"></i>
+                                <i v-if="enteredRider.scored" class="fas fa-award"></i>
+                                <i v-else class="fas fa-graduation-cap"></i>
                             </td>
                             <td>
                                 <button class="button" @click="editEntry(enteredRider)">
