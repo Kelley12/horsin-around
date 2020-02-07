@@ -1,4 +1,4 @@
-export interface IResults {
+export interface IResult {
     showId: number;
     showClassId: number;
     riderId: number;
