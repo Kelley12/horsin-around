@@ -4,7 +4,7 @@ import { prettyFormatDate } from "../../../../shared";
 
 export const ShowClassInfoModal = Vue.extend({
     template: require("./show-class-info-modal.html"),
-    props: ["showClassInfo", "deleteModal"],
+    props: ["showClassInfo", "deleteModal", "disableClassSelect"],
 
     data(): {
         modalText: string,

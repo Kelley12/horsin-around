@@ -8,19 +8,48 @@
         </div>
     </div>
     <h1 class="title">Scoring</h1>
-    <div class="control select">
-        <select v-model="selectedShowId" @change="loadShowClasses()">
-            <option v-for="show in shows" v-bind:value="show.showId">
-                {{ show.name }}
-            </option>
-        </select>
-    </div>
-    <div class="control select">
-        <select v-model="selectedShowClassId" @change="loadScores()">
-            <option v-for="info in showClassInfo" v-bind:value="info.showClass.showClassId">
-                {{ info.showClass.name }}
-            </option>
-        </select>
+    <div class="columns">
+        <div class="column is-half">
+            <div class="control select">
+                <select v-model="selectedShowId" @change="loadShowClasses()">
+                    <option v-for="show in shows" v-bind:value="show.showId">
+                        {{ show.name }}
+                    </option>
+                </select>
+            </div>
+            <div class="control select">
+                <select v-model="selectedShowClassId" @change="loadScores()">
+                    <option v-for="info in showClassInfo" v-bind:value="info.showClass.showClassId">
+                        {{ info.showClass.name }}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="column">
+            Optimum Time
+            <p class="has-text-weight-semibold">
+                {{ showEntriesData.minutes }}:{{ showEntriesData.seconds }}.{{ showEntriesData.milliseconds }}
+            </p>
+        </div>
+        <div class="column">
+            Distance
+            <p class="has-text-weight-semibold">
+                {{ showEntriesData.distance }}
+            </p>
+        </div>
+        <div class="column">
+            Speed
+            <p class="has-text-weight-semibold">
+                {{ showEntriesData.speed }}
+            </p>
+        </div>
+        <div class="column">
+            <button class="button" @click="editShowClassInfo()">
+                <span class="icon is-small">
+                    <i class="fas fa-edit"></i>
+                </span>
+            </button>
+        </div>
     </div>
     <hr>
     <table class="table is-striped is-responsive">
@@ -57,4 +86,10 @@
         @deleteEntry="deleteEntry"
         @close="showEntriesModal = false">
     </show-entry-modal>
+    <show-class-info-modal 
+        v-if="showClassInfoModal"
+        :showClassInfo="showEntriesData"
+        :disableClassSelect="true"
+        @close="showClassInfoModal = false">
+    </show-class-info-modal>
 </div>

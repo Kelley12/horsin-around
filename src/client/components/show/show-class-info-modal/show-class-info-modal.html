@@ -19,7 +19,7 @@
                     <div v-if="!deleteModal" class="field">
                         <label class="label">Class</label>
                         <div class="control select">
-                            <select v-model="showClassInfo.showClassId">
+                            <select v-model="showClassInfo.showClassId" :disabled="disableClassSelect">
                                 <option v-for="showClass in showClasses" v-bind:value="showClass.showClassId">
                                 {{ showClass.name }}
                                 </option>
