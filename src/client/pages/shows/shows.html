@@ -16,6 +16,7 @@
         @addClass="openShowInfoModal(undefined, show.showId)"
         @editClass="openShowInfoModal"
         @deleteClass="deleteShowInfoModal"
+        @showEntries="openShowEntriesModal"
         @open="openModal(show)"
         @deleteModal="deleteShow(show)">
     </show-row>
@@ -35,4 +36,9 @@
         @refreshShow="refreshShow"
         @close="showClassInfoModal = false">
     </show-class-info-modal>
+    <show-entry-modal
+        v-if="showEntriesModal"
+        :showClassInfo="showClassInfo"
+        @close="showEntriesModal = false">
+    </show-entry-modal>
 </div>

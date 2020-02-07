@@ -8,6 +8,11 @@
             <p class="is-size-7 is-italic is-marginless">Distance: {{ info.distance }}</p>
             <p class="is-size-7 is-italic is-marginless">Speed: {{ info.speed }}</p>
             <p class="is-size-7 is-italic is-marginless">Opt Time: {{ info.minutes }}:{{ info.seconds }}.{{ info.milliseconds }}</p>
+            <button class="button" @click="showEntries(info)">
+                <span class="icon is-small">
+                    <i class="fas fa-user-plus"></i>
+                </span>
+            </button>
         </div>
         <button class="button" @click="editClass(info)">
             <span class="icon is-small">

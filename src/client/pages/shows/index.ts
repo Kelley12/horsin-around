@@ -1,12 +1,12 @@
 import Vue from "vue";
-import { ShowRow, ShowModal, ShowClassInfoModal } from "../../components";
+import { ShowRow, ShowModal, ShowClassInfoModal, ShowEntryModal } from "../../components";
 import { state } from "../../state";
 import { get, apiurl } from "../../helpers";
 import { emptyShow, Show, emptyShowClassInfo, ShowClassInfo } from "../../../shared";
 
 export const ShowPage = Vue.extend({
     template: require("./shows.html"),
-    components: { ShowRow, ShowModal, ShowClassInfoModal },
+    components: { ShowRow, ShowModal, ShowClassInfoModal, ShowEntryModal },
     data() { return {
         ...state.get(),
         showsLoading: false,
@@ -14,7 +14,8 @@ export const ShowPage = Vue.extend({
         showClassInfoModal: false,
         show: emptyShow,
         showClassInfo: emptyShowClassInfo,
-        deleteModal: false
+        deleteModal: false,
+        showEntriesModal: false
     }; },
     created() { state.updateVue(this); },
     mounted() {
@@ -100,6 +101,10 @@ export const ShowPage = Vue.extend({
             this.setShowClassInfo(showClassInfo);
             this.deleteModal = true;
             this.showClassInfoModal = true;
+        },
+        openShowEntriesModal(showClassInfo: ShowClassInfo) {
+            this.setShowClassInfo(showClassInfo);
+            this.showEntriesModal = true;
         }
     }
 });

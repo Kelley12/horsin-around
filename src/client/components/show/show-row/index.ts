@@ -37,6 +37,10 @@ export const ShowRow = Vue.extend({
             this.$emit("deleteClass", showClassInfo);
         },
 
+        showEntries(showClassInfo: ShowClassInfo) {
+            this.$emit("showEntries", showClassInfo);
+        },
+
         open() {
             this.$emit("open", this.show);
         },
