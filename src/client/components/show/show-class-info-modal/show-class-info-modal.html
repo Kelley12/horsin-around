@@ -1,0 +1,70 @@
+<div class="modal is-active">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <div class="box">
+            <template v-if="!submitted">
+                <h1 class="title">{{ modalText }} Show Class</h1>
+                <h2 v-if="error" class="subtitle has-text-danger">{{ error }}</h2>
+                <form @submit.prevent="submit()">
+                    <div class="field is-hidden">
+                        <div class="control">
+                            <input type="number" class="input" v-model="showClassInfo.showClassInfoId">
+                        </div>
+                    </div>
+                    <div class="field is-hidden">
+                        <div class="control">
+                            <input type="number" class="input" v-model="showClassInfo.showId">
+                        </div>
+                    </div>
+                    <div v-if="!deleteModal" class="field">
+                        <label class="label">Class</label>
+                        <div class="control select">
+                            <select v-model="showClassInfo.showClassId">
+                                <option v-for="showClass in showClasses" v-bind:value="showClass.showClassId">
+                                {{ showClass.name }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div v-if="!deleteModal" class="field is-grouped">
+                        <div class="control">
+                            <label class="label">Distance</label>
+                            <input type="number" class="input" v-model="showClassInfo.distance">
+                        </div>
+                        <div class="control">
+                            <label class="label">Speed</label>
+                            <input type="number" class="input" v-model="showClassInfo.speed">
+                        </div>
+                    </div>
+                    <div v-if="!deleteModal" class="field">
+                        <label class="label">Optimum Time</label>
+                        <div class="field is-flex">
+                            <input type="number" class="input" v-model="showClassInfo.minutes">
+                            <span class="is-size-4" style="padding: 0 8px">:</span>
+                            <input type="number" class="input" v-model="showClassInfo.seconds">
+                            <span class="is-size-4" style="padding: 0 8px">.</span>
+                            <input type="number" class="input" v-model="showClassInfo.milliseconds">
+                        </div>
+                    </div>
+                    <div class="field is-grouped">
+                        <div class="control">
+                            <button
+                                :class="{ button: true, 'is-link': true, 'is-loading': submitting }"
+                                @click="submit()">
+                                Submit
+                            </button>
+                        </div>
+                        <div class="control">
+                            <button class="button is-text" type="button" @click="close()">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+            </template>
+            <div class="content" v-else>
+                <h1>Updated Show Classes!</h1>
+                <button class="button" @click="close()">Close</button>
+            </div>
+        </div>
+    </div>
+    <button class="modal-close is-large" aria-label="close" @click="close()"></button>
+</div>
