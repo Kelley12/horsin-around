@@ -34,6 +34,9 @@
         <input type="number" class="input" v-model="result.faults" v-on:input="unsavedChange()">
     </td>
     <td>
+        <input type="number" class="input" v-model="result.timePenalty" v-on:input="unsavedChange()">
+    </td>
+    <td>
         <input type="checkbox" v-model="result.eliminated" v-on:input="unsavedChange()">
     </td>
     <td>

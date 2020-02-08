@@ -40,6 +40,9 @@ export class Result implements IResult {
     public faults!: number;
 
     @Column("integer", { default: 0 })
+    public timePenalty!: number;
+
+    @Column("integer", { default: 0 })
     public minutes!: number;
 
     @Column("integer", { default: 0 })
