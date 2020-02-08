@@ -75,8 +75,8 @@ export class ResultController {
 
     async createResult(req: Request, res: Response) {
         const {
-            showId, showClassId, riderId, horse, scored,
-            faults, minutes, seconds, milliseconds
+            showId, showClassId, riderId, horse, scored, faults,
+            timePenalty, eliminated, minutes, seconds, milliseconds
         } = req.body;
 
         if (!showId || !showClassId || !riderId) {
@@ -91,9 +91,11 @@ export class ResultController {
         result.horse = horse;
         result.scored = scored;
         result.faults = faults;
+        result.timePenalty = timePenalty;
         result.minutes = minutes;
         result.seconds = seconds;
         result.milliseconds = milliseconds;
+        result.eliminated = eliminated;
 
         const errors = await validate(result);
         if (errors.length > 0) {
@@ -115,8 +117,8 @@ export class ResultController {
     async updateResult(req: Request, res: Response) {
         const id = parseInt(req.params.id);
         const {
-            showId, showClassId, riderId, horse, scored,
-            faults, minutes, seconds, milliseconds
+            showId, showClassId, riderId, horse, scored, faults,
+            timePenalty, eliminated, minutes, seconds, milliseconds
         } = req.body;
 
         if (!showId || !showClassId || !riderId) {
@@ -141,9 +143,11 @@ export class ResultController {
         result.horse = horse;
         result.scored = scored;
         result.faults = faults;
+        result.timePenalty = timePenalty;
         result.minutes = minutes;
         result.seconds = seconds;
         result.milliseconds = milliseconds;
+        result.eliminated = eliminated;
 
         const errors = await validate(result);
         if (errors.length > 0) {

@@ -21,7 +21,9 @@ export const ScoringRow = Vue.extend({
                 minutes: this.result.minutes,
                 seconds: this.result.seconds,
                 milliseconds: this.result.milliseconds,
-                faults: this.result.faults
+                faults: this.result.faults,
+                timePenalty: this.result.timePenalty,
+                eliminated: this.result.eliminated
             })
                 .then(() => this.isUnsaved = false)
                 .catch((e: Error) => this.$emit("error", e.message));
@@ -40,6 +42,8 @@ export const ScoringRow = Vue.extend({
                     this.result.seconds = result.seconds;
                     this.result.milliseconds = result.milliseconds;
                     this.result.faults = result.faults;
+                    this.result.timePenalty = result.timePenalty;
+                    this.result.eliminated = result.eliminated;
                     this.isUnsaved = false;
                 });
         }

@@ -7,9 +7,11 @@ export interface IResult {
     horse: string;
     scored: boolean;
     faults: number;
+    timePenalty: number;
     minutes: number;
     seconds: number;
     milliseconds: number;
+    eliminated: boolean;
 }
 
 export interface Result extends IResult {
@@ -25,8 +27,10 @@ export const emptyResult: Result = {
     horse: "",
     scored: false,
     faults: 0,
+    timePenalty: 0,
     minutes: 0,
     seconds: 0,
     milliseconds: 0,
+    eliminated: false,
     rider: emptyRider
 };
