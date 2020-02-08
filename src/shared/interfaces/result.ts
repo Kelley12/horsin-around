@@ -10,6 +10,7 @@ export interface IResult {
     minutes: number;
     seconds: number;
     milliseconds: number;
+    eliminated: boolean;
 }
 
 export interface Result extends IResult {
@@ -28,5 +29,6 @@ export const emptyResult: Result = {
     minutes: 0,
     seconds: 0,
     milliseconds: 0,
+    eliminated: false,
     rider: emptyRider
 };

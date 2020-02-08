@@ -48,6 +48,9 @@ export class Result implements IResult {
     @Column("integer", { default: 0 })
     public milliseconds!: number;
 
+    @Column("boolean", { default: false })
+    public eliminated!: boolean;
+
     @CreateDateColumn({ type: "timestamp with time zone" })
     public createDate!: Date;
 

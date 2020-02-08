@@ -76,7 +76,7 @@ export class ResultController {
     async createResult(req: Request, res: Response) {
         const {
             showId, showClassId, riderId, horse, scored,
-            faults, minutes, seconds, milliseconds
+            faults, minutes, seconds, milliseconds, eliminated
         } = req.body;
 
         if (!showId || !showClassId || !riderId) {
@@ -94,6 +94,7 @@ export class ResultController {
         result.minutes = minutes;
         result.seconds = seconds;
         result.milliseconds = milliseconds;
+        result.eliminated = eliminated;
 
         const errors = await validate(result);
         if (errors.length > 0) {
@@ -116,7 +117,7 @@ export class ResultController {
         const id = parseInt(req.params.id);
         const {
             showId, showClassId, riderId, horse, scored,
-            faults, minutes, seconds, milliseconds
+            faults, minutes, seconds, milliseconds, eliminated
         } = req.body;
 
         if (!showId || !showClassId || !riderId) {
@@ -144,6 +145,7 @@ export class ResultController {
         result.minutes = minutes;
         result.seconds = seconds;
         result.milliseconds = milliseconds;
+        result.eliminated = eliminated;
 
         const errors = await validate(result);
         if (errors.length > 0) {
