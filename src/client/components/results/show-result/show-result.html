@@ -1,0 +1,9 @@
+<div class="box">
+    <strong class="is-size-4">{{ show.name }}</strong>
+    <small>{{ formatDate(show.showDate) }}</small>
+    <hr>
+    <class-result
+        v-for="info in showClassInfo"
+        :showClassInfo="info">
+    </class-result>
+</div>

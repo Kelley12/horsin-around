@@ -1,0 +1,39 @@
+<tr>
+    <td>
+        1
+    </td>
+    <td class="is-hidden">
+        {{ result.resultId }}
+    </t>
+    <td class="is-hidden">
+        {{ result.showId }}
+    </td>
+    <td class="is-hidden">
+        {{ result.showClassId }}
+    </td>
+    <td class="is-hidden">
+        {{ result.riderId }}
+    </td>
+    <td>
+        {{ result.rider.firstName }} {{ result.rider.lastName }}
+    </td>
+    <td>
+        {{ result.horse }}
+    </td>
+    <td style="text-align: center;">
+        <i v-if="result.scored" class="fas fa-award"></i>
+        <i v-else class="fas fa-graduation-cap"></i>
+    </td>
+    <td>
+        {{ result.minutes }}:{{ result.seconds }}.{{ result.milliseconds }}
+    </td>
+    <td>
+        {{ result.faults }}
+    </td>
+    <td>
+        {{ result.timePenalty }}
+    </td>
+    <td>
+        {{ result.eliminated }}
+    </td>
+</tr>
