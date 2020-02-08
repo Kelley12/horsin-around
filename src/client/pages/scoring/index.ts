@@ -87,6 +87,15 @@ export const ScoringPage = Vue.extend({
             this.showEntriesModal = true;
         },
 
+        saveAll() {
+            this.$children.forEach((scoringRow) => {
+                if (scoringRow.$data.isUnsaved) {
+                    // @ts-ignore
+                    scoringRow.save();
+                }
+            });
+        },
+
         addEntry(result: Result) {
             get(`${apiurl}/riders/${result.riderId}`)
                 .then((rider) => {
