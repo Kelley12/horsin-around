@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import { validate } from "class-validator";
 import { logger } from "../utils";
 import { getRepository } from "typeorm";
-import { Show } from "../entity";
+import { Show, Result, ShowClassInfo } from "../entity";
 
 export class ShowController {
     private readonly emitter = new EventEmitter2();
@@ -107,8 +107,16 @@ export class ShowController {
     async deleteShow(req: Request, res: Response) {
         const id = parseInt(req.params.id);
 
+        const resultRepository = getRepository(Result);
+        const showClassInfoRepository = getRepository(ShowClassInfo);
         const showRepository = getRepository(Show);
         try {
+            // Delete all show results
+            await resultRepository.delete({ showId: id });
+
+            // Delete all showClasses
+            await showClassInfoRepository.delete({ showId: id });
+
             await showRepository.findOneOrFail(id);
         } catch (error) {
             logger.log("error", `API Error:`);
