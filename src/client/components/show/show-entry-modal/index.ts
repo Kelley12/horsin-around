@@ -39,6 +39,7 @@ export const ShowEntryModal = Vue.extend({
                     showId: this.showClassInfo.showId,
                     showClassId: this.showClassInfo.showClassId,
                     riderId: this.result.riderId,
+                    riderNumber: this.result.riderNumber,
                     horse: this.result.horse,
                     scored: this.result.scored
                 })
@@ -54,6 +55,7 @@ export const ShowEntryModal = Vue.extend({
                     showId: this.showClassInfo.showId,
                     showClassId: this.showClassInfo.showClassId,
                     riderId: this.result.riderId,
+                    riderNumber: this.result.riderNumber,
                     horse: this.result.horse,
                     scored: this.result.scored
                 })
@@ -85,6 +87,7 @@ export const ShowEntryModal = Vue.extend({
             this.error = "";
             this.result.resultId = 0;
             this.result.riderId = 0;
+            this.result.riderNumber = 0;
             this.result.horse = "";
             this.result.scored = false;
         },
@@ -104,6 +107,7 @@ export const ShowEntryModal = Vue.extend({
         editEntry(entry: Result) {
             this.result.resultId = entry.resultId;
             this.result.riderId = entry.riderId;
+            this.result.riderNumber = entry.riderNumber;
             this.result.horse = entry.horse;
             this.result.scored = entry.scored;
 
