@@ -75,7 +75,7 @@ export class ResultController {
 
     async createResult(req: Request, res: Response) {
         const {
-            showId, showClassId, riderId, horse, scored, faults,
+            showId, showClassId, riderId, riderNumber, horse, scored, faults,
             timePenalty, eliminated, minutes, seconds, milliseconds
         } = req.body;
 
@@ -88,6 +88,7 @@ export class ResultController {
         result.showId = showId;
         result.showClassId = showClassId;
         result.riderId = riderId;
+        result.riderNumber = riderNumber;
         result.horse = horse;
         result.scored = scored;
         result.faults = faults;
@@ -117,7 +118,7 @@ export class ResultController {
     async updateResult(req: Request, res: Response) {
         const id = parseInt(req.params.id);
         const {
-            showId, showClassId, riderId, horse, scored, faults,
+            showId, showClassId, riderId, riderNumber, horse, scored, faults,
             timePenalty, eliminated, minutes, seconds, milliseconds
         } = req.body;
 
@@ -140,6 +141,7 @@ export class ResultController {
         result.showId = showId;
         result.showClassId = showClassId;
         result.riderId = riderId;
+        result.riderNumber = riderNumber;
         result.horse = horse;
         result.scored = scored;
         result.faults = faults;

@@ -4,6 +4,7 @@ export interface IResult {
     showId: number;
     showClassId: number;
     riderId: number;
+    riderNumber: number;
     horse: string;
     scored: boolean;
     faults: number;
@@ -24,6 +25,7 @@ export const emptyResult: Result = {
     showId: 0,
     showClassId: 0,
     riderId: 0,
+    riderNumber: 0,
     horse: "",
     scored: false,
     faults: 0,

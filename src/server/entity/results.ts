@@ -30,6 +30,9 @@ export class Result implements IResult {
     @JoinColumn({ name: "riderId" })
     public rider?: Rider;
 
+    @Column("integer", { default: 0 })
+    public riderNumber!: number;
+
     @Column("varchar", { length: 50, default: "N/A" })
     public horse!: string;
 
