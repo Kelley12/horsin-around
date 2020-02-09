@@ -30,6 +30,9 @@ export class Result implements IResult {
     @JoinColumn({ name: "riderId" })
     public rider?: Rider;
 
+    @Column("integer", { default: 0 })
+    public riderNumber!: number;
+
     @Column("varchar", { length: 50, default: "N/A" })
     public horse!: string;
 
@@ -40,6 +43,9 @@ export class Result implements IResult {
     public faults!: number;
 
     @Column("integer", { default: 0 })
+    public timePenalty!: number;
+
+    @Column("integer", { default: 0 })
     public minutes!: number;
 
     @Column("integer", { default: 0 })
@@ -47,6 +53,9 @@ export class Result implements IResult {
 
     @Column("integer", { default: 0 })
     public milliseconds!: number;
+
+    @Column("boolean", { default: false })
+    public eliminated!: boolean;
 
     @CreateDateColumn({ type: "timestamp with time zone" })
     public createDate!: Date;

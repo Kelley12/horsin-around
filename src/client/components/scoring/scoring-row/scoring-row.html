@@ -12,6 +12,9 @@
         {{ result.riderId }}
     </td>
     <td>
+        {{ result.riderNumber }}
+    </td>
+    <td>
         {{ result.rider.firstName }} {{ result.rider.lastName }}
     </td>
     <td>
@@ -32,6 +35,12 @@
     </td>
     <td>
         <input type="number" class="input" v-model="result.faults" v-on:input="unsavedChange()">
+    </td>
+    <td>
+        <input type="number" class="input" v-model="result.timePenalty" v-on:input="unsavedChange()">
+    </td>
+    <td>
+        <input type="checkbox" v-model="result.eliminated" v-on:input="unsavedChange()">
     </td>
     <td>
         <div class="field is-grouped">

@@ -8,6 +8,18 @@ export const ScoringPage = Vue.extend({
     template: require("./scoring.html"),
     components: { ScoringRow, ShowEntryModal, ShowClassInfoModal },
     props: ["showId", "showClassId"],
+    beforeRouteLeave(_to, _from, next) {
+        if (this.unsavedScores()) {
+            const answer = window.confirm("Do you really want to leave? you have unsaved changes!");
+            if (answer) {
+                next();
+            } else {
+                next(false);
+            }
+        } else {
+            next();
+        }
+    },
     data(): {
         selectedShowId: number,
         selectedShowClassId: number,
@@ -28,7 +40,16 @@ export const ScoringPage = Vue.extend({
             showClassInfoModal: false
         };
     },
-    created() { state.updateVue(this); },
+    created() {
+        state.updateVue(this);
+        const unsavedChanges = this.unsavedScores();
+        window.addEventListener("beforeunload", function(event) {
+            if (unsavedChanges) {
+                return undefined;
+            }
+            event.returnValue = "Unsaved Changes";
+        });
+    },
     mounted() {
         this.loadShows();
     },
@@ -87,6 +108,25 @@ export const ScoringPage = Vue.extend({
             this.showEntriesModal = true;
         },
 
+        unsavedScores(): boolean {
+            let unsaved: boolean = false;
+            this.$children.forEach((scoringRow) => {
+                if (scoringRow.$data.isUnsaved) {
+                    unsaved = true;
+                }
+            });
+            return unsaved;
+        },
+
+        saveAll() {
+            this.$children.forEach((scoringRow) => {
+                if (scoringRow.$data.isUnsaved) {
+                    // @ts-ignore
+                    scoringRow.save();
+                }
+            });
+        },
+
         addEntry(result: Result) {
             get(`${apiurl}/riders/${result.riderId}`)
                 .then((rider) => {
@@ -96,9 +136,8 @@ export const ScoringPage = Vue.extend({
         },
 
         editEntry(resultId: number) {
-            console.log(`Attempting to refresh score resultID: ${resultId}`);
             this.$children.forEach((scoringRow) => {
-                if (scoringRow.$props.result.resultId === resultId) {
+                if (scoringRow.$props.result && scoringRow.$props.result.resultId === resultId) {
                     // @ts-ignore
                     scoringRow.refreshRow();
                 }

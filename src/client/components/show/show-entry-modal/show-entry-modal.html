@@ -35,6 +35,12 @@
                         </div>
                     </div>
                     <div class="field">
+                        <label class="label">Rider Number</label>
+                        <div class="control">
+                            <input type="number" class="input" v-model="result.riderNumber">
+                        </div>
+                    </div>
+                    <div class="field">
                         <label class="label">Horse</label>
                         <div class="control">
                             <input type="text" class="input" v-model="result.horse">
@@ -97,6 +103,7 @@
                             <th class="is-hidden">ShowId</th>
                             <th class="is-hidden">ShowClassId</th>
                             <th class="is-hidden">RiderId</th>
+                            <th>Rider #</th>
                             <th>Rider</th>
                             <th>Horse</th>
                             <th>Type</th>
@@ -108,6 +115,7 @@
                             <td class="is-hidden">{{ enteredRider.showId }}</td>
                             <td class="is-hidden">{{ enteredRider.showClassId }}</td>
                             <td class="is-hidden">{{ enteredRider.riderId }}</td>
+                            <td>{{ enteredRider.riderNumber }}</td>
                             <td>{{ enteredRider.rider.firstName }} {{ enteredRider.rider.lastName }}</td>
                             <td>{{ enteredRider.horse }}</td>
                             <td style="text-align: center;">
