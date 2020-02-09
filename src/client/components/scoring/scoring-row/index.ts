@@ -36,6 +36,7 @@ export const ScoringRow = Vue.extend({
         refreshRow() {
             get(`${apiurl}/results/${this.result.resultId}`)
                 .then((result: Result) => {
+                    this.result.riderNumber = result.riderNumber;
                     this.result.horse = result.horse;
                     this.result.scored = result.scored;
                     this.result.minutes = result.minutes;

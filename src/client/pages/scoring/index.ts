@@ -136,9 +136,8 @@ export const ScoringPage = Vue.extend({
         },
 
         editEntry(resultId: number) {
-            console.log(`Attempting to refresh score resultID: ${resultId}`);
             this.$children.forEach((scoringRow) => {
-                if (scoringRow.$props.result.resultId === resultId) {
+                if (scoringRow.$props.result && scoringRow.$props.result.resultId === resultId) {
                     // @ts-ignore
                     scoringRow.refreshRow();
                 }
