@@ -1,2 +1,2 @@
-export * from "./class-result"
-export * from "./show-result"
+export * from "./class-result";
+export * from "./show-result";

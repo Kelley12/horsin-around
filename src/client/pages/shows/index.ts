@@ -18,10 +18,7 @@ export const ShowPage = Vue.extend({
         showEntriesModal: false
     }; },
     created() { state.updateVue(this); },
-    mounted() {
-        this.loadShows();
-    },
-
+    mounted() { this.loadShows(); },
     computed: {
         hasNoShows() {
             if (this.shows.length < 1) {

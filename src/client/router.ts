@@ -6,8 +6,9 @@ import { state } from "./state";
 export const router = new VueRouter({
     linkActiveClass: "is-active",
     routes: [
-        { path: "/", redirect: "/shows", meta: { admin: false } },
+        { path: "/", redirect: "/home", meta: { admin: false } },
         { path: "/home", component: HomePage, meta: { admin: false } },
+        { path: "/home/:showId", component: HomePage, meta: { admin: false } },
         { path: "/login", component: LoginPage, meta: { admin: false } },
         { path: "/shows", component: ShowPage, meta: { admin: false } },
         { path: "/riders", component: RiderPage, meta: { admin: false } },
