@@ -1,6 +1,30 @@
-<div class="box is-inline-flex" style="margin-right: 1.5rem">
-    <div class="content">
+<div class="box is-inline-flex">
+    <div class="container">
         <span class="has-text-weight-bold">{{ showClassInfo.showClass.name }}</span>
         <small>Optimum Time {{ showClassInfo.minutes }}:{{ showClassInfo.seconds }}.{{ showClassInfo.milliseconds }}</small>
-    </div>
+    </di>
+    <hr>
+    <table class="table is-striped is-full-width">
+        <thead>
+            <tr>
+                <th>Position</th>
+                <th>Rider Number</th>
+                <th>Rider Name</th>
+                <th>Horse</th>
+                <th>Type</th>
+                <th>Ride Time</th>
+                <th>Faults</th>
+                <th>Time Penalties</th>
+                <th>Elimination</th>
+            </tr>
+        </thead>
+        <tbody>
+            <result-row
+                v-for="placing in placings"
+                :placing="placing"
+                :key="placing.resultId">
+            </result-row
+            >
+        </tbody>
+    </table>
 </div>

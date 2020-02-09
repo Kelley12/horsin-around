@@ -1,3 +1,4 @@
+export * from "./placing";
 export * from "./show-class";
 export * from "./result";
 export * from "./rider";

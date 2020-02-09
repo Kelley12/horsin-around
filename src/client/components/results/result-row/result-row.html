@@ -1,39 +1,42 @@
 <tr>
     <td>
-        1
+        {{ placing.position }}
     </td>
     <td class="is-hidden">
-        {{ result.resultId }}
+        {{ placing.resultId }}
     </t>
     <td class="is-hidden">
-        {{ result.showId }}
+        {{ placing.showId }}
     </td>
     <td class="is-hidden">
-        {{ result.showClassId }}
+        {{ placing.showClassId }}
     </td>
     <td class="is-hidden">
-        {{ result.riderId }}
+        {{ placing.riderId }}
     </td>
     <td>
-        {{ result.rider.firstName }} {{ result.rider.lastName }}
+        {{ placing.riderNumber }}
     </td>
     <td>
-        {{ result.horse }}
+        {{ placing.rider.firstName }} {{ placing.rider.lastName }}
+    </td>
+    <td>
+        {{ placing.horse }}
     </td>
     <td style="text-align: center;">
-        <i v-if="result.scored" class="fas fa-award"></i>
+        <i v-if="placing.scored" class="fas fa-award"></i>
         <i v-else class="fas fa-graduation-cap"></i>
     </td>
     <td>
-        {{ result.minutes }}:{{ result.seconds }}.{{ result.milliseconds }}
+        {{ placing.minutes }}:{{ placing.seconds }}.{{ placing.milliseconds }}
     </td>
     <td>
-        {{ result.faults }}
+        {{ placing.faults }}
     </td>
     <td>
-        {{ result.timePenalty }}
+        {{ placing.timePenalty }}
     </td>
     <td>
-        {{ result.eliminated }}
+        {{ placing.eliminated }}
     </td>
 </tr>

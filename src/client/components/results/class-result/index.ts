@@ -2,24 +2,24 @@ import Vue, { PropType } from "vue";
 import { state } from "../../../state";
 import { ShowClassInfo } from "../../../../shared";
 import { get, apiurl } from "../../../helpers";
+import { ResultRow } from "../result-row";
 
 export const ClassResult = Vue.extend({
     template: require("./class-result.html"),
-    props: {
-        showClassInfo: Object as PropType<ShowClassInfo>
-    },
+    props: { showClassInfo: Object as PropType<ShowClassInfo> },
+    components: { ResultRow },
     data() {
         return {
             ...state.get(),
-            showClassResults: []
+            placings: []
         };
     },
     created() { state.updateVue(this); },
-    mounted() { this.getShowClassResults(); },
+    mounted() { this.getShowClassPlacing(); },
     methods: {
-        getShowClassResults() {
+        getShowClassPlacing() {
             get(`${apiurl}/results/byShow/${this.showClassInfo.showId}/${this.showClassInfo.showClassId}`)
-                .then((results) => this.showClassResults = results);
+                .then((placings) => this.placings = placings);
         }
     }
 });
