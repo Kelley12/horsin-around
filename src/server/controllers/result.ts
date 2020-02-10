@@ -89,7 +89,7 @@ export class ResultController {
             const optimumTime =
                 (showClassInfo.minutes * 60000) +
                 (showClassInfo.seconds * 1000) +
-                (showClassInfo.milliseconds * 1);
+                (showClassInfo.milliseconds * 100);
 
             const scoredResults = await resultRepository.find({
                 relations: ["rider"],
