@@ -1,6 +1,7 @@
 <tr>
     <td>
-        {{ index + 1 }}
+        <span v-if="!result.eliminated && result.scored">{{ index + 1 }}</span>
+        <span v-else>-</span>
     </td>
     <td class="is-hidden">
         {{ result.resultId }}
@@ -36,7 +37,7 @@
     <td>
         {{ result.timePenalty }}
     </td>
-    <td>
-        {{ result.eliminated }}
-    </td>
+    <th>
+        <span v-if="result.eliminated">E</span>
+    </th>
 </tr>
