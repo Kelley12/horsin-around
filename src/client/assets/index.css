@@ -33,11 +33,11 @@ table {
 .title, .subtitle, .content {
     color: #555;
 }
-  
+
 /********************************
  * Login Box
  *******************************/
-  
+
 .login-container {
     width: 100%;
     display: grid;
@@ -51,4 +51,13 @@ table {
   
 .is-hidden-touch.login-padding {
     height: 100px;
+}
+
+/********************************
+ * Results page
+ *******************************/
+
+.table tr.is-selected {
+    background-color: #eef6fc;
+    color: #000;
 }
