@@ -1,4 +1,4 @@
-<tr>
+<tr :class="{'is-selected': highlighted && !result.eliminated && result.scored}">
     <td>
         <span v-if="!result.eliminated && result.scored">{{ index + 1 }}</span>
         <span v-else>-</span>

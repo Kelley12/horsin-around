@@ -11,15 +11,26 @@ export const ClassResult = Vue.extend({
     data() {
         return {
             ...state.get(),
-            results: []
+            results: [],
+            highlightPlaces: 0
         };
     },
     created() { state.updateVue(this); },
-    mounted() { this.getShowClassPlacing(); },
+    mounted() {
+        this.getShowClassPlacing();
+        this.getShowAwardPlacings();
+    },
     methods: {
         getShowClassPlacing() {
             get(`${apiurl}/results/placing/${this.showClassInfo.showId}/${this.showClassInfo.showClassId}`)
                 .then((results) => this.results = results);
+        },
+        getShowAwardPlacings() {
+            this.shows.forEach((show) => {
+                if (show.showId === parseInt(this.$route.params.showId)) {
+                    this.highlightPlaces = show.awardPlaces;
+                }
+            });
         }
     }
 });

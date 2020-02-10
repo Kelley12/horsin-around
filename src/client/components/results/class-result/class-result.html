@@ -23,7 +23,8 @@
                 v-for="(result, index) in results"
                 :result="result"
                 :index="index"
-                :key="result.resultId">
+                :key="result.resultId"
+                :highlighted="index < highlightPlaces">
             </result-row
             >
         </tbody>

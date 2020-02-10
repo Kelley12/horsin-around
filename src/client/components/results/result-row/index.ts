@@ -5,7 +5,8 @@ export const ResultRow = Vue.extend({
     template: require("./result-row.html"),
     props: {
         result: Object as PropType<Result>,
-        index: Number
+        index: Number,
+        highlighted: Boolean
     },
     methods: {
         formatSeconds(seconds: number): string {
