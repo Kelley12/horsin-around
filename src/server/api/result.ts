@@ -8,6 +8,7 @@ export function resultRouter(): express.Router {
     router.get("/:id", resultController.getResult);
     router.get("/byShow/:showId", resultController.getResultByShow);
     router.get("/byShow/:showId/:showClassId", resultController.getResultByShowClass);
+    router.get("/placing/:showId/:showClassId", resultController.getPlacingByShowClass);
     router.post("/", resultController.createResult);
     router.put("/:id", resultController.updateResult);
     router.delete("/:id", resultController.deleteResult);
