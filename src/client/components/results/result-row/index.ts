@@ -6,5 +6,10 @@ export const ResultRow = Vue.extend({
     props: {
         result: Object as PropType<Result>,
         index: Number
+    },
+    methods: {
+        formatSeconds(seconds: number): string {
+            return seconds > 9 ? `${seconds}` : `0${seconds}`;
+        }
     }
 });

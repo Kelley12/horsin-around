@@ -29,7 +29,7 @@
         <i v-else class="fas fa-graduation-cap"></i>
     </td>
     <td>
-        {{ result.minutes }}:{{ result.seconds }}.{{ result.milliseconds }}
+        {{ result.minutes }}:{{ formatSeconds(result.seconds) }}.{{ result.milliseconds }}
     </td>
     <td>
         {{ result.faults }}
