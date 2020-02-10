@@ -1,4 +1,4 @@
-<tr>
+<tr :class="{'is-selected': highlighted && !result.eliminated && result.scored}">
     <td>
         <span v-if="!result.eliminated && result.scored">{{ index + 1 }}</span>
         <span v-else>-</span>
@@ -29,7 +29,7 @@
         <i v-else class="fas fa-graduation-cap"></i>
     </td>
     <td>
-        {{ result.minutes }}:{{ result.seconds }}.{{ result.milliseconds }}
+        {{ result.minutes }}:{{ formatSeconds(result.seconds) }}.{{ result.milliseconds }}
     </td>
     <td>
         {{ result.faults }}

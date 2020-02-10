@@ -23,9 +23,12 @@
                 v-for="(result, index) in results"
                 :result="result"
                 :index="index"
-                :key="result.resultId">
-            </result-row
-            >
+                :key="result.resultId"
+                :highlighted="index < highlightPlaces">
+            </result-row>
         </tbody>
     </table>
+    <div v-if="onlyPlacings" class="has-text-centered">
+        <button class="button is-small" @click="showAll">Show All Placings</button>
+    </div>
 </div>

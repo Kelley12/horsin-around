@@ -24,6 +24,12 @@
                             <input type="text" class="input" v-model="show.showDate">
                         </div>
                     </div>
+                    <div v-if="!deleteModal" class="field">
+                        <label class="label">Award Places</label>
+                        <div class="control">
+                            <input type="number" class="input" v-model="show.awardPlaces">
+                        </div>
+                    </div>
                     <div v-if="deleteModal" class="field">
                         Are you sure you want to delete {{show.name}}?
                     </div>

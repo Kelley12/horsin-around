@@ -16,6 +16,9 @@ export class Show implements IShow {
     @Column("date")
     public showDate!: Date;
 
+    @Column("integer", { default: 4 })
+    public awardPlaces!: number;
+
     @OneToMany(_ => Result, result => result.show)
     public results!: Result[];
 

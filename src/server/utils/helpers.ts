@@ -1,5 +1,6 @@
-import { Router } from "express";
-import { Result } from "../entity";
+import { Request, Router } from "express";
+import { Result, ShowClassInfo } from "../entity";
+import { getRepository } from "typeorm";
 
 type Wrapper = ((router: Router) => void);
 
@@ -35,4 +36,46 @@ export function compareElimination(resultA: Result, resultB: Result) {
     if (resultA.eliminated && !resultB.eliminated) return 1;
     if (!resultA.eliminated && resultB.eliminated) return -1;
     return 0;
+}
+
+export async function getSortedPlacing(req: Request): Promise<Result[]> {
+    let placings: Result[] = [];
+        const showId = parseInt(req.params.showId);
+        const showClassId = parseInt(req.params.showClassId);
+
+        const resultRepository = getRepository(Result);
+        const showClassInfoRepository = getRepository(ShowClassInfo);
+
+        const showClassInfo = await showClassInfoRepository.findOneOrFail({
+            where: { showId, showClassId }
+        });
+
+        const optimumTime =
+            (showClassInfo.minutes * 60000) +
+            (showClassInfo.seconds * 1000) +
+            (showClassInfo.milliseconds * 100);
+
+        const scoredResults = await resultRepository.find({
+            relations: ["rider"],
+            join: { alias: "result",
+                leftJoinAndSelect: {
+                    show: "result.show",
+                    rider: "result.rider",
+                }
+            },
+            where: { showId, showClassId, scored: true }
+        });
+
+        placings = placings.concat(sortByTimeDiff(scoredResults, optimumTime));
+
+        const schoolingResults = await resultRepository.find({
+            relations: ["rider"],
+            join: { alias: "result", leftJoinAndSelect: {
+                showClass: "result.rider"
+            }},
+            where: { showId, showClassId, scored: false }
+        });
+
+        placings = placings.concat(sortByTimeDiff(schoolingResults, optimumTime));
+        return placings;
 }
