@@ -1,9 +1,9 @@
 import { EventEmitter2 } from "eventemitter2";
 import { Request, Response } from "express";
 import { validate } from "class-validator";
-import { logger, sortByTimeDiff } from "../utils";
+import { logger, getSortedPlacing } from "../utils";
 import { getRepository } from "typeorm";
-import { Result, ShowClassInfo } from "../entity";
+import { Result } from "../entity";
 
 export class ResultController {
     private readonly emitter = new EventEmitter2();
@@ -75,43 +75,25 @@ export class ResultController {
 
     async getPlacingByShowClass(req: Request, res: Response) {
         try {
-            let placings: Result[] = [];
-            const showId = parseInt(req.params.showId);
-            const showClassId = parseInt(req.params.showClassId);
+            const placings = await getSortedPlacing(req);
 
-            const resultRepository = getRepository(Result);
-            const showClassInfoRepository = getRepository(ShowClassInfo);
+            res.send(placings);
+        } catch (error) {
+            logger.log("error", `API Error:`);
+            logger.log("error", error);
+            res.status(404).send("Result not found");
+        }
+    }
 
-            const showClassInfo = await showClassInfoRepository.findOneOrFail({
-                where: { showId, showClassId }
-            });
-
-            const optimumTime =
-                (showClassInfo.minutes * 60000) +
-                (showClassInfo.seconds * 1000) +
-                (showClassInfo.milliseconds * 100);
-
-            const scoredResults = await resultRepository.find({
-                relations: ["rider"],
-                join: { alias: "result",
-                    leftJoinAndSelect: {
-                        rider: "result.rider",
-                    }
-                },
-                where: { showId, showClassId, scored: true }
-            });
-
-            placings = placings.concat(sortByTimeDiff(scoredResults, optimumTime));
-
-            const schoolingResults = await resultRepository.find({
-                relations: ["rider"],
-                join: { alias: "result", leftJoinAndSelect: {
-                    showClass: "result.rider"
-                }},
-                where: { showId, showClassId, scored: false }
-            });
-
-            placings = placings.concat(sortByTimeDiff(schoolingResults, optimumTime));
+    async getTopPlacingByShowClass(req: Request, res: Response) {
+        try {
+            let placings = await getSortedPlacing(req);
+            if (placings.length > 1) {
+                const numOfPlacings = placings[0].show?.awardPlaces || 4;
+                if (placings.length > numOfPlacings) {
+                    placings = placings.slice(0, numOfPlacings);
+                }
+            }
 
             res.send(placings);
         } catch (error) {

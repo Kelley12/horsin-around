@@ -12,7 +12,8 @@ export const ClassResult = Vue.extend({
         return {
             ...state.get(),
             results: [],
-            highlightPlaces: 0
+            highlightPlaces: 0,
+            onlyPlacings: true
         };
     },
     created() { state.updateVue(this); },
@@ -22,8 +23,13 @@ export const ClassResult = Vue.extend({
     },
     methods: {
         getShowClassPlacing() {
-            get(`${apiurl}/results/placing/${this.showClassInfo.showId}/${this.showClassInfo.showClassId}`)
-                .then((results) => this.results = results);
+            get(`${apiurl}/results/placing/top/${this.showClassInfo.showId}/${this.showClassInfo.showClassId}`)
+                .then((results) => {
+                    this.results = results;
+                    if (results.length < this.highlightPlaces) {
+                        this.onlyPlacings = false;
+                    }
+                });
         },
         getShowAwardPlacings() {
             this.shows.forEach((show) => {
@@ -31,6 +37,13 @@ export const ClassResult = Vue.extend({
                     this.highlightPlaces = show.awardPlaces;
                 }
             });
+        },
+        showAll() {
+            get(`${apiurl}/results/placing/${this.showClassInfo.showId}/${this.showClassInfo.showClassId}`)
+                .then((results) => {
+                    this.results = results;
+                    this.onlyPlacings = false;
+                });
         }
     }
 });
