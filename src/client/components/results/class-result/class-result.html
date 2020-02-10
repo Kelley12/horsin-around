@@ -20,9 +20,10 @@
         </thead>
         <tbody>
             <result-row
-                v-for="placing in placings"
-                :placing="placing"
-                :key="placing.resultId">
+                v-for="(result, index) in results"
+                :result="result"
+                :index="index"
+                :key="result.resultId">
             </result-row
             >
         </tbody>

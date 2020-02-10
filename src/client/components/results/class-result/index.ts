@@ -11,15 +11,15 @@ export const ClassResult = Vue.extend({
     data() {
         return {
             ...state.get(),
-            placings: []
+            results: []
         };
     },
     created() { state.updateVue(this); },
     mounted() { this.getShowClassPlacing(); },
     methods: {
         getShowClassPlacing() {
-            get(`${apiurl}/results/byShow/${this.showClassInfo.showId}/${this.showClassInfo.showClassId}`)
-                .then((placings) => this.placings = placings);
+            get(`${apiurl}/results/placing/${this.showClassInfo.showId}/${this.showClassInfo.showClassId}`)
+                .then((results) => this.results = results);
         }
     }
 });

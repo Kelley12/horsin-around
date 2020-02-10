@@ -1,7 +1,10 @@
 import Vue, { PropType } from "vue";
-import { Placing } from "../../../../shared";
+import { Result } from "../../../../shared";
 
 export const ResultRow = Vue.extend({
     template: require("./result-row.html"),
-    props: { placing: Object as PropType<Placing> }
+    props: {
+        result: Object as PropType<Result>,
+        index: Number
+    }
 });

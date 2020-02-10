@@ -1,9 +1,9 @@
 import { EventEmitter2 } from "eventemitter2";
 import { Request, Response } from "express";
 import { validate } from "class-validator";
-import { logger } from "../utils";
+import { logger, sortByTimeDiff } from "../utils";
 import { getRepository } from "typeorm";
-import { Result } from "../entity";
+import { Result, ShowClassInfo } from "../entity";
 
 export class ResultController {
     private readonly emitter = new EventEmitter2();
@@ -61,11 +61,59 @@ export class ResultController {
             const results = await resultRepository.find({
                 relations: ["rider"],
                 join: { alias: "result", leftJoinAndSelect: {
-                    showClass: "result.rider"
+                    rider: "result.rider"
                 }},
-                where: { showId, showClassId}
+                where: { showId, showClassId }
             });
             res.send(results);
+        } catch (error) {
+            logger.log("error", `API Error:`);
+            logger.log("error", error);
+            res.status(404).send("Result not found");
+        }
+    }
+
+    async getPlacingByShowClass(req: Request, res: Response) {
+        try {
+            let placings: Result[] = [];
+            const showId = parseInt(req.params.showId);
+            const showClassId = parseInt(req.params.showClassId);
+
+            const resultRepository = getRepository(Result);
+            const showClassInfoRepository = getRepository(ShowClassInfo);
+
+            const showClassInfo = await showClassInfoRepository.findOneOrFail({
+                where: { showId, showClassId }
+            });
+
+            const optimumTime =
+                (showClassInfo.minutes * 60000) +
+                (showClassInfo.seconds * 1000) +
+                (showClassInfo.milliseconds * 1);
+
+            const scoredResults = await resultRepository.find({
+                relations: ["rider"],
+                join: { alias: "result",
+                    leftJoinAndSelect: {
+                        rider: "result.rider",
+                    }
+                },
+                where: { showId, showClassId, scored: true }
+            });
+
+            placings = placings.concat(sortByTimeDiff(scoredResults, optimumTime));
+
+            const schoolingResults = await resultRepository.find({
+                relations: ["rider"],
+                join: { alias: "result", leftJoinAndSelect: {
+                    showClass: "result.rider"
+                }},
+                where: { showId, showClassId, scored: false }
+            });
+
+            placings = placings.concat(sortByTimeDiff(schoolingResults, optimumTime));
+
+            res.send(placings);
         } catch (error) {
             logger.log("error", `API Error:`);
             logger.log("error", error);
@@ -76,7 +124,7 @@ export class ResultController {
     async createResult(req: Request, res: Response) {
         const {
             showId, showClassId, riderId, riderNumber, horse, scored, faults,
-            timePenalty, eliminated, minutes, seconds, milliseconds
+            timePenalty, eliminated, minutes, seconds, milliseconds, timeInMs
         } = req.body;
 
         if (!showId || !showClassId || !riderId) {
@@ -96,6 +144,7 @@ export class ResultController {
         result.minutes = minutes;
         result.seconds = seconds;
         result.milliseconds = milliseconds;
+        result.timeInMs = timeInMs;
         result.eliminated = eliminated;
 
         const errors = await validate(result);
@@ -119,7 +168,7 @@ export class ResultController {
         const id = parseInt(req.params.id);
         const {
             showId, showClassId, riderId, riderNumber, horse, scored, faults,
-            timePenalty, eliminated, minutes, seconds, milliseconds
+            timePenalty, eliminated, minutes, seconds, milliseconds, timeInMs
         } = req.body;
 
         if (!showId || !showClassId || !riderId) {
@@ -149,6 +198,7 @@ export class ResultController {
         result.minutes = minutes;
         result.seconds = seconds;
         result.milliseconds = milliseconds;
+        result.timeInMs = timeInMs;
         result.eliminated = eliminated;
 
         const errors = await validate(result);
