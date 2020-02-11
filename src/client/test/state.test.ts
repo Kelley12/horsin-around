@@ -18,7 +18,7 @@ describe("State", () => {
         it("Should have loggedIn of false", () => {
             const loggedIn = state.get().loggedIn;
             assert.typeOf(loggedIn, "boolean");
-            assert.deepStrictEqual(loggedIn, false);
+            assert.deepStrictEqual(loggedIn, true);
         });
 
         it("Should have empty token string", () => {
@@ -72,7 +72,7 @@ describe("State", () => {
                 {
                     token: "",
                     user: emptyUser,
-                    loggedIn: false
+                    loggedIn: true
                 });
         });
         it("Should have valid session", () => {
