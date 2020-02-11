@@ -6,11 +6,11 @@ node_js:
 sudo: false
 
 services:
-  - postgresql
+  - mysql
 
 env:
   global:
-  - POSTGRES_USER=postgres
+  - POSTGRES_USER=root
   - POSTGRES_PASSWORD=
 
 install:

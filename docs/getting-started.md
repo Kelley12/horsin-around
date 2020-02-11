@@ -3,7 +3,7 @@
 - [Prerequisites](#prerequisites)
   - [Node and NPM](#node-and-npm)
   - [Docker and Docker Compose](#docker-and-docker-compose)
-  - [PostgreSQL](#postgresql)
+  - [MySQL](#mysql)
     - [Mac](#mac)
   - [ValidateInstallations](#validate-installations)
 - [Setup .env File](#setup-.env-file.md)
@@ -12,7 +12,7 @@
 
 - [Node and NPM](#node-and-npm)
 - [Docker and Docker Compose](#docker-and-docker-compose)
-- [PostgreSQL](#postgresql)
+- [MySQL](#mysql)
 
 ### Node and NPM
 
@@ -22,23 +22,23 @@
 
 [Docker and Docker Compose](https://docs.docker.com/install/)
 
-### PostgreSQL
+### MySQL
 
-[PostgreSQL](https://www.postgresql.org/download/)
+[MySQL](https://dev.mysql.com/downloads/)
 
 #### Mac
 
 Using [Homebrew](https://brew.sh/) execute the following commands
 
 ```bash
-# Remove previous versions of PostgreSQL
-brew uninstall --force postgresql
+# Remove previous versions of MySQL
+brew uninstall --force mysql
 
-# Delete all Files of Postgres
-rm -rf /usr/local/var/postgres
+# Delete all Files of MySQL
+rm -rf /usr/local/var/mysql
 
-# Install Postgres with Homebrew
-brew install postgres
+# Install MySQL with Homebrew
+brew install mysql
 ```
 
 ### Validate Installations
@@ -67,7 +67,7 @@ Update the [docker-compose.yml](../../docker-compose.yml) file, set the `volumes
 
 ```bash
     volumes:
-    - /data/postgres:/existing/folder/location
+    - ./db_data:/existing/folder/location
 ```
 
 Spin up the Docker container using the following command:
@@ -76,10 +76,10 @@ Spin up the Docker container using the following command:
 docker-compose up
 ```
 
-***NOTE: If you are running into an error stating `Cannot create container for service...The container name "/postgres" is already in use by container` use the following command to remove any existing containers and try again.***
+***NOTE: If you are running into an error stating `Cannot create container for service...The container name "/mysql" is already in use by container` use the following command to remove any existing containers and try again.***
 
 ```bash
 docker rm -f $(docker ps -a -q)
 ```
 
-[For more info on developing with Docker, PostgreSQL, and pgAdmin](/docker-pgAdmin.md).
+[For more info on developing with Docker, MySQL, and PHPMyAdmin](/docker-mysql-phpmyadmin.md).

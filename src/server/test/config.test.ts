@@ -34,7 +34,7 @@ describe("Config", () => {
 
     it ("Should have db type", () => {
         assert.exists(config.db.type);
-        assert.deepStrictEqual(config.db.type, "postgres");
+        assert.deepStrictEqual(config.db.type, "mysql");
     });
 
     it ("Should have db host", () => {

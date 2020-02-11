@@ -4,7 +4,7 @@ import { ConnectionOptions } from "typeorm";
 const env = process.env.NODE_ENV;
 
 export const dbconfig: ConnectionOptions = {
-    type: "postgres",
+    type: "mysql",
     host: process.env.POSTGRES_HOST || "localhost",
     port: Number(process.env.POSTGRES_PORT) || 5432,
     database: process.env.POSTGRES_DB ||

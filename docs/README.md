@@ -6,4 +6,4 @@
 - [Getting Started](getting-started.md)
 - [CLI Commands](commands.md)
 - [Debugging](debugging.md)
-- [docker-pgAdmin](docker-pgAdmin.md)
+- [Docker-MySQL-PHPMyAdmin](docker-mysql-phpMyAdmin.md)
