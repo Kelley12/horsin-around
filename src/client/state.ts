@@ -3,7 +3,7 @@ import { emptyUser } from "../shared";
 const localStorage = require("localStorage");
 
 export const state = new State({
-    loggedIn: false,
+    loggedIn: true,
     token: "",
     user: emptyUser,
     shows: [] as any[],
@@ -20,7 +20,7 @@ export const state = new State({
 export function checkForSession() {
     const session = localStorage.getItem("session");
     if (!session) {
-        state.set({ token: "", user: emptyUser, loggedIn: false });
+        state.set({ token: "", user: emptyUser, loggedIn: true });
         return;
     }
 
