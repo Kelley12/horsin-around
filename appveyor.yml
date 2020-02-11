@@ -13,15 +13,15 @@ environment:
     - nodejs_version: 'Current'
     - nodejs_version: 'LTS'
 
-# Specify the PostgreSQL database service
+# Specify the MySQL database service
 services:
-  - postgresql
+  - mysql
 
 # Fix line endings in Windows. (runs before repo cloning)
 init:
   - git config --global core.autocrlf input
-  - SET POSTGRES_USER=postgres
-  - SET POSTGRES_PASSWORD=Password12!
+  - SET MYSQL_USER=root
+  - SET MYSQL_PASSWORD=Password12!
 
 # Install scripts--runs after repo cloning
 install:
