@@ -44,7 +44,7 @@ describe("Config", () => {
 
     it ("Should have db port", () => {
         assert.exists(config.db.port);
-        assert.deepStrictEqual(config.db.port, Number(process.env.MYSQL_PORT) || 5432);
+        assert.deepStrictEqual(config.db.port, Number(process.env.MYSQL_PORT) || 3306);
     });
 
     it ("Should have db database", () => {
