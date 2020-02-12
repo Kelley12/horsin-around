@@ -51,7 +51,6 @@
     "test:clean": "rimraf ./coverage",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
     "preversion": "npm run build && npm run test",
-    "heroku-postbuild": "parcel build src/client/index.html",
     "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js"
   },
   "dependencies": {
