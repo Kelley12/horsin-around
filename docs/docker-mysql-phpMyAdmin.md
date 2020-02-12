@@ -11,7 +11,7 @@
 
 ## Docker
 
-In this project, Docker is used to set up a running Postgres database for development.
+In this project, Docker is used to set up a running MySQL database for development.
 
 ### Preparing the environment with Docker
 
