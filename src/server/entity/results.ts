@@ -60,9 +60,9 @@ export class Result implements IResult {
     @Column("boolean", { default: false })
     public eliminated!: boolean;
 
-    @CreateDateColumn({ type: "timestamp with time zone" })
+    @CreateDateColumn({ type: "datetime" })
     public createDate!: Date;
 
-    @UpdateDateColumn({ type: "timestamp with time zone" })
+    @UpdateDateColumn({ type: "datetime" })
     public updateDate!: Date;
 }

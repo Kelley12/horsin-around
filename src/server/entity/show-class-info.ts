@@ -38,9 +38,9 @@ export class ShowClassInfo implements IShowClassInfo {
     @Column("integer", { default: 0 })
     public milliseconds!: number;
 
-    @CreateDateColumn({ type: "timestamp with time zone" })
+    @CreateDateColumn({ type: "datetime" })
     public createDate!: Date;
 
-    @UpdateDateColumn({ type: "timestamp with time zone" })
+    @UpdateDateColumn({ type: "datetime" })
     public updateDate!: Date;
 }

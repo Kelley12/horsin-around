@@ -19,9 +19,9 @@ export class ShowClass implements IShowClass {
     @OneToMany(_ => ShowClassInfo, ShowClassInfo => ShowClassInfo.showClass)
     public showClassInfo!: ShowClassInfo[];
 
-    @CreateDateColumn({ type: "timestamp with time zone" })
+    @CreateDateColumn({ type: "datetime" })
     public createDate!: Date;
 
-    @UpdateDateColumn({ type: "timestamp with time zone" })
+    @UpdateDateColumn({ type: "datetime" })
     public updateDate!: Date;
 }
