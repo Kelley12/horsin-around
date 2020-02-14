@@ -65,7 +65,7 @@ export class Server {
     listen(host: string, port: number) {
         this.emitter.emit("Starting");
 
-        this.app.use("/", express.static(`${__dirname}/../client`));
+        this.app.use("/", express.static(`${__dirname}/../`));
         this.app.use("/api/v1/", apiRouter());
         this.app.get("*", (_req, res) => res.sendStatus(404));
 
