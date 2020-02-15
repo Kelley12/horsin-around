@@ -14,7 +14,7 @@ export class Show implements IShow {
     public name!: string;
 
     @Column("date")
-    public showDate!: Date;
+    public showDate!: string;
 
     @Column("integer", { default: 4 })
     public awardPlaces!: number;

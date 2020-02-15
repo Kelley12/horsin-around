@@ -1,6 +1,6 @@
 export interface IShow {
     name: string;
-    showDate: Date;
+    showDate: string;
     awardPlaces: number;
 }
 
@@ -11,6 +11,6 @@ export interface Show extends IShow {
 export const emptyShow: Show = {
     showId: 0,
     name: "",
-    showDate: new Date(),
+    showDate: new Date().toDateString(),
     awardPlaces: 4
 };
