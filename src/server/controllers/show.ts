@@ -4,6 +4,7 @@ import { validate } from "class-validator";
 import { logger } from "../utils";
 import { getRepository } from "typeorm";
 import { Show, Result, ShowClassInfo } from "../entity";
+import { formatMySQLDate } from "../../shared";
 
 export class ShowController {
     private readonly emitter = new EventEmitter2();
@@ -46,7 +47,7 @@ export class ShowController {
 
         const show = new Show();
         show.name = name;
-        show.showDate = showDate;
+        show.showDate = formatMySQLDate(showDate);
         show.awardPlaces = awardPlaces;
 
         const errors = await validate(show);
@@ -87,7 +88,7 @@ export class ShowController {
         }
 
         show.name = name;
-        show.showDate = showDate;
+        show.showDate = formatMySQLDate(showDate);
         show.awardPlaces = awardPlaces;
 
         const errors = await validate(show);
