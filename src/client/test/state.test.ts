@@ -18,7 +18,7 @@ describe("State", () => {
         it("Should have loggedIn of false", () => {
             const loggedIn = state.get().loggedIn;
             assert.typeOf(loggedIn, "boolean");
-            assert.deepStrictEqual(loggedIn, true);
+            assert.deepStrictEqual(loggedIn, process.env.NODE_ENV === "development" ? true : false);
         });
 
         it("Should have empty token string", () => {
@@ -72,7 +72,7 @@ describe("State", () => {
                 {
                     token: "",
                     user: emptyUser,
-                    loggedIn: true
+                    loggedIn: process.env.NODE_ENV === "development" ? true : false
                 });
         });
         it("Should have valid session", () => {
