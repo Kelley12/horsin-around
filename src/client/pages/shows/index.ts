@@ -60,7 +60,7 @@ export const ShowPage = Vue.extend({
         resetShow() {
             this.show.showId = 0;
             this.show.name = "";
-            this.show.showDate = new Date();
+            this.show.showDate = new Date().toDateString();
             this.show.awardPlaces = 4;
         },
         deleteShow(show: Show) {
