@@ -49,7 +49,7 @@ describe("Config", () => {
 
     it ("Should have db database", () => {
         assert.exists(config.db.database);
-        assert.deepStrictEqual(config.db.database, process.env.MYSQL_DB || "horsin-around");
+        assert.deepStrictEqual(config.db.database, process.env.MYSQL_DB || "horsin_around");
     });
 
     it ("Should have db username", () => {

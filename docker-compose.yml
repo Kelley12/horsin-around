@@ -11,7 +11,7 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: ${MYSQL_DB:-horsin-around}
+      MYSQL_DATABASE: ${MYSQL_DB:-horsin_around}
       MYSQL_USER: ${MYSQL_USER:-admin}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD:-admin}
     networks:
