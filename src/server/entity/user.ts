@@ -1,5 +1,5 @@
 import {
-    Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, Unique
+    Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, Unique, Index
 } from "typeorm";
 import { IUser } from "../../shared";
 import bcrypt from "bcryptjs";
@@ -11,7 +11,8 @@ export class User implements IUser {
     @PrimaryGeneratedColumn()
     public userId?: number;
 
-    @Column("varchar", { length: 50, unique: true })
+    @Column("varchar", { length: 50 })
+    @Index("email")
     @IsEmail()
     public email!: string;
 
