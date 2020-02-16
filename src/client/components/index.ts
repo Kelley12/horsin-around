@@ -1,3 +1,4 @@
+export * from "./admin";
 export * from "./login";
 export * from "./navbar";
 export * from "./results";

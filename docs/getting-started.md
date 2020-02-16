@@ -67,7 +67,7 @@ Update the [docker-compose.yml](../../docker-compose.yml) file, set the `volumes
 
 ```bash
     volumes:
-    - ./db_data:/existing/folder/location
+    - ./.db_data:/existing/folder/location
 ```
 
 Spin up the Docker container using the following command:

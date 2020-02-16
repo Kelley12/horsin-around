@@ -5,13 +5,13 @@ services:
     container_name: mysql
     image: mysql:5.7.21
     volumes:
-      - "./db_data:/var/lib/mysql"
+      - "./.db_data:/var/lib/mysql"
     ports: 
       - ${MYSQL_PORT:-3306}:3306
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: ${MYSQL_DB:-horsin-around}
+      MYSQL_DATABASE: ${MYSQL_DB:-horsin_around}
       MYSQL_USER: ${MYSQL_USER:-admin}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD:-admin}
     networks:

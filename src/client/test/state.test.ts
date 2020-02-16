@@ -4,7 +4,7 @@ import { emptyUser } from "../../shared";
 const localStorage = require("localStorage");
 
 const testToken = "12345";
-const testUser = { userId: 0, name: "test", email: "test@test.com" };
+const testUser = { userId: 0, name: "test", email: "test@test.com", role: "user" };
 
 describe("State", () => {
     describe("Get", () => {
@@ -18,7 +18,7 @@ describe("State", () => {
         it("Should have loggedIn of false", () => {
             const loggedIn = state.get().loggedIn;
             assert.typeOf(loggedIn, "boolean");
-            assert.deepStrictEqual(loggedIn, process.env.NODE_ENV === "development" ? true : false);
+            assert.deepStrictEqual(loggedIn, false);
         });
 
         it("Should have empty token string", () => {
