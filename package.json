@@ -51,7 +51,8 @@
     "test:clean": "rimraf ./coverage",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
     "preversion": "npm run build && npm run test",
-    "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js"
+    "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
+    "clean": "rimraf dist/ .db_data/ .cache/ .nyc_output/"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
