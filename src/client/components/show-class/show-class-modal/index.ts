@@ -78,6 +78,7 @@ export const ShowClassModal = Vue.extend({
                     .catch((e: Error) => this.error = e.message)
                     .then(() => this.submitting = false);
             }
+            this.$emit("submitted");
         },
 
         close() {

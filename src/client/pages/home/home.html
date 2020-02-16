@@ -1,4 +1,28 @@
 <div style="margin-top: 24px">
     <h1 class="title">Welcome to HorsinAround</h1>
     <hr>
+    <div v-if="hasNoShows" class="content">
+        <p>There are currently no results. Please check back later.</p>
+    </div>
+    <div v-else-if="show.showId < 1">
+        <small>Select show to view results</small>
+        <ul>
+            <li v-for="show in shows">
+                <a class="content" @click="selectShow(show)">
+                    <strong class="is-size-4">{{ show.name }}</strong>
+                    <small>{{ formatDate(show.showDate) }}</small>
+                </a>
+                <hr>
+            </li>
+        </ul>
+    </div>
+    <div v-else>
+        <p>
+            <a class="content" @click="selectShow()"><small>Back to shows</small></a>
+        </p>
+        <show-result
+            :show="show"
+            :key="show.showId">
+        </show-result>
+    </div>
 </div>

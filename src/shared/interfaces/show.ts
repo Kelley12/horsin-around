@@ -1,16 +1,16 @@
 export interface IShow {
     name: string;
-    showDate: Date;
+    showDate: string;
+    awardPlaces: number;
 }
 
-export interface Show {
+export interface Show extends IShow {
     showId: number;
-    name: string;
-    showDate: Date;
 }
 
 export const emptyShow: Show = {
     showId: 0,
     name: "",
-    showDate: new Date()
+    showDate: new Date().toDateString(),
+    awardPlaces: 4
 };

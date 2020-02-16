@@ -5,6 +5,7 @@ coverage
 build
 node_modules
 dist/
+db_data/
 .cache/
 .nyc_output
 

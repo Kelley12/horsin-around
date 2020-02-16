@@ -18,10 +18,7 @@ export const ShowPage = Vue.extend({
         showEntriesModal: false
     }; },
     created() { state.updateVue(this); },
-    mounted() {
-        this.loadShows();
-    },
-
+    mounted() { this.loadShows(); },
     computed: {
         hasNoShows() {
             if (this.shows.length < 1) {
@@ -58,11 +55,13 @@ export const ShowPage = Vue.extend({
             this.show.showId = show.showId;
             this.show.name = show.name;
             this.show.showDate = show.showDate;
+            this.show.awardPlaces = show.awardPlaces;
         },
         resetShow() {
             this.show.showId = 0;
             this.show.name = "";
-            this.show.showDate = new Date();
+            this.show.showDate = new Date().toDateString();
+            this.show.awardPlaces = 4;
         },
         deleteShow(show: Show) {
             this.setShow(show);

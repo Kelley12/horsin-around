@@ -4,6 +4,7 @@ import { validate } from "class-validator";
 import { logger } from "../utils";
 import { getRepository } from "typeorm";
 import { Show, Result, ShowClassInfo } from "../entity";
+import { formatMySQLDate } from "../../shared";
 
 export class ShowController {
     private readonly emitter = new EventEmitter2();
@@ -37,7 +38,7 @@ export class ShowController {
     }
 
     async createShow(req: Request, res: Response) {
-        const { name, showDate } = req.body;
+        const { name, showDate, awardPlaces } = req.body;
 
         if (!name || !showDate) {
             return res.status(400)
@@ -46,7 +47,8 @@ export class ShowController {
 
         const show = new Show();
         show.name = name;
-        show.showDate = showDate;
+        show.showDate = formatMySQLDate(showDate);
+        show.awardPlaces = awardPlaces;
 
         const errors = await validate(show);
         if (errors.length > 0) {
@@ -67,7 +69,7 @@ export class ShowController {
 
     async updateShow(req: Request, res: Response) {
         const id = parseInt(req.params.id);
-        const { name, showDate } = req.body;
+        const { name, showDate, awardPlaces } = req.body;
 
         if (!name || !showDate) {
             return res.status(400)
@@ -86,7 +88,8 @@ export class ShowController {
         }
 
         show.name = name;
-        show.showDate = showDate;
+        show.showDate = formatMySQLDate(showDate);
+        show.awardPlaces = awardPlaces;
 
         const errors = await validate(show);
         if (errors.length > 0) {

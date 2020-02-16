@@ -1,34 +1,37 @@
 version: "3"
 services:
-  postgres:
-    container_name: postgres
-    image: postgres:latest
-    ports: 
-      - ${POSTGRES_PORT:-5432}:${POSTGRES_PORT:-5432}
+  # MySQL Database
+  db:
+    container_name: mysql
+    image: mysql:5.7.21
     volumes:
-      - /var/lib/postgresql/data:/data/postgres
-    environment:
-      # Defaults values if .env file is not found or variables missing
-      POSTGRES_USER: ${POSTGRES_USER:-admin}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-admin}
-      POSTGRES_DB: ${POSTGRES_DB:-horsin-around}
-    networks:
-      - postgres
- 
-  pgadmin:
-    links:
-      - postgres:postgres
-    container_name: pgadmin
-    image: dpage/pgadmin4:latest
+      - "./db_data:/var/lib/mysql"
     ports: 
-      - ${PGADMIN_HOST_PORT:-8080}:${PGADMIN_CONTAINER_PORT:-80}
+      - ${MYSQL_PORT:-3306}:3306
+    restart: always
     environment:
-      # Defaults values if .env file is not found or variables missing
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-admin@admin.com}
-      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ${MYSQL_DB:-horsin-around}
+      MYSQL_USER: ${MYSQL_USER:-admin}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-admin}
     networks:
-      - postgres
- 
+      - mysql
+
+  # phpmyadmin
+  phpmyadmin:
+    depends_on:
+      - db
+    container_name: phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+      - ${PHPMYADMIN_HOST_PORT:-8080}:${PHPMYADMIN_CONTAINER_PORT:-80}
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: root 
+    networks:
+      - mysql
+
 networks:
-  postgres:
+  mysql:
     driver: bridge

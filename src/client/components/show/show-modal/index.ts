@@ -55,7 +55,8 @@ export const ShowModal = Vue.extend({
                 put(`${apiurl}/shows/${this.show.showId}`, {
                     showId: this.show.showId,
                     name: this.show.name,
-                    showDate: this.show.showDate
+                    showDate: this.show.showDate,
+                    awardPlaces: this.show.awardPlaces
                 })
                     .then(() => {
                         const shows = state.get().shows;
@@ -63,6 +64,7 @@ export const ShowModal = Vue.extend({
                             if (show.showId === this.show.showId) {
                                 show.name = this.show.name;
                                 show.showDate = this.show.showDate;
+                                show.awardPlaces = this.show.awardPlaces;
                             }
                         });
                         state.set({ shows });
@@ -73,7 +75,8 @@ export const ShowModal = Vue.extend({
             } else {
                 post(`${apiurl}/shows`, {
                     name: this.show.name,
-                    showDate: this.show.showDate
+                    showDate: this.show.showDate,
+                    awardPlaces: this.show.awardPlaces
                 })
                     .then((show) => {
                         const shows = state.get().shows;

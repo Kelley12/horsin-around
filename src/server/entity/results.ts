@@ -54,12 +54,15 @@ export class Result implements IResult {
     @Column("integer", { default: 0 })
     public milliseconds!: number;
 
+    @Column("integer", { default: 0 })
+    public timeInMs!: number;
+
     @Column("boolean", { default: false })
     public eliminated!: boolean;
 
-    @CreateDateColumn({ type: "timestamp with time zone" })
+    @CreateDateColumn({ type: "datetime" })
     public createDate!: Date;
 
-    @UpdateDateColumn({ type: "timestamp with time zone" })
+    @UpdateDateColumn({ type: "datetime" })
     public updateDate!: Date;
 }

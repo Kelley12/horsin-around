@@ -8,9 +8,11 @@
         <div class="navbar-menu">
             <div class="navbar-start">
                 <template v-if="loggedIn">
+                    <router-link to="/home" class="navbar-item is-tab">Home</router-link>
                     <router-link to="/shows" class="navbar-item is-tab">Shows</router-link>
                     <router-link to="/class" class="navbar-item is-tab">Classes</router-link>
                     <router-link to="/riders" class="navbar-item is-tab">Riders</router-link>
+                    <router-link to="/scoring" class="navbar-item is-tab">Scoring</router-link>
                     <router-link to="/admin" v-if="user.role === 'admin'" class="navbar-item is-tab">Admin</router-link>
                     <router-link to="/my-account" class="navbar-item is-tab">My Account</router-link>
                 </template>

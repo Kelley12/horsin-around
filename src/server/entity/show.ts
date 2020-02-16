@@ -14,7 +14,10 @@ export class Show implements IShow {
     public name!: string;
 
     @Column("date")
-    public showDate!: Date;
+    public showDate!: string;
+
+    @Column("integer", { default: 4 })
+    public awardPlaces!: number;
 
     @OneToMany(_ => Result, result => result.show)
     public results!: Result[];
@@ -22,9 +25,9 @@ export class Show implements IShow {
     @OneToMany(_ => ShowClassInfo, ShowClassInfo => ShowClassInfo.show)
     public showClassInfo!: ShowClassInfo[];
 
-    @CreateDateColumn({ type: "timestamp with time zone" })
+    @CreateDateColumn({ type: "datetime" })
     public createDate!: Date;
 
-    @UpdateDateColumn({ type: "timestamp with time zone" })
+    @UpdateDateColumn({ type: "datetime" })
     public updateDate!: Date;
 }

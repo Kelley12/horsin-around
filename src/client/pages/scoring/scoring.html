@@ -93,6 +93,7 @@
         v-if="showClassInfoModal"
         :showClassInfo="showEntriesData"
         :disableClassSelect="true"
+        @submitted="setShowClassInfo()"
         @close="showClassInfoModal = false">
     </show-class-info-modal>
 </div>

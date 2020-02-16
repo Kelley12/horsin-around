@@ -5,8 +5,9 @@ import { state, signOut, post, apiurl, clearSession } from "./helpers";
 export const router = new VueRouter({
     linkActiveClass: "is-active",
     routes: [
-        { path: "/", redirect: "/shows", meta: { anon: true } },
+        { path: "/", redirect: "/home", meta: { anon: true } },
         { path: "/home", component: HomePage, meta: { anon: true } },
+        { path: "/home/:showId", component: HomePage, meta: { anon: false } },
         { path: "/login", component: LoginPage, meta: { anon: true } },
         { path: "/shows", component: ShowPage, meta: { anon: false } },
         { path: "/riders", component: RiderPage, meta: { anon: true } },

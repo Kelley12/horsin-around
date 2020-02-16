@@ -1,7 +1,7 @@
 import { EventEmitter2 } from "eventemitter2";
 import { Request, Response } from "express";
 import { validate } from "class-validator";
-import { logger } from "../utils";
+import { logger, getSortedPlacing } from "../utils";
 import { getRepository } from "typeorm";
 import { Result } from "../entity";
 
@@ -61,11 +61,41 @@ export class ResultController {
             const results = await resultRepository.find({
                 relations: ["rider"],
                 join: { alias: "result", leftJoinAndSelect: {
-                    showClass: "result.rider"
+                    rider: "result.rider"
                 }},
-                where: { showId, showClassId}
+                where: { showId, showClassId }
             });
             res.send(results);
+        } catch (error) {
+            logger.log("error", `API Error:`);
+            logger.log("error", error);
+            res.status(404).send("Result not found");
+        }
+    }
+
+    async getPlacingByShowClass(req: Request, res: Response) {
+        try {
+            const placings = await getSortedPlacing(req);
+
+            res.send(placings);
+        } catch (error) {
+            logger.log("error", `API Error:`);
+            logger.log("error", error);
+            res.status(404).send("Result not found");
+        }
+    }
+
+    async getTopPlacingByShowClass(req: Request, res: Response) {
+        try {
+            let placings = await getSortedPlacing(req);
+            if (placings.length > 1) {
+                const numOfPlacings = placings[0].show?.awardPlaces || 4;
+                if (placings.length > numOfPlacings) {
+                    placings = placings.slice(0, numOfPlacings);
+                }
+            }
+
+            res.send(placings);
         } catch (error) {
             logger.log("error", `API Error:`);
             logger.log("error", error);
@@ -76,7 +106,7 @@ export class ResultController {
     async createResult(req: Request, res: Response) {
         const {
             showId, showClassId, riderId, riderNumber, horse, scored, faults,
-            timePenalty, eliminated, minutes, seconds, milliseconds
+            timePenalty, eliminated, minutes, seconds, milliseconds, timeInMs
         } = req.body;
 
         if (!showId || !showClassId || !riderId) {
@@ -96,6 +126,7 @@ export class ResultController {
         result.minutes = minutes;
         result.seconds = seconds;
         result.milliseconds = milliseconds;
+        result.timeInMs = timeInMs;
         result.eliminated = eliminated;
 
         const errors = await validate(result);
@@ -119,7 +150,7 @@ export class ResultController {
         const id = parseInt(req.params.id);
         const {
             showId, showClassId, riderId, riderNumber, horse, scored, faults,
-            timePenalty, eliminated, minutes, seconds, milliseconds
+            timePenalty, eliminated, minutes, seconds, milliseconds, timeInMs
         } = req.body;
 
         if (!showId || !showClassId || !riderId) {
@@ -149,6 +180,7 @@ export class ResultController {
         result.minutes = minutes;
         result.seconds = seconds;
         result.milliseconds = milliseconds;
+        result.timeInMs = timeInMs;
         result.eliminated = eliminated;
 
         const errors = await validate(result);
