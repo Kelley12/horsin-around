@@ -13,6 +13,12 @@ export const applyMiddleware = (
     }
 };
 
+export function compareElimination(resultA: Result, resultB: Result) {
+    if (resultA.eliminated && !resultB.eliminated) return 1;
+    if (!resultA.eliminated && resultB.eliminated) return -1;
+    return 0;
+}
+
 export function sortByTimeDiff(array: Result[], optimumTime: number) {
     return array.sort((a, b) => {
         const elimination = compareElimination(a, b);
@@ -32,12 +38,6 @@ export function sortByTimeDiff(array: Result[], optimumTime: number) {
     });
 }
 
-export function compareElimination(resultA: Result, resultB: Result) {
-    if (resultA.eliminated && !resultB.eliminated) return 1;
-    if (!resultA.eliminated && resultB.eliminated) return -1;
-    return 0;
-}
-
 export async function getSortedPlacing(req: Request): Promise<Result[]> {
     let placings: Result[] = [];
         const showId = parseInt(req.params.showId);
@@ -53,7 +53,9 @@ export async function getSortedPlacing(req: Request): Promise<Result[]> {
         const optimumTime =
             (showClassInfo.minutes * 60000) +
             (showClassInfo.seconds * 1000) +
-            (showClassInfo.milliseconds * 100);
+            (showClassInfo.milliseconds < 10 ? showClassInfo.milliseconds * 100
+                : showClassInfo.milliseconds < 100 ? showClassInfo.milliseconds * 10
+                : showClassInfo.milliseconds);
 
         const scoredResults = await resultRepository.find({
             relations: ["rider"],
