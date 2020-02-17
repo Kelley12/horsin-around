@@ -2,12 +2,14 @@ import {
     handleCors,
     handleHelmet,
     handleBodyRequestParsing,
-    handleCompression
+    handleCompression,
+    handlePassport
 } from "./helpers";
 
 export const middleware = [
     handleCors,
     handleHelmet,
     handleBodyRequestParsing,
-    handleCompression
+    handleCompression,
+    handlePassport
 ];
