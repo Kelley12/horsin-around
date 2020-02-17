@@ -1,6 +1,7 @@
 import Vue from "vue";
 import { post, put, apiurl, del } from "../../../helpers";
 import { state } from "../../../state";
+import _ from "lodash";
 
 export const RiderModal = Vue.extend({
     template: require("./rider-modal.html"),
@@ -39,11 +40,7 @@ export const RiderModal = Vue.extend({
                 del(`${apiurl}/riders/${this.rider.riderId}`)
                     .then(() => {
                         const riders = state.get().riders;
-                        riders.forEach((rider, i) => {
-                            if (rider.riderId === this.rider.riderId) {
-                                riders.splice(i, 1);
-                            }
-                        });
+                        _.remove(riders, { userId: this.rider.riderId });
                         state.set({ riders });
                         this.submitted = true;
                     })

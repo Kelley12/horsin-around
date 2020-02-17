@@ -1,6 +1,7 @@
 import Vue from "vue";
 import { post, put, apiurl, del } from "../../../helpers";
 import { state } from "../../../state";
+import _ from "lodash";
 
 export const ShowClassModal = Vue.extend({
     template: require("./show-class-modal.html"),
@@ -39,11 +40,7 @@ export const ShowClassModal = Vue.extend({
                 del(`${apiurl}/class/${this.showClass.showClassId}`)
                     .then(() => {
                         const showClasses = state.get().showClasses;
-                        showClasses.forEach((showClass, i) => {
-                            if (showClass.showClassId === this.showClass.showClassId) {
-                                showClasses.splice(i, 1);
-                            }
-                        });
+                        _.remove(showClasses, { showClassId: this.showClass.showClassId });
                         state.set({ showClasses });
                         this.submitted = true;
                     })

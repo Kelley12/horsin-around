@@ -2,6 +2,7 @@ import Vue from "vue";
 import { post, put, apiurl, del } from "../../../helpers";
 import { state } from "../../../state";
 import { prettyFormatDate } from "../../../../shared";
+import _ from "lodash";
 
 export const ShowModal = Vue.extend({
     template: require("./show-modal.html"),
@@ -41,11 +42,7 @@ export const ShowModal = Vue.extend({
                 del(`${apiurl}/shows/${this.show.showId}`)
                     .then(() => {
                         const shows = state.get().shows;
-                        shows.forEach((show, i) => {
-                            if (show.showId === this.show.showId) {
-                                shows.splice(i, 1);
-                            }
-                        });
+                        _.remove(shows, { showId: this.show.showId });
                         state.set({ shows });
                         this.submitted = true;
                     })
