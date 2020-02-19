@@ -12,6 +12,7 @@ logger.registerEmitter(server, { name: "Server", level: "verbose" });
 
 server.connect(config.db)
     .then(() => {
+        require("./middleware/passport");
         const PORT = Number(process.env.PORT) || 9000;
         server.listen("0.0.0.0", PORT);
     })

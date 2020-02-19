@@ -29,7 +29,7 @@ export const handleSession = (router: Router) => {
     router.use(session({
         store: new RedisStore({ client: redisClient }),
         secret: process.env.SESSION_SECRET || "horsin-around",
-        resave: false
+        resave: false, saveUninitialized: false
     }));
 };
 
