@@ -66,6 +66,6 @@ export async function post<T = any>(uri: string, body?: any): Promise<T> {
         method: "POST", body: JSON.stringify(body), headers: jsonHeader
     });
     const res = await fetch(req);
-    if (res.status !== 201) return statusRej(res);
+    if (res.status !== 201 && res.status !== 200) return statusRej(res);
     return parseResponse(res);
 }
