@@ -1,7 +1,6 @@
 import Vue from "vue";
 import { state } from "../../../state";
 import { post, put, apiurl, del } from "../../../helpers";
-import _ from "lodash";
 
 export const UserModal = Vue.extend({
     template: require("./user-modal.html"),
@@ -40,7 +39,11 @@ export const UserModal = Vue.extend({
                 del(`${apiurl}/users/${this.user.userId}`)
                     .then(() => {
                         const users = state.get().users;
-                        _.remove(users, { userId: this.user.userId });
+                        users.forEach((user, i) => {
+                            if (user.userId === this.user.userId) {
+                                users.splice(i, 1);
+                            }
+                        });
                         state.set({ users });
                         this.submitted = true;
                     })

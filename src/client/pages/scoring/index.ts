@@ -3,7 +3,6 @@ import { ScoringRow, ShowEntryModal, ShowClassInfoModal } from "../../components
 import { Result, ShowClassInfoByShow, ShowClassInfo, emptyShowClassInfo } from "../../../shared";
 import { state } from "../../state";
 import { get, apiurl } from "../../helpers";
-import _ from "lodash";
 
 export const ScoringPage = Vue.extend({
     template: require("./scoring.html"),
@@ -146,7 +145,11 @@ export const ScoringPage = Vue.extend({
         },
 
         deleteEntry(resultId: number) {
-            _.remove(this.scores, { resultId });
+            this.scores.forEach((result, i) => {
+                if (result.resultId === resultId) {
+                    this.scores.splice(i, 1);
+                }
+            });
         },
 
         editShowClassInfo() {
