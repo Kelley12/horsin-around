@@ -3,7 +3,6 @@ import {
     handleHelmet,
     handleBodyRequestParsing,
     handleCompression,
-    handleSession,
     handlePassport
 } from "./helpers";
 
@@ -12,6 +11,5 @@ export const middleware = [
     handleHelmet,
     handleBodyRequestParsing,
     handleCompression,
-    handleSession,
     handlePassport
 ];

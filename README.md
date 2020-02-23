@@ -31,7 +31,6 @@
 | Code Linting | [TSLint](https://github.com/palantir/tslint) provides static analysis to check [TypeScript](https://github.com/microsoft/TypeScript) code for readability, maintainability, and functionality errors. |
 | Frontend Framework | [Vue](https://vuejs.org/) Javascript Framework |
 | Web App Bundler | Web application bundling using [Parcel](https://github.com/parcel-bundler/parcel) |
-| [Redis](https://redis.io/) | [connect-redis](https://www.npmjs.com/package/connect-redis) provides a [Redis](https://redis.io/) [express-session](https://www.npmjs.com/package/express-session) storage for [Express](https://expressjs.com/) |
 | [MySQL](https://www.mysql.com/) | [MySQL](https://www.mysql.com/) database used with [TypeORM](https://github.com/typeorm/typeorm) |
 | Logging | [Winston](https://github.com/winstonjs/winston) utilizing [EventEmitter2](https://github.com/EventEmitter2/EventEmitter2) |
 | Auto server restart | Restart the server using [nodemon](https://github.com/remy/nodemon) in real-time anytime an edit is made |
