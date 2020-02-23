@@ -3,12 +3,15 @@ import { getRepository } from "typeorm";
 import { validate } from "class-validator";
 import { logger } from "../utils";
 import passport from "passport";
+import jwt from "jsonwebtoken";
 
 import { User } from "../entity";
+import { config } from "../config";
 
 export class AuthenticationController {
     static async login(req: Request, res: Response, next: NextFunction) {
-        const { email, password } = req.body;
+        const email = req.body.email.toLowerCase();
+        const password = req.body.password;
         if (!(email && password)) {
             res.sendStatus(400)
                 .send({ error: "Missing data: email or password" });
@@ -24,7 +27,10 @@ export class AuthenticationController {
             }
 
             req.login(user, () => {
-                res.send();
+                const token = jwt.sign({ id: user.username }, config.jwtSecret);
+                res.status(200).send({
+                    token, user
+                });
             });
         })(req, res, next);
     }

@@ -1,6 +1,7 @@
 import Vue from "vue";
-import { state } from "../../state";
+import { state, checkForSession } from "../../state";
 import { post, apiurl } from "../../helpers";
+import { User } from "../../../shared";
 
 export const LoginBox = Vue.extend({
     template: require("./login.html"),
@@ -27,10 +28,12 @@ export const LoginBox = Vue.extend({
                 email: this.email,
                 password: this.password
             })
-                .then(() => {
+                .then(({ token, user }: { token: string, user: User }) => {
+                    localStorage.setItem("session", JSON.stringify({ token, user }));
+                    checkForSession();
                     this.$router.push("/");
                 })
-                .catch((e: Error) => this.error = e.message )
+                .catch((e: Error) => this.error = e.message)
                 .then(() => this.loading = false);
         }
     }

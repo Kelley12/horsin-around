@@ -25,8 +25,8 @@ jsonHeader.append("Content-Type", "application/json");
 const baseHeader = new Headers();
 
 export function setAjaxToken(token: string) {
-    baseHeader.set("horsin-around-token", token);
-    jsonHeader.set("horsin-around-token", token);
+    baseHeader.set("Authorization", `JWT ${token}`);
+    jsonHeader.set("Authorization", `JWT ${token}`);
 }
 
 export async function get(uri: string): Promise<any> {
@@ -57,7 +57,7 @@ export async function patch(uri: string, body: any): Promise<void> {
 export async function del(uri: string): Promise<void> {
     const req = new Request(uri, { method: "DELETE", headers: baseHeader });
     const res = await fetch(req);
-    if (res.status !== 200) return statusRej(res);
+    if (![200, 204].includes(res.status)) return statusRej(res);
     return parseResponse(res);
 }
 
@@ -66,6 +66,6 @@ export async function post<T = any>(uri: string, body?: any): Promise<T> {
         method: "POST", body: JSON.stringify(body), headers: jsonHeader
     });
     const res = await fetch(req);
-    if (res.status !== 201 && res.status !== 200) return statusRej(res);
+    if (![200, 201].includes(res.status)) return statusRej(res);
     return parseResponse(res);
 }
