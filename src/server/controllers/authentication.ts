@@ -27,7 +27,9 @@ export class AuthenticationController {
             }
 
             req.login(user, () => {
-                const token = jwt.sign({ id: user.username }, config.jwtSecret);
+                const token = jwt.sign({ id: user.userId }, config.jwtSecret, {
+                    expiresIn: "1d",
+                  });
                 res.status(200).send({
                     token, user
                 });
