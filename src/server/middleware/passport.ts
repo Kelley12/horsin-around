@@ -1,4 +1,3 @@
-import { NextFunction, Request, Response } from "express";
 import passport from "passport";
 import * as passportLocal from "passport-local";
 import * as passportJWT from "passport-jwt";
@@ -44,13 +43,12 @@ passport.use("local", new LocalStrategy(
         }
     }
 ));
-const opts = {
-    jwtFromRequest: ExtractJWT.fromAuthHeaderWithScheme("JWT"),
-    secretOrKey: config.jwtSecret,
-};
 
 passport.use("jwt", new JWTstrategy(
-    opts,
+    {
+        jwtFromRequest: ExtractJWT.fromAuthHeaderWithScheme("JWT"),
+        secretOrKey: config.jwtSecret,
+    },
     // tslint:disable-next-line:variable-name
     async (jwt_payload, done) => {
         try {
@@ -86,10 +84,3 @@ passport.deserializeUser(async function(userId: number, done) {
         done(undefined, {});
     }
 });
-
-export const isAuthenticated = (req: Request, res: Response, next: NextFunction) => {
-    if (req.isAuthenticated()) {
-      return next();
-    }
-    res.redirect("/login");
-};
