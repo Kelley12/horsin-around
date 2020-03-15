@@ -4,7 +4,7 @@
 
 ## Debugging with Visual Studio Code
 
-You can super charge your React debugging workflow via VS Code and Chrome. Here are the steps:
+You can super charge your debugging workflow via VS Code and Chrome. Here are the steps:
 
 1. Install the [Debugger for Chrome](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome) extension in VS Code.
 2. Add the `Launch Chrome` option to your `launch.json` config:

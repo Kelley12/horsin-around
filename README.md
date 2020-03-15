@@ -9,10 +9,9 @@
 - [Project Goals](#project-goals)
 - [Features](#features)
 - [Prerequisites](#prerequisites)
-  - [Validate Installations](#validate-installations)
-- [Development](#development)
-  - [Docker](#docker)
-  - [App](#app)
+- [Quick Start](#quick-start)
+- [Documentation](#documentation)
+- [License](#license)
 
 ## Project Goals
 
@@ -52,15 +51,18 @@
 1. Make sure that you have [Prerequisites](#prerequisites) installed.
 2. Clone this repo using `git clone https://github.com/kelley12/horsin-around.git`
 3. Move to the appropriate directory: `cd horsin-around`.
-4. Run `npm start:dev` to see the example app at `http://localhost:9000`.
+4. Run `npm start:dev` to see the example app at `http://localhost:1234`.
 
 ## Documentation
 
-- [Overview](docs/general): A short overview of the included tools
-  - [Getting Started](docs/general/getting-started.md): Getting started guide
-  - [.env Setup](docs/general/.env-setup.md): Setting up .env file
-  - [Commands](docs/general/commands.md): Commands to buidling, running, linting, testing, etc.
-- [Testing](docs/testing): How to work with the built-in test harness
+- [Contribution Guideline](./CONTRIBUTING.md)
+- [Overview](docs/): Summary of documentation
+  - [.env Setup](docs/.env-setup.md): Setting up the .env file
+  - [Getting Started](docs/getting-started.md): Getting started guide
+  - [CLI Commands](docs/commands.md): Commands to buidling, running, linting, testing, etc.
+  - [Debugging](docs/debugging.md): Information on debugging with VS Code and Chrome
+  - [Docker-MySQL-PHPMyAdmin](docs/docker-mysql-phpMyAdmin.md): Using Docker with MySQL and PHPMyAdmin
+  - [Heroku](docs/heroku.md): Information on deploying to Heroku and useful Heroku CLI commands
 
 ## License
 

@@ -1,6 +1,4 @@
-# Contributing to react-boilerplate
-
-Love react-boilerplate and want to help? Thanks so much, there's something to do for everybody!
+# Contributing to horsin-around
 
 Please take a moment to review this document in order to make the contribution process easy and effective for everyone involved.
 
@@ -9,7 +7,7 @@ Following these guidelines helps to communicate that you respect the time of the
 ## Using the issue tracker
 
 The [issue tracker](https://github.com/kelley12/horsin-around/issues) is
-the preferred channel for [bug reports](#bugs), [features requests](#features)
+the preferred channel for [bug reports](#bug-reports), [feature requests](#feature-requests)
 and [submitting pull requests](#pull-requests).
 
 ## Bug reports
@@ -59,7 +57,7 @@ Example:
 >
 > ## Versions
 >
-> - React-Boilerplate:
+> - Horsin-Around:
 > - Node/NPM:
 > - Browser:
 
@@ -95,9 +93,9 @@ included in the project:
 
     ```bash
     # Clone your fork of the repo into the current directory
-    git clone https://github.com/<your-username>/react-boilerplate.git
+    git clone https://github.com/<your-username>/horsin-around.git
     # Navigate to the newly cloned directory
-    cd react-boilerplate
+    cd horsin-around
     # Assign the original repo to a remote called "upstream"
     git remote add upstream https://github.com/kelley12/horsin-around.git
     ```
