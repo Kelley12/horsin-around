@@ -13,3 +13,5 @@ export const middleware = [
     handleCompression,
     handlePassport
 ];
+
+export * from "./authorization";

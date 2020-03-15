@@ -52,7 +52,7 @@ passport.use("jwt", new JWTstrategy(
     // tslint:disable-next-line:variable-name
     async (jwt_payload, done) => {
         try {
-            logger.log("info", `Attempted find user of id: ${jwt_payload.id}`);
+            logger.log("info", `Attempting to find user with id: ${jwt_payload.id}...`);
             const user = await userRepository.findOneOrFail({ userId: jwt_payload.id }, {
                 select: ["userId", "email", "name", "role", "password"]
             });
@@ -63,20 +63,22 @@ passport.use("jwt", new JWTstrategy(
             }
 
             user.password = "secret";
-            logger.log("info", `Seccessful found user: ${user.email}`);
+            logger.log("info", `Seccessfully found user: ${user.email}`);
             return done(undefined, user);
         } catch (error) {
-            logger.log("error", `Error occurred while logging in userId: ${jwt_payload.id}`);
+            logger.log("error", `Error occurred while finding user with id: ${jwt_payload.id}`);
             return done(error);
         }
     }),
 );
 
 passport.serializeUser(function(user: User, done: Function) {
+    logger.log("info", `Serializing user: ${user.email}`);
     done(undefined, user.userId);
 });
 
 passport.deserializeUser(async function(userId: number, done) {
+    logger.log("info", `Deserializing user: ${userId}`);
     const user = await userRepository.findOne(userId);
     if (user) {
         done(undefined, user);
