@@ -1,9 +1,10 @@
 import { State, setAjaxToken } from "./helpers";
 import { emptyUser } from "../shared";
+import VueRouter from "vue-router";
 const localStorage = require("localStorage");
 
 export const state = new State({
-    loggedIn: process.env.NODE_ENV === "development" ? true : false,
+    loggedIn: false,
     token: "",
     user: emptyUser,
     shows: [] as any[],
@@ -12,11 +13,11 @@ export const state = new State({
     users: [] as any[]
 });
 
-// export function signOut(router: VueRouter) {
-//     localStorage.setItem("session", "");
-//     state.set({ loggedIn: false, token: "" });
-//     router.push("/login");
-// }
+export function signOut(router: VueRouter) {
+    localStorage.setItem("session", "");
+    state.set({ loggedIn: false, token: "" });
+    router.push("/");
+}
 
 export function checkForSession() {
     const session = localStorage.getItem("session");
@@ -24,7 +25,7 @@ export function checkForSession() {
         state.set({
             token: "",
             user: emptyUser,
-            loggedIn: process.env.NODE_ENV === "development" ? true : false
+            loggedIn: false
         });
         return;
     }

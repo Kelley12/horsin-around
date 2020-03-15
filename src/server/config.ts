@@ -27,5 +27,6 @@ export const config = {
     url: process.env.URL || "localhost",
     host: process.env.HOST || "0.0.0.0",
     port: process.env.PORT || 9000,
+    jwtSecret: process.env.JWT_SECRET || "horsin-around",
     db: dbconfig
 };

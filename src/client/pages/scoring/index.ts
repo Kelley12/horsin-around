@@ -145,7 +145,6 @@ export const ScoringPage = Vue.extend({
         },
 
         deleteEntry(resultId: number) {
-            console.log(`Deleting score of resultId: ${resultId}`);
             this.scores.forEach((result, i) => {
                 if (result.resultId === resultId) {
                     this.scores.splice(i, 1);

@@ -72,7 +72,7 @@ describe("State", () => {
                 {
                     token: "",
                     user: emptyUser,
-                    loggedIn: process.env.NODE_ENV === "development" ? true : false
+                    loggedIn: false
                 });
         });
         it("Should have valid session", () => {
