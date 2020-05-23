@@ -64,5 +64,5 @@ For more information and commands in the mysql command line interface, visit the
 
 ## Resources
 
-[MySQL Docker Compose](https://dev.to/alexmacarthur/quickly-spin-up-mysql-w-docker-compose-4g35)
-[MySQL + PHPMyAdmin Docker Compose](https://gist.github.com/bradtraversy/faa8de544c62eef3f31de406982f1d42)
+- [MySQL Docker Compose](https://dev.to/alexmacarthur/quickly-spin-up-mysql-w-docker-compose-4g35)
+- [MySQL + PHPMyAdmin Docker Compose](https://gist.github.com/bradtraversy/faa8de544c62eef3f31de406982f1d42)
