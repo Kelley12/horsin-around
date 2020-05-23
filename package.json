@@ -19,7 +19,7 @@
     "url": "git://github.com/kelley12/horsin-around.git"
   },
   "engines": {
-    "node": ">=8.16.1",
+    "node": "12.16.x",
     "npm": ">=6.4.1"
   },
   "nodemonConfig": {
