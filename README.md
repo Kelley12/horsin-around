@@ -52,7 +52,7 @@
 1. Make sure that you have [Prerequisites](#prerequisites) installed.
 2. Clone this repo using `git clone https://github.com/kelley12/horsin-around.git`
 3. Move to the appropriate directory: `cd horsin-around`.
-4. Run `npm start:dev` to see the example app at `http://localhost:9000`.
+4. Run `npm run start:dev` to see the example app at `http://localhost:9000`.
 
 ## Documentation
 
