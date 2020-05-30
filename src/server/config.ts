@@ -28,5 +28,7 @@ export const config = {
     host: process.env.HOST || "0.0.0.0",
     port: process.env.PORT || 9000,
     jwtSecret: process.env.JWT_SECRET || "horsin-around",
+    defaultUser: process.env.DEFAULT_USER || "admin@email.com",
+    defaultUserPassword: process.env.DEFAULT_USER_PASSWORD || "P@ssword",
     db: dbconfig
 };
