@@ -14,7 +14,7 @@ server.connect(config.db)
     .then(() => {
         require("./middleware/passport");
         server.configure(config);
-        const PORT = Number(process.env.PORT) || 9000;
+        const PORT = Number(process.env.PORT) || 3000;
         server.listen("0.0.0.0", PORT);
     })
     .catch(err => logger.log("error", err));
