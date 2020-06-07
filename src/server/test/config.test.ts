@@ -1,8 +1,8 @@
-require("dotenv").config();
 import { config } from "../config";
 import { assert } from "chai";
-const path = require("path");
+require("dotenv").config();
 
+const path = require("path");
 const rootDirectory = path.join(__dirname, "..");
 const env = process.env.NODE_ENV;
 
@@ -24,7 +24,7 @@ describe("Config", () => {
 
     it ("Should have environment port", () => {
         assert.exists(config.port);
-        assert.deepStrictEqual(config.port, process.env.PORT || 9000);
+        assert.deepStrictEqual(config.port, process.env.PORT || 3000);
     });
 
     it ("Should have db config", () => {
@@ -60,6 +60,21 @@ describe("Config", () => {
     it ("Should have db password", () => {
         assert.exists(config.db.password);
         assert.deepStrictEqual(config.db.password, process.env.MYSQL_PASSWORD || "admin");
+    });
+
+    it ("Should have default username", () => {
+        assert.exists(config.db.password);
+        assert.deepStrictEqual(config.defaultUser, process.env.DEFAULT_USER || "admin@email.com");
+    });
+
+    it ("Should have default user password", () => {
+        assert.exists(config.db.password);
+        assert.deepStrictEqual(config.defaultUserPassword, process.env.DEFAULT_USER_PASSWORD || "P@ssword");
+    });
+
+    it ("Should have JWT secret", () => {
+        assert.exists(config.db.password);
+        assert.deepStrictEqual(config.jwtSecret, process.env.JWT_SECRET || "horsin-around");
     });
 
     it ("Should have db synchronize", () => {
