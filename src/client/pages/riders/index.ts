@@ -13,7 +13,9 @@ export const RiderPage = Vue.extend({
             ridersLoading: false,
             riderModal: false,
             rider: emptyRider,
-            deleteModal: false
+            deleteModal: false,
+            allRiders: [],
+            riderFilter: ""
         };
     },
     created() { state.updateVue(this); },
@@ -21,6 +23,7 @@ export const RiderPage = Vue.extend({
         get(`${apiurl}/riders`)
             .then((riders) => {
                 state.set({riders});
+                this.allRiders = riders;
             })
             .catch((e: Error) => console.log(e))
             .then(() => this.ridersLoading = false);
@@ -56,6 +59,15 @@ export const RiderPage = Vue.extend({
             this.setRider(rider);
             this.deleteModal = true;
             this.riderModal = true;
+        },
+        filterRiders() {
+            if (this.riderFilter.length < 2 || !this.riderFilter) {
+                this.riders = this.allRiders;
+            } else {
+                this.riders = this.riders.filter(rider =>
+                    rider.firstName.toLowerCase().includes(this.riderFilter.toLowerCase())
+                    || rider.lastName.toLowerCase().includes(this.riderFilter.toLowerCase()));
+            }
         }
     }
 });
