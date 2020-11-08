@@ -1,0 +1,144 @@
+<div class="modal is-active">
+    <div class="modal-background" @click="close()"></div>
+    <div class="modal-content">
+        <div class="box">
+            <div v-if="editMode">
+                <h1 class="title">New Rider Entry</h1>
+                <h2 v-if="error" class="subtitle has-text-danger">{{ error }}</h2>
+                <form @submit.prevent="submit()">
+                    <div class="field is-hidden">
+                        <label class="label">Result ID</label>
+                        <div class="control">
+                            <input type="number" class="input" v-model="result.resultId">
+                        </div>
+                    </div>
+                    <div class="field is-hidden">
+                        <label class="label">Show ID</label>
+                        <div class="control">
+                            <input type="number" class="input" v-model="result.showId">
+                        </div>
+                    </div>
+                    <div class="field is-hidden">
+                        <label class="label">Class Id</label>
+                        <div class="control">
+                            <input type="number" class="input" v-model="result.showClassId">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Rider</label>    
+                        <div class="control select">
+                            <select v-model="result.riderId">
+                                <option v-for="rider in riders" v-bind:value="rider.riderId">
+                                {{ rider.firstName }} {{ rider.lastName }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Rider Number</label>
+                        <div class="control">
+                            <input type="number" class="input" v-model="result.riderNumber">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Horse</label>
+                        <div class="control">
+                            <input type="text" class="input" v-model="result.horse">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="control">    
+                            <label class="checkbox">
+                                <input type="checkbox" v-model="result.scored">
+                                Scored
+                            </label>
+                        </div>
+                    </div>
+                    <div class="field is-grouped">
+                        <div class="control">
+                            <button
+                                :class="{ button: true, 'is-link': true, 'is-loading': submitting }"
+                                @click="submit()">
+                                Submit
+                            </button>
+                        </div>
+                        <div class="control">
+                            <button class="button is-text" type="button" @click="toggleEditMode()">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div v-else-if="deleteMode">
+                <h1 class="title">Delete Show Entry? This will delete any results as well.</h1>
+                <h2 v-if="error" class="subtitle has-text-danger">{{ error }}</h2>
+                <form @submit.prevent="submit()">
+                    <div class="field is-hidden">
+                        <label class="label">Result ID</label>
+                        <div class="control">
+                            <input type="number" class="input" v-model="result.resultId">
+                        </div>
+                    </div>
+                    <div class="field is-grouped">
+                        <div class="control">
+                            <button
+                                :class="{ button: true, 'is-link': true, 'is-loading': submitting }"
+                                @click="deleteEntry()">
+                                Delete Entry
+                            </button>
+                        </div>
+                        <div class="control">
+                            <button class="button is-text" type="button" @click="toggleDeleteMode()">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div v-else>
+                <div class="columns is-mobile is-pulled-right">
+                    <button class="button is-success" @click="toggleEditMode()">Add New Show Entry</button>
+                </div>
+                <h1 class="title">Class Entries</h1>
+                <table class="table is-striped">
+                    <thead>
+                        <tr>
+                            <th class="is-hidden">ShowId</th>
+                            <th class="is-hidden">ShowClassId</th>
+                            <th class="is-hidden">RiderId</th>
+                            <th>Rider #</th>
+                            <th>Rider</th>
+                            <th>Horse</th>
+                            <th>Type</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="enteredRider in enteredRiders">
+                            <td class="is-hidden">{{ enteredRider.showId }}</td>
+                            <td class="is-hidden">{{ enteredRider.showClassId }}</td>
+                            <td class="is-hidden">{{ enteredRider.riderId }}</td>
+                            <td>{{ enteredRider.riderNumber }}</td>
+                            <td>{{ enteredRider.rider.firstName }} {{ enteredRider.rider.lastName }}</td>
+                            <td>{{ enteredRider.horse }}</td>
+                            <td style="text-align: center;">
+                                <i v-if="enteredRider.scored" class="fas fa-award"></i>
+                                <i v-else class="fas fa-graduation-cap"></i>
+                            </td>
+                            <td>
+                                <button class="button" @click="editEntry(enteredRider)">
+                                    <span class="icon is-small">
+                                        <i class="fas fa-user-edit"></i>
+                                    </span>
+                                </button>
+                                <button class="button" @click="deleteEntryForm(enteredRider)">
+                                    <span class="icon is-small">
+                                        <i class="fas fa-user-times"></i>
+                                    </span>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <button class="modal-close is-large" aria-label="close" @click="close()"></button>
+</div>

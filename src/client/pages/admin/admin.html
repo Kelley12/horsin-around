@@ -1,0 +1,49 @@
+<div style="margin-top: 24px">
+    <div class="columns">
+        <div class="column is-3">
+            <h1 class="title">Administration</h1>
+            <hr>
+            <aside class="menu">
+                <p class="menu-label">General</p>
+                <ul class="menu-list">
+                    <li><a class="is-active">Users</a></li>
+                </ul>
+            </aside>
+        </div>
+        <div class="column">
+            <div class="columns is-mobile is-pulled-right is-marginles">
+                <div class="column is-8">
+                    <p>Use Ctrl + F to search for now</p>
+                </div>
+                <div>
+                    <button class="button is-success" @click="openModal()">Add New User</button>
+                </div>
+            </div>
+            <h2 class="title">Users</h2>
+            <hr>
+            <user-row
+                v-for="user in users"
+                :key="user.userId"
+                :userRow="user"
+                @open="openModal(user)"
+                @changePassword="changeUserPassword(user)"
+                @deleteModal="deleteUser(user)">
+            </user-row>
+            <div v-if="hasNoUsers" class="content">
+                <p>No users in database. Click Add New User above to add one.</p>
+            </div>
+        </div>
+    </div>
+    <user-modal 
+        v-if="userModal"
+        :user="user"
+        :deleteModal="deleteModal"
+        @close="userModal = false">
+    </user-modal>
+    <change-password-modal
+        v-if="changePasswordModal"
+        :user="user"
+        :adminModal="true"
+        @close="changePasswordModal = false">
+    </change-password-modal>
+</div>

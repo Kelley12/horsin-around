@@ -4,13 +4,13 @@ import { ConnectionOptions } from "typeorm";
 const env = process.env.NODE_ENV;
 
 export const dbconfig: ConnectionOptions = {
-    type: "postgres",
-    host: process.env.POSTGRES_HOST || "localhost",
-    port: Number(process.env.POSTGRES_PORT) || 5432,
-    database: process.env.POSTGRES_DB ||
-        (env === "test" ? "horsin-around_test" : "horsin-around"),
-    username: process.env.POSTGRES_USER || "admin",
-    password: process.env.POSTGRES_PASSWORD || "admin",
+    type: "mysql",
+    host: process.env.MYSQL_HOST || "localhost",
+    port: Number(process.env.MYSQL_PORT) || 3306,
+    database: process.env.MYSQL_DB ||
+        (env === "test" ? "horsin_around_test" : "horsin_around"),
+    username: process.env.MYSQL_USER || "admin",
+    password: process.env.MYSQL_PASSWORD || "admin",
     synchronize: true,
     logging: env !== "test",
     dropSchema: env === "test",
@@ -26,6 +26,9 @@ export const config = {
     name: env || "development",
     url: process.env.URL || "localhost",
     host: process.env.HOST || "0.0.0.0",
-    port: process.env.PORT || 9000,
+    port: process.env.PORT || 3000,
+    jwtSecret: process.env.JWT_SECRET || "horsin-around",
+    defaultUser: process.env.DEFAULT_USER || "admin@email.com",
+    defaultUserPassword: process.env.DEFAULT_USER_PASSWORD || "P@ssword",
     db: dbconfig
 };

@@ -1,8 +1,8 @@
-require("dotenv").config();
 import { config } from "../config";
 import { assert } from "chai";
-const path = require("path");
+require("dotenv").config();
 
+const path = require("path");
 const rootDirectory = path.join(__dirname, "..");
 const env = process.env.NODE_ENV;
 
@@ -24,7 +24,7 @@ describe("Config", () => {
 
     it ("Should have environment port", () => {
         assert.exists(config.port);
-        assert.deepStrictEqual(config.port, process.env.PORT || 9000);
+        assert.deepStrictEqual(config.port, process.env.PORT || 3000);
     });
 
     it ("Should have db config", () => {
@@ -34,32 +34,47 @@ describe("Config", () => {
 
     it ("Should have db type", () => {
         assert.exists(config.db.type);
-        assert.deepStrictEqual(config.db.type, "postgres");
+        assert.deepStrictEqual(config.db.type, "mysql");
     });
 
     it ("Should have db host", () => {
         assert.exists(config.db.host);
-        assert.deepStrictEqual(config.db.host, process.env.POSTGRES_HOST || "localhost");
+        assert.deepStrictEqual(config.db.host, process.env.MYSQL_HOST || "localhost");
     });
 
     it ("Should have db port", () => {
         assert.exists(config.db.port);
-        assert.deepStrictEqual(config.db.port, Number(process.env.POSTGRES_PORT) || 5432);
+        assert.deepStrictEqual(config.db.port, Number(process.env.MYSQL_PORT) || 3306);
     });
 
     it ("Should have db database", () => {
         assert.exists(config.db.database);
-        assert.deepStrictEqual(config.db.database, process.env.POSTGRES_DB || "horsin-around");
+        assert.deepStrictEqual(config.db.database, process.env.MYSQL_DB || "horsin_around");
     });
 
     it ("Should have db username", () => {
         assert.exists(config.db.username);
-        assert.deepStrictEqual(config.db.username, process.env.POSTGRES_USER || "admin");
+        assert.deepStrictEqual(config.db.username, process.env.MYSQL_USER || "admin");
     });
 
     it ("Should have db password", () => {
         assert.exists(config.db.password);
-        assert.deepStrictEqual(config.db.password, process.env.POSTGRES_PASSWORD || "admin");
+        assert.deepStrictEqual(config.db.password, process.env.MYSQL_PASSWORD || "admin");
+    });
+
+    it ("Should have default username", () => {
+        assert.exists(config.db.password);
+        assert.deepStrictEqual(config.defaultUser, process.env.DEFAULT_USER || "admin@email.com");
+    });
+
+    it ("Should have default user password", () => {
+        assert.exists(config.db.password);
+        assert.deepStrictEqual(config.defaultUserPassword, process.env.DEFAULT_USER_PASSWORD || "P@ssword");
+    });
+
+    it ("Should have JWT secret", () => {
+        assert.exists(config.db.password);
+        assert.deepStrictEqual(config.jwtSecret, process.env.JWT_SECRET || "horsin-around");
     });
 
     it ("Should have db synchronize", () => {

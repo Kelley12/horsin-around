@@ -12,7 +12,9 @@ logger.registerEmitter(server, { name: "Server", level: "verbose" });
 
 server.connect(config.db)
     .then(() => {
-        const PORT = Number(process.env.PORT) || 9000;
+        require("./middleware/passport");
+        server.configure(config);
+        const PORT = Number(process.env.PORT) || 3000;
         server.listen("0.0.0.0", PORT);
     })
     .catch(err => logger.log("error", err));

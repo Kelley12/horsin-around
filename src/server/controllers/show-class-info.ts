@@ -1,37 +1,171 @@
 import { EventEmitter2 } from "eventemitter2";
+import { Request, Response } from "express";
+import { validate } from "class-validator";
+import { logger } from "../utils";
+import { getRepository } from "typeorm";
 import { ShowClassInfo } from "../entity";
-import { getManager, Repository } from "typeorm";
 
 export class ShowClassInfoController {
     private readonly emitter = new EventEmitter2();
-    private readonly repository: Repository<ShowClassInfo>;
 
-    constructor() {
-        this.repository = getManager().getRepository(ShowClassInfo);
+    async getShowClassInfos(_: Request, res: Response) {
+        try {
+            const showClassInfoRepository = getRepository(ShowClassInfo);
+            const showClassInfos = await showClassInfoRepository.find();
+
+            res.send(showClassInfos);
+        } catch (error) {
+            logger.log("error", `API Error:`);
+            logger.log("error", error);
+            res.status(500).json({ error });
+        }
     }
 
-    getShowClassInfos(): Promise<ShowClassInfo[]> {
-        return this.repository.find();
+    async getShowClassInfo(req: Request, res: Response) {
+        try {
+            const id = parseInt(req.params.id);
+            const showClassInfoRepository = getRepository(ShowClassInfo);
+            const showClassInfo = await showClassInfoRepository.findOneOrFail(id);
+            res.send(showClassInfo);
+        } catch (error) {
+            logger.log("error", `API Error:`);
+            logger.log("error", error);
+            res.status(404).send("ShowClassInfo not found");
+        }
     }
 
-    getShowClassInfo(id: number): Promise<ShowClassInfo | undefined> {
-        return this.repository.findOne(id);
+    async getShowClassInfoByShow(req: Request, res: Response) {
+        try {
+            const showId = parseInt(req.params.showId);
+            const showClassInfoRepository = getRepository(ShowClassInfo);
+            const showClassInfo = await showClassInfoRepository.find({
+                relations: ["showClass"],
+                join: { alias: "showClassInfo", leftJoinAndSelect: {
+                    showClass: "showClassInfo.showClass"
+                }},
+                where: { showId }
+            });
+            res.send(showClassInfo);
+        } catch (error) {
+            logger.log("error", `API Error:`);
+            logger.log("error", error);
+            res.status(404).send("ShowClassInfo not found");
+        }
     }
 
-    createShowClassInfo(showClassInfo: ShowClassInfo): Promise<ShowClassInfo> {
-        const newShowClassInfo = this.repository.create(showClassInfo);
-        return this.repository.save(newShowClassInfo);
+    async getShowClassInfoByShowClass(req: Request, res: Response) {
+        try {
+            const showId = parseInt(req.params.showId);
+            const showClassId = parseInt(req.params.showClassId);
+            const showClassInfoRepository = getRepository(ShowClassInfo);
+            const showClassInfo = await showClassInfoRepository.findOneOrFail({
+                relations: ["showClass"],
+                join: { alias: "showClassInfo", leftJoinAndSelect: {
+                    showClass: "showClassInfo.showClass"
+                }},
+                where: { showId, showClassId }
+            });
+            res.send(showClassInfo);
+        } catch (error) {
+            logger.log("error", `API Error:`);
+            logger.log("error", error);
+            res.status(404).send("ShowClassInfo not found");
+        }
     }
 
-    async updateShowClassInfo(showClassInfo: ShowClassInfo, id: number):
-        Promise<ShowClassInfo | undefined> {
-        await this.repository.update(id, showClassInfo);
-        return this.repository.findOne(id);
+    async createShowClassInfo(req: Request, res: Response) {
+        const { showId, showClassId, distance, speed, minutes, seconds, milliseconds } = req.body;
+
+        if (!showId || !showClassId) {
+            return res.status(400)
+                .send({ error: "Missing data: showId or showClassId" });
+        }
+
+        const showClassInfo = new ShowClassInfo();
+        showClassInfo.showId = showId;
+        showClassInfo.showClassId = showClassId;
+        showClassInfo.distance = distance;
+        showClassInfo.speed = speed;
+        showClassInfo.minutes = minutes;
+        showClassInfo.seconds = seconds;
+        showClassInfo.milliseconds = milliseconds;
+
+        const errors = await validate(showClassInfo);
+        if (errors.length > 0) {
+            res.status(400).send(errors);
+            return;
+        }
+
+        try {
+            const showClassInfoRepository = getRepository(ShowClassInfo);
+            await showClassInfoRepository.save(showClassInfo);
+        } catch (e) {
+            res.status(409).send("Invalid showClassInfo");
+            return;
+        }
+
+        res.status(201).send(showClassInfo);
     }
 
-    async deleteShowClassInfo(id: number): Promise<boolean> {
-        const deleted = await this.repository.delete(id);
-        return deleted.raw[1] ? true : false;
+    async updateShowClassInfo(req: Request, res: Response) {
+        const id = parseInt(req.params.id);
+        const { showId, showClassId, distance, speed, minutes, seconds, milliseconds } = req.body;
+
+        if (!showId || !showClassId) {
+            return res.status(400)
+                .send({ error: "Missing data: showId or showClassId" });
+        }
+
+        let showClassInfo;
+        const showClassInfoRepository = getRepository(ShowClassInfo);
+        try {
+            showClassInfo = await showClassInfoRepository.findOneOrFail(id);
+        } catch (error) {
+            logger.log("error", `API Error:`);
+            logger.log("error", error);
+            res.status(404).send("ShowClassInfo not found");
+            return;
+        }
+
+        showClassInfo.showId = showId;
+        showClassInfo.showClassId = showClassId;
+        showClassInfo.distance = distance;
+        showClassInfo.speed = speed;
+        showClassInfo.minutes = minutes;
+        showClassInfo.seconds = seconds;
+        showClassInfo.milliseconds = milliseconds;
+
+        const errors = await validate(showClassInfo);
+        if (errors.length > 0) {
+            res.status(400).send(errors);
+            return;
+        }
+
+        try {
+            await showClassInfoRepository.save(showClassInfo);
+        } catch (e) {
+            res.status(409).send("Invalid showClassInfo");
+            return;
+        }
+
+        res.status(200).send(showClassInfo);
+    }
+
+    async deleteShowClassInfo(req: Request, res: Response) {
+        const id = parseInt(req.params.id);
+
+        const showClassInfoRepository = getRepository(ShowClassInfo);
+        try {
+            await showClassInfoRepository.findOneOrFail(id);
+        } catch (error) {
+            logger.log("error", `API Error:`);
+            logger.log("error", error);
+            res.status(404).send("ShowClassInfo not found");
+            return;
+        }
+        showClassInfoRepository.delete(id);
+
+        res.status(200).send(true);
     }
 
     on(event: "Error", cb: (error: Error) => void): this;
@@ -50,3 +184,5 @@ export class ShowClassInfoController {
         return this;
     }
 }
+
+export const showClassInfoController = new ShowClassInfoController();

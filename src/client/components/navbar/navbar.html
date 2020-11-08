@@ -2,13 +2,18 @@
     <div class="container">
         <div class="navbar-brand">
             <router-link to="/" class="navbar-item" :active-class="''" >
-                <h1 class="title">HorsinAround</h1>
+                <h1 class="title">Horsin'Around</h1>
             </router-link>
         </div>
         <div class="navbar-menu">
             <div class="navbar-start">
                 <template v-if="loggedIn">
                     <router-link to="/home" class="navbar-item is-tab">Home</router-link>
+                    <router-link to="/shows" class="navbar-item is-tab">Shows</router-link>
+                    <router-link to="/class" class="navbar-item is-tab">Classes</router-link>
+                    <router-link to="/riders" class="navbar-item is-tab">Riders</router-link>
+                    <router-link to="/scoring" class="navbar-item is-tab">Scoring</router-link>
+                    <router-link to="/admin" class="navbar-item is-tab">Admin</router-link>
                 </template>
             </div>
             <div class="navbar-end">

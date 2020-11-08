@@ -1,47 +1,68 @@
 import {
     Column, Entity, PrimaryGeneratedColumn, ManyToOne,
-    CreateDateColumn, UpdateDateColumn
+    CreateDateColumn, UpdateDateColumn, JoinColumn
 } from "typeorm";
-import { IResults } from "../../shared";
+import { IResult } from "../../shared";
 import { Show } from "./show";
 import { ShowClass } from "./show-class";
 import { Rider } from "./rider";
 
 @Entity("results")
-export class Result implements IResults {
+export class Result implements IResult {
     @PrimaryGeneratedColumn()
     public resultId?: number;
 
+    @Column()
+    public showId!: number;
     @ManyToOne(_ => Show, show => show.results)
+    @JoinColumn({ name: "showId" })
     public show?: Show;
 
+    @Column()
+    public showClassId!: number;
     @ManyToOne(_ => ShowClass, showClass => showClass.results)
+    @JoinColumn({ name: "showClassId" })
     public showClass?: ShowClass;
 
+    @Column()
+    public riderId!: number;
     @ManyToOne(_ => Rider, rider => rider.results)
+    @JoinColumn({ name: "riderId" })
     public rider?: Rider;
 
-    @Column("varchar", { length: 50 })
+    @Column("integer", { default: 0 })
+    public riderNumber!: number;
+
+    @Column("varchar", { length: 50, default: "N/A" })
     public horse!: string;
 
-    @Column()
+    @Column("boolean", { default: false })
     public scored!: boolean;
 
-    @Column()
+    @Column("integer", { default: 0 })
     public faults!: number;
 
-    @Column()
+    @Column("integer", { default: 0 })
+    public timePenalty!: number;
+
+    @Column("integer", { default: 0 })
     public minutes!: number;
 
-    @Column()
+    @Column("integer", { default: 0 })
     public seconds!: number;
 
-    @Column()
+    @Column("integer", { default: 0 })
     public milliseconds!: number;
 
-    @CreateDateColumn({ type: "timestamp with time zone" })
+    @Column("integer", { default: 0 })
+    public timeInMs!: number;
+
+    @Column("boolean", { default: false })
+    public eliminated!: boolean;
+
+    @CreateDateColumn({ type: "datetime" })
     public createDate!: Date;
 
-    @UpdateDateColumn({ type: "timestamp with time zone" })
+    @UpdateDateColumn({ type: "datetime" })
     public updateDate!: Date;
 }

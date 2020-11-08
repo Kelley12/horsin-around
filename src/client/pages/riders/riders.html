@@ -1,9 +1,15 @@
 <div style="margin-top: 24px">
-    <div class="columns is-mobile is-pulled-right is-marginles">
-        <div class="column is-8">
-            <p>Use Ctrl + F to search for now</p>
+    <div class="columns is-mobile is-pulled-right is-marginless" style="width: 50%;">
+        <div class="column is-four-fifths">        
+            <div class="control has-icons-left has-icons-right">
+                <input class="input" placeholder="Rider Name" v-model="riderFilter"
+                    @change="filterRiders" @keyup="filterRiders">
+                <span class="icon is-small is-left">
+                <i class="fas fa-search"></i>
+                </span>
+            </div>
         </div>
-        <div>
+        <div class="column">
             <button class="button is-success" @click="openModal()">Add New Rider</button>
         </div>
     </div>

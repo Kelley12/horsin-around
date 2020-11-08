@@ -13,18 +13,15 @@ export class ShowClass implements IShowClass {
     @Column("varchar", { length: 50 })
     public name!: string;
 
-    @Column()
-    public speed!: number;
-
     @OneToMany(_ => Result, result => result.showClass)
     public results!: Result[];
 
     @OneToMany(_ => ShowClassInfo, ShowClassInfo => ShowClassInfo.showClass)
     public showClassInfo!: ShowClassInfo[];
 
-    @CreateDateColumn({ type: "timestamp with time zone" })
+    @CreateDateColumn({ type: "datetime" })
     public createDate!: Date;
 
-    @UpdateDateColumn({ type: "timestamp with time zone" })
+    @UpdateDateColumn({ type: "datetime" })
     public updateDate!: Date;
 }
