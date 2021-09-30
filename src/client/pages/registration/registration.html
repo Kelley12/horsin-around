@@ -1,0 +1,152 @@
+<div class="box" style="max-width: 700px; margin: 10px auto">
+    <div class="content" v-if="show.showId < 1">
+        <h1>This show is no longer accepting entries</h1>
+        <router-link to="/home" class="navbar-item is-tab">Back to Home</router-link>
+    </div>
+    <template v-else-if="!submitted">
+        <h1 class="title">Sign up</h1>
+        <ul>
+            <li>
+                <b>Entries/Fees:</b> $15 Grounds fee per horse to off-set arena rental and insurance costs. $10 per Class before closing date, after closing date $15 per class.
+                You may enter more than once in the same class for schooling, but only one will be your competition round. 
+                Classes may be split into Junior (under 18) for the low division. 
+                Refunds in full (or applied to next show in series) before closing date, after closing entries may be applied to another show in the series, minus $15 grounds fee. 
+                Day of show scratches or no-shows, no refund & no credit given.
+            </li>
+            <li>
+                <b>Awards:</b> Ribbons thru 4th place. 
+                Year-end Winter Jumper Series Champion and Reserve Champion awarded to the same horse/rider combination for the series- Low jumper, Mid Jumper and High Jumper divisions. 
+                Points are as follows: 1st -50, 2nd -25, 3rd -15, 4th -10. 
+                You do not need to enter every class of division! 
+                Must compete in 3 of the series shows in one division to be eligible for a year-end award in that division.
+            </li>
+            <li>
+                <b>Ties:</b> In case of tie, pre-entered horse/rider will win over post-entered. If still tied, tie remains.
+            </li>
+            <li>
+                <b>Warmups:</b> There will be a brief warm up allowed in the indoor arena prior to each division (4 horses max, managed by show staff).
+            </li>
+            <li>
+                <b>Attire:</b> Riding helmet and boots with a low heel must be worn.
+            </li>
+            <li>
+                <b>Other info: <u>NO DOGS ALLOWED</u></b> on the grounds in accordance with Birt Arena policies. 
+                Management reserves the right to excuse any competitor, trainer or spectator for unsportsmanlike behavior. 
+                <b>Manure must be picked up in parking lot</b>. <u>CLEAN UP after yourself</u>.
+            </li>
+            <li>
+                <b>Concessions:</b> will be available for purchase and support a local horse club.
+            </li>
+        </ul>
+        <form @submit.prevent="submit()" style="margin-top: 20px;">
+            <div class="content has-text-danger" v-if="errors.length">
+                <b>Please correct the following error(s):</b>
+                <ul>
+                    <li v-for="error in errors"><span v-html="error"></span></li>
+                </ul>
+            </div>
+            <div class="field">
+                <label class="label">Rider First Name</label>
+                <div class="control">
+                    <input type="text" :class="{input : true, 'is-danger' : firstNameError}" v-model="firstName">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Rider Last Name</label>
+                <div class="control">
+                    <input type="text" :class="{input : true, 'is-danger' : lastNameError}" v-model="lastName">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Phone Number</label>
+                <div class="control">
+                    <input type="text" :class="{input : true, 'is-danger' : phoneNumberError}" v-model="phoneNumber">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Horse Name</label>
+                <div class="control">
+                    <input type="text" :class="{input : true, 'is-danger' : horseNameError}" v-model="horseName">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Classes</label>
+                <ul>
+                    <li class="control" v-for="(selectedClass, index) in selectedClasses">
+                        <div class="columns">
+                            <div class="column">
+                                <div :class="{select : true, 'is-danger' : selectedClassesError}">
+                                    <select v-model="selectedClass.id">
+                                        <option :value="0">Select a class...</option>
+                                        <option v-for="showClass in showClasses" v-bind:value="showClass.showClassId">
+                                            {{ showClass.name }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="column">
+                                <label class="checkbox">
+                                    <input type="checkbox" v-model="selectedClass.schooling">
+                                    Schooling?
+                                  </label>
+                            </div>
+                            <div class="column" v-if="index > 0">
+                                <button
+                                class="button is-danger"
+                                @click.prevent="deleteClass(index)">
+                                    <span class="icon is-small">
+                                        <i class="far fa-trash-alt"></i>
+                                    </span>
+                                    <span>Delete Class</span>
+                                </button>
+                            </div>
+                            <div class="column" v-else></div>
+                        </div>
+                    </li>
+                    <li class="control">
+                        <div class="columns">
+                            <div class="column">
+                                <button class="button is-primary" @click.prevent="addClass()">Add Class</button>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <p style="margin-top: 15px;"><b>Please note:</b></p>
+                <ol style="margin-left: 5%;">
+                    <li>$5 fee for change of horse of rider at show- fill out form at show office</li>
+                    <li>You may add rounds day of, you must fill out the form at the office</li>
+                </ol>
+                <div class="card" style="width: 50%; margin: 10px auto">
+                    <header class="card-header">
+                      <p class="card-header-title">
+                        Fees
+                      </p>
+                    </header>
+                    <div class="card-content">
+                      <div class="content">
+                        <p>Entry Fees: $10 X {{selectedClasses.length}} = ${{selectedClasses.length * 10}}</p>
+                        <p>Grounds Fee: $15</p>
+                        <hr/>
+                        <p>Total: ${{selectedClasses.length * 10 + 15}}</p>
+                      </div>
+                    </div>
+                </div>
+                <p class="has-text-centered">When writing checks, please make payable to: “<span class="has-text-danger">Erin Storey</span>”</p>
+                <p class="is-size-5 has-text-centered">Don’t forget to complete the release of liability form found <a href="https://storeytails.com/wp-content/uploads/2020/10/NWWJS-Release_Form.pdf">here</a></p>
+            </div>
+            <div class="field is-grouped">
+                <div class="control" style="margin: 10px auto">
+                    <button
+                        :class="{ button: true, 'is-link': true }"
+                        @click.prevent="submit()">
+                        Sign Up
+                    </button>
+                </div>
+            </div>
+        </form>
+    </template>
+    <div class="content" v-else-if="submitted">
+        <h1>You are now registered for {{ show.name }}!</h1>
+        <router-link to="/home" class="navbar-item is-tab">Back to Home</router-link>
+    </div>
+</div>

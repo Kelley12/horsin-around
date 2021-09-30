@@ -5,4 +5,4 @@ export * from "./riders";
 export * from "./scoring";
 export * from "./show-class";
 export * from "./shows";
-export * from "./admin";
+export * from "./registration";
