@@ -1,5 +1,5 @@
 import VueRouter from "vue-router";
-import { 
+import {
     HomePage,
     LoginPage,
     ShowPage,
