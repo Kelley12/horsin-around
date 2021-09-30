@@ -1,5 +1,14 @@
 import VueRouter from "vue-router";
-import { HomePage, LoginPage, ShowPage, ShowClassPage, RiderPage, ScoringPage, AdminPage, RegistrationPage } from "./pages";
+import { 
+    HomePage,
+    LoginPage,
+    ShowPage,
+    ShowClassPage,
+    RiderPage,
+    ScoringPage,
+    AdminPage,
+    RegistrationPage
+} from "./pages";
 import { state } from "./state";
 // import { post, apiurl } from "./helpers";
 

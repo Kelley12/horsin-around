@@ -2,12 +2,12 @@ import Vue from "vue";
 import { ShowResult } from "../../components";
 import { state } from "../../state";
 import { get, apiurl } from "../../helpers";
-import { emptyShow, Show } from '../../../shared';
+import { emptyShow, Show } from "../../../shared";
 
 export const RegistrationPage = Vue.extend({
     template: require("./registration.html"),
     components: { ShowResult },
-    data(): { 
+    data(): {
         show: Show,
         firstName: string,
         lastName: string,
@@ -38,7 +38,7 @@ export const RegistrationPage = Vue.extend({
             phoneNumberError: false,
             horseNameError: false,
             selectedClassesError: false,
-        }; 
+        };
     },
     created() { state.updateVue(this); },
     mounted() {
@@ -95,12 +95,12 @@ export const RegistrationPage = Vue.extend({
                 this.horseNameError = true;
                 this.errors.push("Must enter horse name");
             }
-            if(this.selectedClasses.some(selectedClass => selectedClass.id < 1)){
+            if (this.selectedClasses.some(selectedClass => selectedClass.id < 1)) {
                 this.selectedClassesError = true;
                 this.errors.push("All classes must be selected");
             }
 
-            return this.errors.length == 0;
+            return this.errors.length === 0;
         },
         submit() {
             if (this.validateForm()) {
@@ -113,7 +113,7 @@ export const RegistrationPage = Vue.extend({
                         classId: selectedClass.id,
                         schooling: selectedClass.schooling,
                         fee: 10,
-                    }
+                    };
                 });
                 console.log("Submitting:", rows);
                 this.submitted = true;
