@@ -1,7 +1,7 @@
 import { EventEmitter2 } from "eventemitter2";
 import { Request, Response } from "express";
 import { getRepository } from "typeorm";
-import { Registration, Rider } from "../entity";
+import { Registration, Result, Rider } from "../entity";
 import { logger } from '../utils';
 
 export class RegistrationController {
@@ -30,28 +30,24 @@ export class RegistrationController {
         // Lookup the rider by first and last name
         // If they exists, get the rider Id, otherwise create a new rider
         const riderRepository = getRepository(Rider);
-        logger.log("info", `Finding rider: ${firstName} ${lastName}`);
         let rider = await riderRepository.find({
             where: { firstName: firstName, lastName: lastName }
         });
-        logger.log("info", `Found rider: ${rider}`);
 
         let riderId = 0;
         if (!rider || !rider[0]) {
             // Rider does not exist, create rider
-            const rider = new Rider();
-            rider.firstName = firstName;
-            rider.lastName = lastName;
-            logger.log("info", `Creating rider: ${firstName} ${lastName}`);
+            const newRider = new Rider();
+            newRider.firstName = firstName;
+            newRider.lastName = lastName;
 
-            await riderRepository.save(rider);
+            logger.log("info", `Rider not found, creating new rider: ${firstName} ${lastName}`);
+            const riders = await riderRepository.save(newRider);
+
+            // Find the rider if they have been created
+            rider = [riders];
         }
 
-        rider = await riderRepository.find({
-            where: { firstName: firstName, lastName: lastName }
-        });
-
-        logger.log("info", `Finding rider: ${firstName} ${lastName}`);
         if (rider && rider[0] && rider[0].riderId) {
             // Rider exists, get riderId
             riderId = rider[0].riderId;
@@ -71,11 +67,25 @@ export class RegistrationController {
             registration.schooling = entry.schooling;
 
             return registration;
-        })
+        });
+
+        const results = entries.map((entry: any) => {
+            const result = new Result();
+            result.showId = showId;
+            result.showClassId = showClassId;
+            result.riderId = riderId;
+            result.horse = entry.horseName;
+            result.scored = !entry.schooling;
+
+            return result;
+        });
 
         try {
             const registrationRepository = getRepository(Registration);
             await registrationRepository.save(registrations);
+
+            const resultRepository = getRepository(Result);
+            await resultRepository.save(results);
         } catch (e) {
             res.status(409).send("Invalid registration");
             return;
