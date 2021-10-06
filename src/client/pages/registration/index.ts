@@ -1,7 +1,7 @@
 import Vue from "vue";
 import { ShowResult } from "../../components";
 import { state } from "../../state";
-import { get, apiurl } from "../../helpers";
+import { get, apiurl, post } from "../../helpers";
 import { emptyShow, Show } from "../../../shared";
 
 export const RegistrationPage = Vue.extend({
@@ -106,17 +106,21 @@ export const RegistrationPage = Vue.extend({
             if (this.validateForm()) {
                 const rows = this.selectedClasses.map(selectedClass => {
                     return {
+                        showId: this.show.showId,
                         firstName: this.firstName,
                         lastName: this.lastName,
                         phoneNumber: this.phoneNumber,
                         horseName: this.horseName,
-                        classId: selectedClass.id,
+                        showClassId: selectedClass.id,
                         schooling: selectedClass.schooling,
-                        fee: 10,
+                        classFee: 10,
                     };
                 });
-                console.log("Submitting:", rows);
-                this.submitted = true;
+                post(`${apiurl}/registration`, {
+                    entries: rows
+                })
+                    .then(() => this.submitted = true)
+                    .catch((e: Error) => this.errors.push(e.message));
             }
         }
     }
