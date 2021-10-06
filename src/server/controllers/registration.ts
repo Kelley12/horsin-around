@@ -2,31 +2,12 @@ import { EventEmitter2 } from "eventemitter2";
 import { Request, Response } from "express";
 import { getRepository } from "typeorm";
 import { Registration, Result, Rider } from "../entity";
-import { logger } from '../utils';
+import { logger } from "../utils";
 
 export class RegistrationController {
     private readonly emitter = new EventEmitter2();
 
-    async createRegistration(req: Request, res: Response) {
-        const { entries } = req.body;
-
-        if (!entries || entries.length < 1) {
-            return res.status(400)
-                .send({ error: "" });
-        }        
-
-        const {
-            showId,
-            showClassId,
-            firstName,
-            lastName,
-        } = entries[0];
-
-        if (!showId || !showClassId || !firstName || !lastName) {
-            return res.status(400)
-                .send({ error: "Missing data: show, class, or rider" });
-        }
-
+    async getOrCreateRider(firstName: string, lastName: string): Promise<number> {
         // Lookup the rider by first and last name
         // If they exists, get the rider Id, otherwise create a new rider
         const riderRepository = getRepository(Rider);
@@ -52,8 +33,38 @@ export class RegistrationController {
             // Rider exists, get riderId
             riderId = rider[0].riderId;
         } else {
+            throw Error("Error saving rider");
+        }
+
+        return riderId;
+    }
+
+    async createRegistration(req: Request, res: Response) {
+        const { entries } = req.body;
+
+        if (!entries || entries.length < 1) {
             return res.status(400)
-                .send({ error: "Error saving rider" });
+                .send({ error: "" });
+        }
+
+        const {
+            showId,
+            showClassId,
+            firstName,
+            lastName,
+        } = entries[0];
+
+        if (!showId || !showClassId || !firstName || !lastName) {
+            return res.status(400)
+                .send({ error: "Missing data: show, class, or rider" });
+        }
+
+        let riderId = 0;
+        try {
+            riderId = await this.getOrCreateRider(firstName, lastName);
+        } catch (e) {
+            res.status(400).send({ error: "Error saving rider" });
+            return;
         }
 
         const registrations = entries.map((entry: any) => {
