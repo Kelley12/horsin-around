@@ -21,7 +21,7 @@ export const emptyRegistration: Registration = {
     showClassId: 0,
     riderId: 0,
     horse: "",
-    phoneNumber: '',
+    phoneNumber: "",
     classFee: 0,
     schooling: false,
     rider: emptyRider

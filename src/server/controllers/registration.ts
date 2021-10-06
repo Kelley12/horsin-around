@@ -12,7 +12,7 @@ export class RegistrationController {
         // If they exists, get the rider Id, otherwise create a new rider
         const riderRepository = getRepository(Rider);
         let rider = await riderRepository.find({
-            where: { firstName: firstName, lastName: lastName }
+            where: { firstName, lastName }
         });
 
         let riderId = 0;
@@ -39,12 +39,9 @@ export class RegistrationController {
         return riderId;
     }
 
-    async createRegistration(req: Request, res: Response) {
-        const { entries } = req.body;
-
+    validateEntries(entries: any): any {
         if (!entries || entries.length < 1) {
-            return res.status(400)
-                .send({ error: "" });
+            throw Error("Missing data: entries");
         }
 
         const {
@@ -55,9 +52,27 @@ export class RegistrationController {
         } = entries[0];
 
         if (!showId || !showClassId || !firstName || !lastName) {
-            return res.status(400)
-                .send({ error: "Missing data: show, class, or rider" });
+            throw Error("Missing data: show, class, or rider");
         }
+
+    }
+
+    async createRegistration(req: Request, res: Response) {
+        const { entries } = req.body;
+
+        try {
+            this.validateEntries(entries);
+        } catch (e) {
+            res.status(400).send({ error: e.message });
+            return;
+        }
+
+        const {
+            showId,
+            showClassId,
+            firstName,
+            lastName,
+        } = entries[0];
 
         let riderId = 0;
         try {
@@ -67,31 +82,30 @@ export class RegistrationController {
             return;
         }
 
-        const registrations = entries.map((entry: any) => {
-            const registration = new Registration();
-            registration.showId = showId;
-            registration.showClassId = showClassId;
-            registration.riderId = riderId;
-            registration.horse = entry.horseName;
-            registration.phoneNumber = entry.phoneNumber;
-            registration.classFee = entry.classFee;
-            registration.schooling = entry.schooling;
+        try {
+            const registrations = entries.map((entry: any) => {
+                const registration = new Registration();
+                registration.showId = showId;
+                registration.showClassId = showClassId;
+                registration.riderId = riderId;
+                registration.horse = entry.horseName;
+                registration.phoneNumber = entry.phoneNumber;
+                registration.classFee = entry.classFee;
+                registration.schooling = entry.schooling;
 
-            return registration;
-        });
+                return registration;
+            });
 
-        const results = entries.map((entry: any) => {
-            const result = new Result();
-            result.showId = showId;
-            result.showClassId = showClassId;
-            result.riderId = riderId;
-            result.horse = entry.horseName;
-            result.scored = !entry.schooling;
+            const results = entries.map((entry: any) => {
+                const result = new Result();
+                result.showId = showId;
+                result.showClassId = showClassId;
+                result.riderId = riderId;
+                result.horse = entry.horseName;
+                result.scored = !entry.schooling;
 
             return result;
         });
-
-        try {
             const registrationRepository = getRepository(Registration);
             await registrationRepository.save(registrations);
 
