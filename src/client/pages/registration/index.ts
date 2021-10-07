@@ -22,6 +22,9 @@ export const RegistrationPage = Vue.extend({
         phoneNumberError: boolean,
         horseNameError: boolean,
         selectedClassesError: boolean,
+        releaseOpen: boolean,
+        releaseSigned: boolean,
+        releaseError: boolean,
     } {
         return {
             show: emptyShow,
@@ -38,6 +41,9 @@ export const RegistrationPage = Vue.extend({
             phoneNumberError: false,
             horseNameError: false,
             selectedClassesError: false,
+            releaseOpen: false,
+            releaseSigned: false,
+            releaseError: false,
         };
     },
     created() { state.updateVue(this); },
@@ -99,8 +105,15 @@ export const RegistrationPage = Vue.extend({
                 this.selectedClassesError = true;
                 this.errors.push("All classes must be selected");
             }
+            if (!this.releaseSigned) {
+                this.releaseError = true;
+                this.errors.push("Must sign release to submit");
+            }
 
             return this.errors.length === 0;
+        },
+        toggleRelease() {
+            this.releaseOpen = !this.releaseOpen;
         },
         submit() {
             if (this.validateForm()) {

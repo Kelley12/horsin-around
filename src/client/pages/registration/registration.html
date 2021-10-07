@@ -135,12 +135,57 @@
                 <p class="has-text-centered"><a href="https://venmo.com/code?user_id=2287985668128768890&created=1633451786">Pay with Venmo</a></p>
                 <p class="has-text-centered"><a href="https://www.paypal.me/mekidd693">Pay with Paypal</a></p>
                 <p class="has-text-centered">When writing checks, please make payable to: “<span class="has-text-danger">Erin Storey</span>”</p>
-                <p class="is-size-5 has-text-centered">Don’t forget to complete the release of liability form found <a href="https://storeytails.com/wp-content/uploads/2020/10/NWWJS-Release_Form.pdf">here</a></p>
             </div>
+            <div class="field">
+                <div class="card">
+                    <header @click.prevent="toggleRelease()" :class="{ 'card-header': true, 'has-background-danger-light': releaseError }">
+                      <p class="card-header-title">
+                        Release of Liability
+                      </p>
+                      <span class="card-header-icon" aria-label="more options">
+                        <span class="icon">
+                          <i v-if="releaseOpen" class="fas fa-angle-down" aria-hidden="true"></i>
+                          <i v-else class="fas fa-angle-up" aria-hidden="true"></i>
+                        </span>
+                    </span>
+                    </header>
+                    <div v-if="releaseOpen" class="card-content">
+                        <div class="content">
+                            <p>
+                                I have applied to participate in this USEA sponsored educational activity. I agree that my participation is subject to the Conditions in this release and to those set by the organizer of this
+                                activity, the regulations and requirements of the USEA and, where applicable, the U.S. Equestrian Federation Rules for Eventing.</p>
+                            <p>
+                                <b>I agree</b> to wear protective headgear when riding. When jumping, I agree to wear protective headgear passing or surpassing the ASTM/SEI standards with harness attached that meets
+                                standards currently imposed by the <b><i>U.S. Equestrian Rules for Eventing</i></b>. I understand that the USEA mandates that all riders participating in cross-country activity wear body-protecting vests that meet or exceed current USEF rules and the wearing of an approved medical armband or bracelet.
+                            </p>
+                            <p>
+                                <b>I understand</b> that the sport of eventing is a high risk sport, and that my participation in this educational activity may also involve participation in an “equine activity” as defined by applicable laws and is solely at my own risk. I understand that my participation involves all inherent risks associated with the dangers and conditions which are an integral part of equine
+                                activities, including, but not limited to, the propensity of equines to behave in ways which may result in injury, harm or even death to humans or other animals around or near them;
+                                the unpredictability of equine reaction to sounds, sudden movements, smells and unfamiliar objects; persons or other animals; hazards related to surface and subsurface conditions;
+                                collisions with other equines or objects; and, the potential of a participant to act in a negligent or unskilled manner which may contribute to injury to the participant or others, including
+                                failing or inability to maintain control over the animal. By participating in this activity I agree to assume responsibility for those risks, and I release and agree to hold harmless the
+                                activity organizer, organizing committee, officials, the USEA, USEF, their officers, agents, employees and the volunteers assisting in the conduct of this USEA educational activity and
+                                the owners of any property on which it is to be held, from all liability for negligence resulting in accidents, damage, injury or illness to myself and to my property, including the horse(s)
+                                which I may ride.
+                            </p>
+                            <p>
+                                <b>I understand and agree</b> that the organizer of this USEA educational activity has the right to cancel this activity; to refuse any entry or application; to require and enforce the wearing
+                                of safety or other attire and the conduct of riders, horses and visitors; and to prohibit, stop or control any action during the activity deemed by the organizer to be improper or unsafe.
+                            </p>
+                        </div>
+                        <label class="checkbox">
+                            <input type="checkbox" v-model="releaseSigned">
+                            I agree to the terms and conditions
+                          </label>
+                      </div>
+                  </div>
+            </div>
+            <p v-if="!releaseSigned" class="is-size-5 has-text-centered">Don’t forget to complete the release of liability form above.</p>
             <div class="field is-grouped">
                 <div class="control" style="margin: 10px auto">
                     <button
-                        :class="{ button: true, 'is-link': true }"
+                        class="button is-link"
+                        :disabled="!releaseSigned"
                         @click.prevent="submit()">
                         Sign Up
                     </button>
