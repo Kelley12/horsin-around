@@ -1,5 +1,14 @@
 import VueRouter from "vue-router";
-import { HomePage, LoginPage, ShowPage, ShowClassPage, RiderPage, ScoringPage, AdminPage } from "./pages";
+import {
+    HomePage,
+    LoginPage,
+    ShowPage,
+    ShowClassPage,
+    RiderPage,
+    ScoringPage,
+    AdminPage,
+    RegistrationPage
+} from "./pages";
 import { state } from "./state";
 // import { post, apiurl } from "./helpers";
 
@@ -15,6 +24,8 @@ export const router = new VueRouter({
         { path: "/class", component: ShowClassPage, meta: { anon: false } },
         { path: "/scoring", component: ScoringPage, meta: { anon: false } },
         { path: "/admin", component: AdminPage, meta: { anon: false } },
+        { path: "/registration", component: RegistrationPage, meta: { anon: true } },
+        { path: "/registration/:showId", component: RegistrationPage, meta: { anon: true } },
     ]
 });
 

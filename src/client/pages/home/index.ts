@@ -42,6 +42,15 @@ export const HomePage = Vue.extend({
                 this.$router.push(`/home/${show.showId}`);
             }
         },
+        signUp(show?: Show) {
+            if (!show) {
+                this.show = emptyShow;
+                this.$router.push(`/registration`);
+            } else {
+                this.show = show;
+                this.$router.push(`/registration/${show.showId}`);
+            }
+        },
         getShow() {
             const showId = this.$route.params.showId;
             if (showId) {

@@ -51,7 +51,7 @@
 1. Make sure that you have [Prerequisites](#prerequisites) installed.
 2. Clone this repo using `git clone https://github.com/kelley12/horsin-around.git`
 3. Move to the appropriate directory: `cd horsin-around`.
-4. Run `npm run start:dev` to see the example app at `http://localhost:1234`.
+4. Run `npm run start:dev` to see the example app at <http://localhost:1234>.
 
 ## Documentation
 
@@ -59,7 +59,7 @@
 - [Overview](docs/): Summary of documentation
   - [.env Setup](docs/.env-setup.md): Setting up the .env file
   - [Getting Started](docs/getting-started.md): Getting started guide
-  - [CLI Commands](docs/commands.md): Commands to buidling, running, linting, testing, etc.
+  - [CLI Commands](docs/commands.md): Commands to building, running, linting, testing, etc.
   - [Debugging](docs/debugging.md): Information on debugging with VS Code and Chrome
   - [Docker-MySQL-PHPMyAdmin](docs/docker-mysql-phpMyAdmin.md): Using Docker with MySQL and PHPMyAdmin
   - [Heroku](docs/heroku.md): Information on deploying to Heroku and useful Heroku CLI commands

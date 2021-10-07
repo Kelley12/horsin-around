@@ -1,4 +1,5 @@
 export * from "./show-class";
+export * from "./registration";
 export * from "./results";
 export * from "./rider";
 export * from "./show";

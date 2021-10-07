@@ -12,7 +12,7 @@ Installs all dependencies and builds the the development app
 npm run start:dev
 ```
 
-Starts the development server running on `http://localhost:3000`
+Starts the development server running on <http://localhost:3000>
 
 ## Cleaning
 
@@ -38,7 +38,7 @@ Builds the app for production
 npm run start
 ```
 
-Starts the development server running on `http://localhost:3000`
+Starts the development server running on <http://localhost:3000>
 
 ## Testing
 
