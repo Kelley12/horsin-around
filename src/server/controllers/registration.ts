@@ -1,67 +1,17 @@
 import { EventEmitter2 } from "eventemitter2";
 import { Request, Response } from "express";
 import { getRepository } from "typeorm";
-import { Registration, Result, Rider } from "../entity";
-import { logger } from "../utils";
+import { Registration, Result } from "../entity";
+import { getOrCreateRider, validateEntries } from '../utils';
 
 export class RegistrationController {
     private readonly emitter = new EventEmitter2();
-
-    async getOrCreateRider(firstName: string, lastName: string): Promise<number> {
-        // Lookup the rider by first and last name
-        // If they exists, get the rider Id, otherwise create a new rider
-        const riderRepository = getRepository(Rider);
-        let rider = await riderRepository.find({
-            where: { firstName, lastName }
-        });
-
-        let riderId = 0;
-        if (!rider || !rider[0]) {
-            // Rider does not exist, create rider
-            const newRider = new Rider();
-            newRider.firstName = firstName;
-            newRider.lastName = lastName;
-
-            logger.log("info", `Rider not found, creating new rider: ${firstName} ${lastName}`);
-            const riders = await riderRepository.save(newRider);
-
-            // Find the rider if they have been created
-            rider = [riders];
-        }
-
-        if (rider && rider[0] && rider[0].riderId) {
-            // Rider exists, get riderId
-            riderId = rider[0].riderId;
-        } else {
-            throw Error("Error saving rider");
-        }
-
-        return riderId;
-    }
-
-    validateEntries(entries: any): any {
-        if (!entries || entries.length < 1) {
-            throw Error("Missing data: entries");
-        }
-
-        const {
-            showId,
-            showClassId,
-            firstName,
-            lastName,
-        } = entries[0];
-
-        if (!showId || !showClassId || !firstName || !lastName) {
-            throw Error("Missing data: show, class, or rider");
-        }
-
-    }
 
     async createRegistration(req: Request, res: Response) {
         const { entries } = req.body;
 
         try {
-            this.validateEntries(entries);
+            validateEntries(entries);
         } catch (e) {
             res.status(400).send({ error: e.message });
             return;
@@ -76,7 +26,7 @@ export class RegistrationController {
 
         let riderId = 0;
         try {
-            riderId = await this.getOrCreateRider(firstName, lastName);
+            riderId = await getOrCreateRider(firstName, lastName);
         } catch (e) {
             res.status(400).send({ error: "Error saving rider" });
             return;
