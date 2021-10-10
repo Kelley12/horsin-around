@@ -1,6 +1,7 @@
 import { Request, Router } from "express";
-import { Result, ShowClassInfo } from "../entity";
+import { Result, Rider, ShowClassInfo } from "../entity";
 import { getRepository } from "typeorm";
+import { logger } from ".";
 
 type Wrapper = ((router: Router) => void);
 
@@ -81,3 +82,54 @@ export async function getSortedPlacing(req: Request): Promise<Result[]> {
         placings = placings.concat(sortByTimeDiff(schoolingResults, optimumTime));
         return placings;
 }
+
+
+export async function getOrCreateRider(firstName: string, lastName: string): Promise<number> {
+    // Lookup the rider by first and last name
+    // If they exists, get the rider Id, otherwise create a new rider
+    const riderRepository = getRepository(Rider);
+    let rider = await riderRepository.find({
+        where: { firstName, lastName }
+    });
+
+    let riderId = 0;
+    if (!rider || !rider[0]) {
+        // Rider does not exist, create rider
+        const newRider = new Rider();
+        newRider.firstName = firstName;
+        newRider.lastName = lastName;
+
+        logger.log("info", `Rider not found, creating new rider: ${firstName} ${lastName}`);
+        const riders = await riderRepository.save(newRider);
+
+        // Find the rider if they have been created
+        rider = [riders];
+    }
+
+    if (rider && rider[0] && rider[0].riderId) {
+        // Rider exists, get riderId
+        riderId = rider[0].riderId;
+    } else {
+        throw Error("Error saving rider");
+    }
+
+    return riderId;
+}
+
+export function validateEntries(entries: any): any {
+    if (!entries || entries.length < 1) {
+        throw Error("Missing data: entries");
+    }
+
+    const {
+        showId,
+        showClassId,
+        firstName,
+        lastName,
+    } = entries[0];
+
+    if (!showId || !showClassId || !firstName || !lastName) {
+        throw Error("Missing data: show, class, or rider");
+    }
+}
+
