@@ -2,7 +2,7 @@ import { EventEmitter2 } from "eventemitter2";
 import { Request, Response } from "express";
 import { getRepository } from "typeorm";
 import { Registration, Result } from "../entity";
-import { getOrCreateRider, validateEntries } from '../utils';
+import { getOrCreateRider, validateEntries } from "../utils";
 
 export class RegistrationController {
     private readonly emitter = new EventEmitter2();

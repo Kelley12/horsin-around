@@ -1,7 +1,7 @@
 import { Request, Router } from "express";
 import { Result, Rider, ShowClassInfo } from "../entity";
 import { getRepository } from "typeorm";
-import { logger } from '.';
+import { logger } from ".";
 
 type Wrapper = ((router: Router) => void);
 
