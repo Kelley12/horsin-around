@@ -36,7 +36,7 @@ export class RegistrationController {
             const registrations = entries.map((entry: any) => {
                 const registration = new Registration();
                 registration.showId = showId;
-                registration.showClassId = showClassId;
+                registration.showClassId = entry.showClassId;
                 registration.riderId = riderId;
                 registration.horse = entry.horseName;
                 registration.phoneNumber = entry.phoneNumber;
