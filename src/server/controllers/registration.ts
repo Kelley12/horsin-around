@@ -19,7 +19,6 @@ export class RegistrationController {
 
         const {
             showId,
-            showClassId,
             firstName,
             lastName,
         } = entries[0];
@@ -49,7 +48,7 @@ export class RegistrationController {
             const results = entries.map((entry: any) => {
                 const result = new Result();
                 result.showId = showId;
-                result.showClassId = showClassId;
+                result.showClassId = entry.showClassId;
                 result.riderId = riderId;
                 result.horse = entry.horseName;
                 result.scored = !entry.schooling;
