@@ -19,7 +19,6 @@ export class RegistrationController {
 
         const {
             showId,
-            showClassId,
             firstName,
             lastName,
         } = entries[0];
