@@ -101,10 +101,6 @@ export const RegistrationPage = Vue.extend({
                 this.horseNameError = true;
                 this.errors.push("Must enter horse name");
             }
-            if (this.selectedClasses.some(selectedClass => selectedClass.id < 1)) {
-                this.selectedClassesError = true;
-                this.errors.push("All classes must be selected");
-            }
             if (!this.releaseSigned) {
                 this.releaseError = true;
                 this.errors.push("Must sign release to submit");
@@ -117,7 +113,8 @@ export const RegistrationPage = Vue.extend({
         },
         submit() {
             if (this.validateForm()) {
-                const rows = this.selectedClasses.map(selectedClass => {
+                const rows = this.selectedClasses.filter(selectedClass => selectedClass.id)
+                .map(selectedClass => {
                     return {
                         showId: this.show.showId,
                         firstName: this.firstName,
