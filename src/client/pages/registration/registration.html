@@ -195,6 +195,10 @@
     </template>
     <div class="content" v-else-if="submitted">
         <h1>You are now registered for {{ show.name }}!</h1>
+        <h2>Entered classes:</h2>
+        <ul>
+            <li v-for="enteredClass in submittedRows"><span>{{enteredClass.name}} - {{enteredClass.schooling ? "schooling" : "scored"}}</span></li>
+        </ul>
         <router-link to="/home" class="navbar-item is-tab">Back to Home</router-link>
     </div>
 </div>

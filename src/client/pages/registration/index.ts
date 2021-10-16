@@ -15,6 +15,7 @@ export const RegistrationPage = Vue.extend({
         horseName: string,
         selectedClasses: { id: number, schooling: boolean }[],
         showClasses: any[],
+        submittedRows: any[],
         submitted: boolean,
         errors: string[],
         firstNameError: boolean,
@@ -34,6 +35,7 @@ export const RegistrationPage = Vue.extend({
             horseName: "",
             selectedClasses: [{ id: 0, schooling: false }],
             showClasses: state.get().showClasses,
+            submittedRows: [],
             submitted: false,
             errors: [],
             firstNameError: false,
@@ -125,6 +127,11 @@ export const RegistrationPage = Vue.extend({
                         schooling: selectedClass.schooling,
                         classFee: 10,
                     };
+                });
+                this.submittedRows = rows.map(row => {
+                    const showClass = this.showClasses.find(showclass =>
+                        showclass.showClassId === row.showClassId);
+                    return { ...row, ...showClass };
                 });
                 post(`${apiurl}/registration`, {
                     entries: rows
