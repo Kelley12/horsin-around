@@ -72,7 +72,7 @@ passport.use("jwt", new JWTstrategy(
     }),
 );
 
-passport.serializeUser(function(user: User, done: Function) {
+passport.serializeUser(function(user: any, done: Function) {
     logger.log("info", `Serializing user: ${user.email}`);
     done(undefined, user.userId);
 });
