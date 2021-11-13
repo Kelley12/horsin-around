@@ -24,7 +24,9 @@ export const ScoringRow = Vue.extend({
                 timeInMs: (
                     (this.result.minutes * 60000) +
                     (this.result.seconds * 1000) +
-                    (this.result.milliseconds * 100)),
+                    (this.result.milliseconds < 10 ? this.result.milliseconds * 100
+                        : this.result.milliseconds < 100 ? this.result.milliseconds * 10
+                        : this.result.milliseconds)),
                 faults: this.result.faults,
                 timePenalty: this.result.timePenalty,
                 eliminated: this.result.eliminated
