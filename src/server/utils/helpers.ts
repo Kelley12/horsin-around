@@ -27,12 +27,12 @@ export function sortByTimeDiff(array: Result[], optimumTime: number) {
 
         const x = Math.abs(a.timeInMs - optimumTime) + // Time Diff
             Math.max(0, a.timeInMs - optimumTime) + // Penalty for over opt time
-            (a.faults * 1000) + // Fault penalty
+            (a.faults * 2000) + // Fault penalty
             (a.timePenalty * 1000); // Additional time penalty
 
         const y = Math.abs(b.timeInMs - optimumTime) + // Time Diff
             Math.max(0, b.timeInMs - optimumTime) + // Penalty for over opt time
-            (b.faults * 1000) + // Fault penalty
+            (b.faults * 2000) + // Fault penalty
             (b.timePenalty * 1000); // Additional time penalty
 
         return ((x < y) ? -1 : ((x > y) ? 1 : 0));

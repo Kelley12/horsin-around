@@ -30,7 +30,7 @@ export const router = new VueRouter({
 });
 
 router.beforeEach((to, _from, next) => {
-    if (!state.get().loggedIn && !to.meta.anon && to.path !== "/login") {
+    if (!state.get().loggedIn && !to.meta?.anon && to.path !== "/login") {
         return next("/login");
     }
 
