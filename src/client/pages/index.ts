@@ -1,4 +1,5 @@
 export * from "./admin";
+export * from "./check-in";
 export * from "./home";
 export * from "./login";
 export * from "./riders";

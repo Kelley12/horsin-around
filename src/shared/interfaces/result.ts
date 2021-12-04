@@ -1,3 +1,4 @@
+import { PaymentType } from ".";
 import { Rider, emptyRider } from "./rider";
 
 export interface IResult {
@@ -13,6 +14,8 @@ export interface IResult {
     seconds: number;
     milliseconds: number;
     eliminated: boolean;
+    paid: boolean;
+    paymentType: PaymentType;
 }
 
 export interface Result extends IResult {
@@ -34,5 +37,7 @@ export const emptyResult: Result = {
     seconds: 0,
     milliseconds: 0,
     eliminated: false,
-    rider: emptyRider
+    rider: emptyRider,
+    paid: false,
+    paymentType: PaymentType.CASH
 };

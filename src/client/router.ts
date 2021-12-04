@@ -6,6 +6,7 @@ import {
     ShowClassPage,
     RiderPage,
     ScoringPage,
+    CheckInPage,
     AdminPage,
     RegistrationPage
 } from "./pages";
@@ -23,6 +24,7 @@ export const router = new VueRouter({
         { path: "/riders", component: RiderPage, meta: { anon: false } },
         { path: "/class", component: ShowClassPage, meta: { anon: false } },
         { path: "/scoring", component: ScoringPage, meta: { anon: false } },
+        { path: "/check-in", component: CheckInPage, meta: { anon: false } },
         { path: "/admin", component: AdminPage, meta: { anon: false } },
         { path: "/registration", component: RegistrationPage, meta: { anon: true } },
         { path: "/registration/:showId", component: RegistrationPage, meta: { anon: true } },

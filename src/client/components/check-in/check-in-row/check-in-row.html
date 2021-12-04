@@ -1,0 +1,34 @@
+<div class="box">
+    <h2 class="title is-4">{{ entry.firstName }} {{ entry.lastName }} - {{ entry.horse }}</h2>
+    <hr>
+    <div class="columns">
+        <div class="column">
+            <strong>Classes:</strong>
+            <ul>
+                <li v-for="enteredClass in JSON.parse(entry.attributes)">
+                    {{ enteredClass.className }}
+                    <i v-if="enteredClass.scored" class="fas fa-award"></i>
+                    <i v-else class="fas fa-graduation-cap"></i>
+                </li>
+            </ul>
+        </div>
+        <div class="column">
+            <strong>Number:</strong>
+            <input type="number" class="input" v-model="entry.riderNumber" v-on:input="checkInRider()">
+        </div>
+        <div class="column">
+            <strong>Paid:</strong>
+            <input type="checkbox" v-model="entry.paid" @change="checkInRider()">
+            <br>
+            <strong>PaymentType:</strong> 
+            <div class="control select">
+                <select v-model="entry.paymentType" @change="checkInRider()">
+                    <option value="cash">Cash</option>
+                    <option value="check">Check</option>
+                    <option value="paypal">Paypal</option>
+                    <option value="venmo">Venmo</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>

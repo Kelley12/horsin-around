@@ -1,4 +1,6 @@
+export * from "./entry";
 export * from "./show-class";
+export * from "./paymentType";
 export * from "./registration";
 export * from "./result";
 export * from "./rider";

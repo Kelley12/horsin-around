@@ -1,0 +1,24 @@
+<div style="margin-top: 24px">
+    <div class="columns is-mobile is-pulled-right is-marginles">
+        <div class="column is-12">
+            <p>Use Ctrl + F to search</p>
+        </div>
+    </div>
+    <h1 class="title">Rider Check In</h1>
+    <div class="control select">
+        <select v-model="selectedShowId" @change="loadShowClasses()">
+            <option v-for="show in shows" v-bind:value="show.showId">
+                {{ show.name }}
+            </option>
+        </select>
+    </div>
+    <hr>
+    <check-in-row
+        v-for="entry in entries"
+        :key=`${entry.riderId}-${entry.horse}`
+        :entry="entry">
+    </check-in-row>
+    <div v-if="hasNoEntries" class="content">
+        <p>No riders to check in. Add new riders to the show to check them in.</p>
+    </div>
+</div>
