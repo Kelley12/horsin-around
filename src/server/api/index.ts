@@ -7,6 +7,7 @@ import { registrationRouter } from "./registration";
 import { showClassInfoRouter } from "./show-class-info";
 import { userRouter } from "./user";
 import { authenticationRouter } from "./authentication";
+import { entryRouter } from "./entry";
 
 export function apiRouter(): express.Router {
     const router = express.Router();
@@ -18,6 +19,7 @@ export function apiRouter(): express.Router {
     router.use("/results", resultRouter());
     router.use("/registration", registrationRouter());
     router.use("/users", userRouter());
+    router.use("/entry", entryRouter());
     router.use("/auth", authenticationRouter());
 
     router.get("*", (_req, res) => res.sendStatus(404));

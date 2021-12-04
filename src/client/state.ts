@@ -10,7 +10,8 @@ export const state = new State({
     shows: [] as any[],
     riders: [] as any[],
     showClasses: [] as any[],
-    users: [] as any[]
+    users: [] as any[],
+    entries: [] as any[]
 });
 
 export function signOut(router: VueRouter) {

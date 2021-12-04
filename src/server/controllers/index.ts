@@ -1,3 +1,4 @@
+export * from "./entry";
 export * from "./authentication";
 export * from "./show-class";
 export * from "./registration";

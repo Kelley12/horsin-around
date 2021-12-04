@@ -2,7 +2,7 @@ import {
     Column, Entity, PrimaryGeneratedColumn, ManyToOne,
     CreateDateColumn, UpdateDateColumn, JoinColumn
 } from "typeorm";
-import { IResult } from "../../shared";
+import { IResult, PaymentType } from "../../shared";
 import { Show } from "./show";
 import { ShowClass } from "./show-class";
 import { Rider } from "./rider";
@@ -59,6 +59,12 @@ export class Result implements IResult {
 
     @Column("boolean", { default: false })
     public eliminated!: boolean;
+
+    @Column("boolean", { default: false })
+    public paid!: boolean;
+
+    @Column("varchar", { length: 50, default: "cash" })
+    public paymentType!: PaymentType;
 
     @CreateDateColumn({ type: "datetime" })
     public createDate!: Date;
