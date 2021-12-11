@@ -22,7 +22,7 @@ export class EntryController {
                     GROUP_CONCAT(
                         CONCAT(
                             '{"showClassId": ', sc.showClassId, ', ',
-                            '"className": "', REPLACE(REPLACE(sc.name, """", "\\\""), "'", "\\'"), '", ',
+                            '"className": "', REPLACE(sc.name, """", "\\\\\\\""), '", ',
                             '"scored": ', re.scored, '}'
                         )
                     ),
