@@ -67,7 +67,7 @@
     "fs-extra": "^8.1.0",
     "generate-password": "^1.5.1",
     "helmet": "^3.22.0",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "localStorage": "^1.0.4",
     "mysql": "^2.18.1",
     "node-fetch": "^2.6.1",
